@@ -17,19 +17,8 @@ namespace MermaidDotNet.Diagrams
     public abstract class ADiagram
     {
         public abstract string Name { get; }
-        public List<Node> Nodes { get; set; }
-        public List<Link> Links { get; set; }
-
-        /// <summary>
-        /// Initialize the flowchart
-        /// </summary>
-        /// <param name="nodes">A list of nodes</param>
-        /// <param name="links">A list of links</param>
-        public ADiagram(List<Node> nodes, List<Link> links)
-        {
-            Nodes = nodes;
-            Links = links;
-        }
+        public List<Node> Nodes { get; set; } = new List<Node>();
+        public List<Link> Links { get; set; } = new List<Link>();
 
         /// <summary>
         /// Given a list of nodes and links, calculate the mermaid flowchart

@@ -162,7 +162,11 @@ namespace MermaidDotNet.EntityFrameworkCore
         {
             var nodes = BuildEntityRelationNodes(schema, options);
             var links = BuildEntityRelationLinks(schema, options);
-            return new EntityRelationshipDiagram(nodes, links);
+            
+            var diagram = new EntityRelationshipDiagram();
+            diagram.Nodes.AddRange(nodes);
+            diagram.Links.AddRange(links);
+            return diagram;
         }
 
         private static List<EntityRelationNode> BuildEntityRelationNodes(DiagramSchema schema, EntityRelationshipDiagramOptions options)

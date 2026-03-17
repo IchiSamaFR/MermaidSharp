@@ -23,7 +23,10 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowLink("node1", "node2", "dotted", null, false, LinkType.Dotted)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
+
             string expected = @"flowchart LR
     node1[Node 1]
     node2[Node 2]
@@ -50,9 +53,12 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "thick", null, false, LinkType.Thick)
+                new FlowLink("node1", "node2", "thick", "", false, LinkType.Thick)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
+
             string expected = @"flowchart LR
     node1[Node 1]
     node2[Node 2]
@@ -79,9 +85,12 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", null, false, LinkType.Invisible)
+                new FlowLink("node1", "node2", "", "", false, LinkType.Invisible)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
+
             string expected = @"flowchart LR
     node1[Node 1]
     node2[Node 2]
@@ -110,7 +119,10 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowLink("node1", "node2", "", null, false, LinkType.Normal, ArrowType.Circle)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
+
             string expected = @"flowchart LR
     node1[Node 1]
     node2[Node 2]
@@ -139,7 +151,10 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowLink("node1", "node2", "", null, false, LinkType.Normal, ArrowType.Cross)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
+
             string expected = @"flowchart LR
     node1[Node 1]
     node2[Node 2]
@@ -168,7 +183,10 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowLink("node1", "node2", "", null, true, LinkType.Normal, ArrowType.Circle)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
+
             string expected = @"flowchart LR
     node1[Node 1]
     node2[Node 2]

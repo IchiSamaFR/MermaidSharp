@@ -18,7 +18,9 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowNode("node1", "This is a parallelogram", ShapeType.Parallelogram)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+
             string expected = @"flowchart LR
     node1[/This is a parallelogram/]";
 
@@ -40,7 +42,9 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowNode("node1", "This is a trapezoid", ShapeType.Trapezoid)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+
             string expected = @"flowchart LR
     node1[\This is a trapezoid\]";
 
@@ -62,7 +66,9 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowNode("node1", "This is a trapezoid alt", ShapeType.TrapezoidAlt)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+
             string expected = @"flowchart LR
     node1[/This is a trapezoid alt\]";
 
@@ -84,7 +90,9 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowNode("node1", "This is a subroutine", ShapeType.Subroutine)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+
             string expected = @"flowchart LR
     node1[[This is a subroutine]]";
 

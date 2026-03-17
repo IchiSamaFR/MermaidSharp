@@ -60,6 +60,9 @@ namespace MermaidDotNet.Tests.EntityRelationships
                 new EntityRelationLink("Product", "ProductCategory", "ProductId", RelationType.OneOrMore, RelationType.ZeroOrMore),
                 new EntityRelationLink("Category", "ProductCategory", "CategoryId", RelationType.OneOrMore, RelationType.ZeroOrMore)
             };
+            var diagram = new EntityRelationshipDiagram();
+            diagram.Nodes.AddRange(nodes);
+            diagram.Links.AddRange(links);
 
             var expected = @"erDiagram
     User {
@@ -97,8 +100,7 @@ namespace MermaidDotNet.Tests.EntityRelationships
     Product }|--o{ ProductCategory : ""ProductId""
     Category }|--o{ ProductCategory : ""CategoryId""";
 
-            // Act
-            var diagram = new EntityRelationshipDiagram(nodes, links);
+            // Act;
             string result = diagram.CalculateDiagram();
 
             // Assert
@@ -111,7 +113,7 @@ namespace MermaidDotNet.Tests.EntityRelationships
         public void CalculateDiagram_ShouldReturnEmptyDiagram_WhenNoNodesOrLinks()
         {
             // Arrange
-            var diagram = new EntityRelationshipDiagram(new List<EntityRelationNode>(), new List<EntityRelationLink>());
+            var diagram = new EntityRelationshipDiagram();
 
             // Act
             var result = diagram.CalculateDiagram();
@@ -132,6 +134,9 @@ namespace MermaidDotNet.Tests.EntityRelationships
                     new EntityRelationColumn("FullName", "string")
                 })
             };
+            var diagram = new EntityRelationshipDiagram();
+            diagram.Nodes.AddRange(nodes);
+
             var expected = @"erDiagram
     Customer {
         int CustomerId
@@ -139,7 +144,6 @@ namespace MermaidDotNet.Tests.EntityRelationships
     }";
 
             // Act
-            var diagram = new EntityRelationshipDiagram(nodes, new List<EntityRelationLink>());
             var result = diagram.CalculateDiagram();
 
             // Assert
@@ -164,6 +168,10 @@ namespace MermaidDotNet.Tests.EntityRelationships
             {
                 new EntityRelationLink("Person", "Person", "ManagerId", RelationType.ZeroOrOne, RelationType.ZeroOrMore)
             };
+            var diagram = new EntityRelationshipDiagram();
+            diagram.Nodes.AddRange(nodes);
+            diagram.Links.AddRange(links);
+
             var expected = @"erDiagram
     Person {
         int PersonId PK, FK
@@ -172,7 +180,6 @@ namespace MermaidDotNet.Tests.EntityRelationships
     Person |o--o{ Person : ""ManagerId""";
 
             // Act
-            var diagram = new EntityRelationshipDiagram(nodes, links);
             var result = diagram.CalculateDiagram();
 
             // Assert
@@ -205,6 +212,10 @@ namespace MermaidDotNet.Tests.EntityRelationships
                 new EntityRelationLink("Author", "Book", "AuthorId", RelationType.OneOrMore, RelationType.ZeroOrMore),
                 new EntityRelationLink("Author", "Book", "EditorId", RelationType.OneOrMore, RelationType.ZeroOrMore)
             };
+            var diagram = new EntityRelationshipDiagram();
+            diagram.Nodes.AddRange(nodes);
+            diagram.Links.AddRange(links);
+
             var expected = @"erDiagram
     Author {
         int AuthorId
@@ -220,7 +231,6 @@ namespace MermaidDotNet.Tests.EntityRelationships
     Author }|--o{ Book : ""EditorId""";
 
             // Act
-            var diagram = new EntityRelationshipDiagram(nodes, links);
             var result = diagram.CalculateDiagram();
 
             // Assert

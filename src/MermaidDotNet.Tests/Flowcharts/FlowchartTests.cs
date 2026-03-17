@@ -13,7 +13,7 @@ namespace MermaidDotNet.Tests.Flowcharts
         public void ValidTDFlowchart()
         {
             //Arrange
-            FlowchartDiagram flowchart = new FlowchartDiagram("TD", new List<FlowNode>(), new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram("TD");
 
             //Act
 
@@ -25,7 +25,7 @@ namespace MermaidDotNet.Tests.Flowcharts
         public void ValidLRFlowchart()
         {
             //Arrange
-            FlowchartDiagram flowchart = new FlowchartDiagram("LR", new List<FlowNode>(), new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram("LR");
 
             //Act
 
@@ -37,7 +37,7 @@ namespace MermaidDotNet.Tests.Flowcharts
         public void ValidBTFlowchart()
         {
             //Arrange
-            FlowchartDiagram flowchart = new FlowchartDiagram("BT", new List<FlowNode>(), new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram("BT");
 
             //Act
 
@@ -49,7 +49,7 @@ namespace MermaidDotNet.Tests.Flowcharts
         public void ValidRLFlowchart()
         {
             //Arrange
-            FlowchartDiagram flowchart = new FlowchartDiagram("RL", new List<FlowNode>(), new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram("RL");
 
             //Act
 
@@ -61,7 +61,7 @@ namespace MermaidDotNet.Tests.Flowcharts
         public void ValidTBFlowchart()
         {
             //Arrange
-            FlowchartDiagram flowchart = new FlowchartDiagram("TB", new List<FlowNode>(), new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram("TB");
 
             //Act
 
@@ -75,7 +75,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             //Arrange
             try
             {
-                FlowchartDiagram flowchart = new FlowchartDiagram("none", new List<FlowNode>(), new List<FlowLink>());
+                FlowchartDiagram flowchart = new FlowchartDiagram("none");
 
                 //Act
 
@@ -96,7 +96,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             //Arrange
             try
             {
-                FlowchartDiagram flowchart = new FlowchartDiagram("LR", new List<FlowNode>(), new List<FlowLink>());
+                FlowchartDiagram flowchart = new FlowchartDiagram("LR");
                 flowchart.Nodes.Add(new FlowNode("node1", "node1"));
 
                 //Act
@@ -117,7 +117,8 @@ namespace MermaidDotNet.Tests.Flowcharts
             try
             {
                 List<FlowNode> nodes = new List<FlowNode> { new FlowNode("node2", "node2") };
-                FlowchartDiagram flowchart = new FlowchartDiagram("LR", nodes, new List<FlowLink>());
+                FlowchartDiagram flowchart = new FlowchartDiagram("LR");
+                flowchart.Nodes.AddRange(nodes);
                 flowchart.Links.Add(new FlowLink("node1", "node2", "1"));
 
                 //Act
@@ -139,7 +140,8 @@ namespace MermaidDotNet.Tests.Flowcharts
             try
             {
                 List<FlowNode> nodes = new List<FlowNode> { new FlowNode("node1", "node1") };
-                FlowchartDiagram flowchart = new FlowchartDiagram("LR", nodes, new List<FlowLink>());
+                FlowchartDiagram flowchart = new FlowchartDiagram("LR");
+                flowchart.Nodes.AddRange(nodes);
                 flowchart.Links.Add(new FlowLink("node1", "node2", "1"));
 
                 //Act

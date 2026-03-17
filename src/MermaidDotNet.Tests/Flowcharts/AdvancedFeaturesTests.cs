@@ -18,7 +18,9 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowNode("node1", "Styled Node", ShapeType.Rectangle, "myClass")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+
             string expected = @"flowchart LR
     node1[Styled Node]
     class node1 myClass";
@@ -41,7 +43,9 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowNode("node1", "Clickable Node", ShapeType.Rectangle, null, "https://example.com")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+
             string expected = @"flowchart LR
     node1[Clickable Node]
     click node1 ""https://example.com""";
@@ -64,7 +68,9 @@ namespace MermaidDotNet.Tests.Flowcharts
             {
                 new FlowNode("node1", "Styled Clickable Node", ShapeType.Rectangle, "highlightClass", "alert('Hello!')")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, new List<FlowLink>());
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+
             string expected = @"flowchart LR
     node1[Styled Clickable Node]
     class node1 highlightClass
@@ -98,7 +104,10 @@ namespace MermaidDotNet.Tests.Flowcharts
                 new FlowLink("decision", "end", "yes", "stroke:green,stroke-width:3px", false, LinkType.Thick),
                 new FlowLink("decision", "process", "", null, false, LinkType.Normal, ArrowType.Circle)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
+
             string expected = @"flowchart TD
     start((Start))
     process[Process Data]

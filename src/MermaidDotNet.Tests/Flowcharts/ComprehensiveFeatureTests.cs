@@ -39,7 +39,9 @@ namespace MermaidDotNet.Tests.Flowcharts
                 new FlowLink("validate", "input", "invalid", null, true, LinkType.Normal, ArrowType.Cross)
             };
 
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links);
+            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
 
             string expected = @"flowchart BT
     start((Start Process))

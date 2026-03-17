@@ -24,22 +24,7 @@ namespace MermaidDotNet.Diagrams
         /// Initialize the flowchart
         /// </summary>
         /// <param name="direction">Accepts LR, TD, BT, RL, and TB options</param>
-        /// <param name="nodes">A list of nodes</param>
-        /// <param name="links">A list of links</param>
-        public FlowchartDiagram(string direction, List<FlowNode> nodes, List<FlowLink> links)
-                : this(direction, nodes, links, new List<FlowSubGraph>())
-        {
-        }
-
-        /// <summary>
-        /// Initialize the flowchart
-        /// </summary>
-        /// <param name="direction">Accepts LR, TD, BT, RL, and TB options</param>
-        /// <param name="nodes">A list of nodes</param>
-        /// <param name="links">A list of links</param>
-        /// <param name="subGraphs">A list of subgraphs</param>
-        public FlowchartDiagram(string direction, List<FlowNode> nodes, List<FlowLink> links, List<FlowSubGraph> subGraphs)
-                : base(nodes.Cast<Node>().ToList(), links.Cast<Link>().ToList())
+        public FlowchartDiagram(string direction)
         {
             if (direction != "LR" && direction != "TD" && direction != "BT" && direction != "RL" && direction != "TB")
             {
@@ -47,7 +32,6 @@ namespace MermaidDotNet.Diagrams
             }
 
             Direction = direction;
-            SubGraphs = subGraphs;
         }
 
         /// <summary>
