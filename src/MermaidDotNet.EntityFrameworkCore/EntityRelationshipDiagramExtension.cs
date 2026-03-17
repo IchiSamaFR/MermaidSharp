@@ -7,7 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-#if NET8_0
+
+#if NET48
+using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Infrastructure;
+#else
 using Microsoft.EntityFrameworkCore;
 #endif
 
@@ -27,7 +32,25 @@ namespace MermaidDotNet.EntityFrameworkCore
             return BuildEntityRelationshipDiagram(schema, options);
         }
 
-#if NET8_0
+#if NET48
+        private static List<EntityTypeContext> GetEntityTypes(DbContext dbContext)
+        {
+            var objectContext = ((IObjectContextAdapter)dbContext).ObjectContext;
+            var container = objectContext.MetadataWorkspace.GetEntityContainer(objectContext.DefaultContainerName, DataSpace.CSpace);
+
+            return container.BaseEntitySets
+                .OfType<EntitySet>()
+                .Select(set =>
+                {
+                    var entityType = set.ElementType;
+                    var clrType = objectContext.GetType().Assembly.GetTypes()
+                        .FirstOrDefault(t => t.Name == entityType.Name) ?? typeof(object);
+                    return new EntityTypeContext(entityType, clrType);
+                })
+                .OrderBy(e => e.Name)
+                .ToList();
+        }
+#else
         private static List<EntityTypeContext> GetEntityTypes(DbContext dbContext)
         {
             return dbContext.Model.GetEntityTypes()
