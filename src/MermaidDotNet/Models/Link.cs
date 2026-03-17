@@ -14,7 +14,7 @@ namespace MermaidDotNet.Models
         public string SourceNode { get; set; }
         public string DestinationNode { get; set; }
 
-        public virtual string GetLinkString()
+        public virtual string ToString()
         {
             return $"{SourceNode}{GetLink()}{DestinationNode}";
         }

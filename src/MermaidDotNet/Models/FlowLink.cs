@@ -1,4 +1,5 @@
 ﻿using MermaidDotNet.Enums;
+using MermaidDotNet.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,28 +26,7 @@ namespace MermaidDotNet.Models
         public LinkType Type { get; set; }
         public ArrowType Arrow { get; set; }
 
-        protected override string GetLink()
-        {
-            StringBuilder sb = new StringBuilder();
-            if (IsBidirectional)
-            {
-                sb.Append(GetStartArrowSymbol(Arrow));
-            }
-            sb.Append(GetLinkSymbol(Type));
-            if (!string.IsNullOrEmpty(Label))
-            {
-                sb.Append(Label);
-                var linkSymbol = GetLinkSymbol(Type);
-                if (Type == LinkType.Dotted)
-                {
-                    linkSymbol = new string(linkSymbol.Reverse().ToArray());
-                }
-                sb.Append(linkSymbol);
-            }
-            sb.Append(GetEndArrowSymbol(Arrow));
-            return sb.ToString();
-        }
-        public string GetStyleString(int index)
+        public string ToStyleString(int index)
         {
             if (string.IsNullOrEmpty(LinkStyle))
             {
@@ -55,53 +35,21 @@ namespace MermaidDotNet.Models
             return $"linkStyle {index} {LinkStyle}";
         }
 
-        private string GetLinkSymbol(LinkType linkType)
+        protected override string GetLink()
         {
-            switch (linkType)
+            StringBuilder sb = new StringBuilder();
+            if (IsBidirectional)
             {
-                case LinkType.Normal:
-                    return "--";
-                case LinkType.Dotted:
-                    return "-.";
-                case LinkType.Thick:
-                    return "==";
-                case LinkType.Invisible:
-                    return "~~~";
-                default:
-                    return "--";
+                sb.Append(Arrow.StartString());
             }
-        }
-
-        private string GetStartArrowSymbol(ArrowType arrowType)
-        {
-            switch (arrowType)
+            sb.Append(Type.StartString());
+            if (!string.IsNullOrEmpty(Label))
             {
-                case ArrowType.Normal:
-                case ArrowType.Open:
-                    return "<";
-                case ArrowType.Circle:
-                    return "o";
-                case ArrowType.Cross:
-                    return "x";
-                default:
-                    return "<";
+                sb.Append(Label);
+                sb.Append(Type.EndString());
             }
-        }
-
-        private string GetEndArrowSymbol(ArrowType arrowType)
-        {
-            switch (arrowType)
-            {
-                case ArrowType.Normal:
-                case ArrowType.Open:
-                    return ">";
-                case ArrowType.Circle:
-                    return "o";
-                case ArrowType.Cross:
-                    return "x";
-                default:
-                    return ">";
-            }
+            sb.Append(Arrow.EndString());
+            return sb.ToString();
         }
     }
 }

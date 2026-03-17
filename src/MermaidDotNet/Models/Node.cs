@@ -15,7 +15,7 @@ namespace MermaidDotNet.Models
         public string Text { get; set; }
         public string CssClass { get; set; }
 
-        public virtual string GetNodeString()
+        public override string ToString()
         {
             var sb = new StringBuilder();
             sb.Append(Name);
@@ -27,7 +27,7 @@ namespace MermaidDotNet.Models
 
             return sb.ToString();
         }
-        public virtual string GetClassString()
+        public virtual string ToClassString()
         {
             if (string.IsNullOrEmpty(CssClass))
             {

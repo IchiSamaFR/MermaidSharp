@@ -1,4 +1,6 @@
 ﻿using MermaidDotNet.Enums;
+using MermaidDotNet.Extensions;
+using System.Xml.Linq;
 
 namespace MermaidDotNet.Models
 {
@@ -8,9 +10,6 @@ namespace MermaidDotNet.Models
         public RelationType SourceRelation { get; }
         public RelationType DestinationRelation { get; }
 
-        /// <summary>
-        /// Crée un lien de relation entre deux entités avec types de relation Mermaid ER.
-        /// </summary>
         public EntityRelationLink(
             string sourceNode,
             string destinationNode,
@@ -26,9 +25,6 @@ namespace MermaidDotNet.Models
             DestinationRelation = destinationRelation;
         }
 
-        /// <summary>
-        /// Crée un lien simple entre deux entités (sans syntaxe Mermaid ER personnalisée).
-        /// </summary>
         public EntityRelationLink(
             string sourceNode,
             string destinationNode,
@@ -43,60 +39,19 @@ namespace MermaidDotNet.Models
         {
         }
 
-        public override string GetLinkString()
+        public override string ToString()
         {
-            // Utilise la syntaxe Mermaid ER pour les relations
-            string relationSyntax = GetMermaidRelationSyntax(SourceRelation, DestinationRelation);
-            string label = !string.IsNullOrEmpty(Label) ? $" : \"{Label}\"" : string.Empty;
-            return $"{SourceNode} {relationSyntax} {DestinationNode}{label}";
-        }
+            string label = !string.IsNullOrEmpty(Label) ? $": \"{Label}\"" : string.Empty;
 
-        /// <summary>
-        /// Génère la syntaxe Mermaid ER pour le lien selon les types de relation.
-        /// </summary>
-        private static string GetMermaidRelationSyntax(RelationType source, RelationType destination)
-        {
-            // Symboles Mermaid ER
-            string left;
-            switch (source)
+            var returnedParts = new string[]
             {
-                case RelationType.ZeroOrOne:
-                    left = "|o";
-                    break;
-                case RelationType.ExactlyOne:
-                    left = "||";
-                    break;
-                case RelationType.ZeroOrMore:
-                    left = "}o";
-                    break;
-                case RelationType.OneOrMore:
-                    left = "}|";
-                    break;
-                default:
-                    left = "||";
-                    break;
-            }
+                SourceNode,
+                $"{SourceRelation.StartString()}--{DestinationRelation.EndString()}",
+                DestinationNode,
+                label
+            };
 
-            string right;
-            switch (destination)
-            {
-                case RelationType.ZeroOrOne:
-                    right = "o|";
-                    break;
-                case RelationType.ExactlyOne:
-                    right = "||";
-                    break;
-                case RelationType.ZeroOrMore:
-                    right = "o{";
-                    break;
-                case RelationType.OneOrMore:
-                    right = "|{";
-                    break;
-                default:
-                    right = "||";
-                    break;
-            }
-            return left + "--" + right;
+            return returnedParts.JoinNonEmpty(" ");
         }
     }
 }

@@ -26,7 +26,7 @@ namespace MermaidDotNet.Models
             Direction = direction;
         }
 
-        public string GetSubGraphString()
+        public override string ToString()
         {
             var lines = new List<string>();
             lines.Add($"subgraph {Name}");
@@ -34,8 +34,8 @@ namespace MermaidDotNet.Models
             {
                 lines.Add($"direction {Direction}");
             }
-            lines.AddRange(Nodes.Select(n => n.GetNodeString()).ClearNewLines());
-            lines.AddRange(Links.Select(n => n.GetLinkString()).ClearNewLines());
+            lines.AddRange(Nodes.Select(n => n.ToString()).ClearNewLines());
+            lines.AddRange(Links.Select(n => n.ToString()).ClearNewLines());
             lines.Add("end");
             return string.Join(Environment.NewLine, lines);
         }

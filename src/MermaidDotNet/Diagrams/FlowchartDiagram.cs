@@ -7,6 +7,13 @@ using System.Linq;
 
 namespace MermaidDotNet.Diagrams
 {
+    /// <summary>
+    /// Represents a Mermaid flowchart diagram, allowing configuration of direction, nodes, links, and subgraphs.
+    /// </summary>
+    /// <remarks>Use this class to construct and generate Mermaid-compatible flowchart diagrams with support
+    /// for custom directions and subgraph grouping. The diagram can be rendered as a Mermaid syntax string for
+    /// visualization or export. Only the directions "LR", "TD", "BT", "RL", and "TB" are supported. Attempting to use
+    /// an unsupported direction will result in a NotSupportedException.</remarks>
     public class FlowchartDiagram : ADiagram
     {
         public override string Name => "flowchart";
@@ -23,12 +30,14 @@ namespace MermaidDotNet.Diagrams
                 : this(direction, nodes, links, new List<FlowSubGraph>())
         {
         }
+
         /// <summary>
         /// Initialize the flowchart
         /// </summary>
         /// <param name="direction">Accepts LR, TD, BT, RL, and TB options</param>
         /// <param name="nodes">A list of nodes</param>
         /// <param name="links">A list of links</param>
+        /// <param name="subGraphs">A list of subgraphs</param>
         public FlowchartDiagram(string direction, List<FlowNode> nodes, List<FlowLink> links, List<FlowSubGraph> subGraphs)
                 : base(nodes.Cast<Node>().ToList(), links.Cast<Link>().ToList())
         {
@@ -50,9 +59,9 @@ namespace MermaidDotNet.Diagrams
             var lines = new List<string>();
             lines.Add($"{Name} {Direction}");
 
-            lines.AddRange(SubGraphs.Select(sg => sg.GetSubGraphString()).ClearNewLines().Indent());
-            lines.AddRange(Nodes.Select(n => n.GetNodeString()).ClearNewLines().Indent());
-            lines.AddRange(Links.Select(n => n.GetLinkString()).ClearNewLines().Indent());
+            lines.AddRange(SubGraphs.Select(sg => sg.ToString()).ClearNewLines().Indent());
+            lines.AddRange(Nodes.Select(n => n.ToString()).ClearNewLines().Indent());
+            lines.AddRange(Links.Select(n => n.ToString()).ClearNewLines().Indent());
 
             var allNodes = Nodes.OfType<FlowNode>()
                 .Concat(SubGraphs.SelectMany(sg => sg.Nodes))
@@ -61,9 +70,9 @@ namespace MermaidDotNet.Diagrams
                 .Concat(SubGraphs.SelectMany(sg => sg.Links))
                 .ToList();
             var linkStyles = allLinks.Where(l => !string.IsNullOrEmpty(l.LinkStyle)).ToList();
-            lines.AddRange(linkStyles.Select(n => n.GetStyleString(linkStyles.IndexOf(n))).ClearNewLines().Indent());
-            lines.AddRange(allNodes.Select(n => n.GetClassString()).ClearNewLines().Indent());
-            lines.AddRange(allNodes.Select(n => n.GetClickActionString()).ClearNewLines().Indent());
+            lines.AddRange(linkStyles.Select(n => n.ToStyleString(linkStyles.IndexOf(n))).ClearNewLines().Indent());
+            lines.AddRange(allNodes.Select(n => n.ToClassString()).ClearNewLines().Indent());
+            lines.AddRange(allNodes.Select(n => n.ToClickString()).ClearNewLines().Indent());
 
             return string.Join(Environment.NewLine, lines);
         }

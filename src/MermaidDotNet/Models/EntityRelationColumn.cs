@@ -1,4 +1,5 @@
 ﻿using MermaidDotNet.Enums;
+using MermaidDotNet.Extensions;
 using System.Collections.Generic;
 
 namespace MermaidDotNet.Models
@@ -17,47 +18,18 @@ namespace MermaidDotNet.Models
             Comment = comment;
         }
 
-        public string GetColumnString()
+        public string ToString()
         {
-            var str = Type;
+            var comment = !string.IsNullOrEmpty(Comment) ? $"\"{Comment}\"" : string.Empty;
 
-            if (!string.IsNullOrEmpty(Name))
+            var returnedParts = new string[]
             {
-                if (string.IsNullOrEmpty(str))
-                {
-                    str = Name;
-                }
-                else
-                {
-                    str = string.Join(" ", str, Name);
-                }
-            }
-
-            if (ColumnKeyType != ColumnKeyType.None)
-            {
-                str = string.Join(" ", str, GetRelationReferenceString());
-            }
-
-            if (!string.IsNullOrEmpty(Comment))
-            {
-                str = string.Join(" ", str, $"\"{Comment}\"");
-            }
-
-            return str;
-        }
-
-        private string GetRelationReferenceString()
-        {
-            var references = new List<string>();
-
-            if ((ColumnKeyType & ColumnKeyType.PrimaryKey) == ColumnKeyType.PrimaryKey)
-                references.Add("PK");
-            if ((ColumnKeyType & ColumnKeyType.ForeignKey) == ColumnKeyType.ForeignKey)
-                references.Add("FK");
-            if ((ColumnKeyType & ColumnKeyType.UniqueKey) == ColumnKeyType.UniqueKey)
-                references.Add("UK");
-
-            return references.Count > 0 ? string.Join(", ", references) : string.Empty;
+                Type,
+                Name,
+                ColumnKeyType.StartString(),
+                comment
+            };
+            return returnedParts.JoinNonEmpty(" ");
         }
     }
 }

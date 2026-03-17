@@ -1,28 +1,20 @@
-﻿namespace MermaidDotNet.Enums
+﻿using MermaidDotNet.Attributes;
+using System.ComponentModel;
+
+namespace MermaidDotNet.Enums
 {
-    /// <summary>
-    /// Types de relations pour les diagrammes ER Mermaid.
-    /// </summary>
     public enum RelationType
     {
-        /// <summary>
-        /// Zero ou un (|o o|).
-        /// </summary>
+        [MermaidEnum("|o", "o|")]
         ZeroOrOne,
 
-        /// <summary>
-        /// Exactement un (|| ||).
-        /// </summary>
+        [MermaidEnum("||")]
         ExactlyOne,
 
-        /// <summary>
-        /// Zero ou plusieurs (}o o{).
-        /// </summary>
+        [MermaidEnum("}o", "o{")]
         ZeroOrMore,
 
-        /// <summary>
-        /// Un ou plusieurs (}| |{).
-        /// </summary>
+        [MermaidEnum("}|", "|{")]
         OneOrMore
     }
 }

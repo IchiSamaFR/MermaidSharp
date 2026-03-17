@@ -302,7 +302,7 @@ namespace MermaidDotNet.Tests.Flowcharts
                         new FlowNode("node4", "This is node 4")
                     },
                     new List<FlowLink> {
-                        new FlowLink("node1", "node3", null)
+                        new FlowLink("node1", "node3")
                     })
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction, new List<FlowNode>(), new List<FlowLink>(), subGraphs);
@@ -356,7 +356,7 @@ namespace MermaidDotNet.Tests.Flowcharts
                         new FlowNode("node4", "This is node 4")
                     },
                     new List<FlowLink> {
-                        new FlowLink("node1", "node3", null)
+                        new FlowLink("node1", "node3")
                     })
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction, nodes, links, subGraphs);
@@ -414,7 +414,7 @@ namespace MermaidDotNet.Tests.Flowcharts
                         new FlowNode("node4", "This is node 4")
                     },
                     new List<FlowLink> {
-                        new FlowLink("node1", "node3", null)
+                        new FlowLink("node1", "node3")
                     },
                     direction)
             };
@@ -500,7 +500,7 @@ namespace MermaidDotNet.Tests.Flowcharts
                         new FlowNode("node4", "This is node 4")
                     },
                     new List<FlowLink> {
-                        new FlowLink("node1", "node3", null)
+                        new FlowLink("node1", "node3")
                     },
                     "BT")
             };

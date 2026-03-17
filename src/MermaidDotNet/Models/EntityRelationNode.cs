@@ -20,15 +20,15 @@ namespace MermaidDotNet.Models
         }
 
 
-        public override string GetNodeString()
+        public override string ToString()
         {
             var lines = new List<string>();
             if (Columns.Count == 0)
             {
-                return base.GetNodeString();
+                return base.ToString();
             }
-            lines.Add(string.Join(" ", base.GetNodeString(), "{"));
-            lines.AddRange(Columns.Select(c => c.GetColumnString()).Indent());
+            lines.Add(string.Join(" ", base.ToString(), "{"));
+            lines.AddRange(Columns.Select(c => c.ToString()).Indent());
             lines.Add("}");
             return string.Join(Environment.NewLine, lines);
         }

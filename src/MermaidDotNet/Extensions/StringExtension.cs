@@ -7,6 +7,11 @@ namespace MermaidDotNet.Extensions
 {
     internal static class StringExtension
     {
+        public static string JoinNonEmpty(this IEnumerable<string> lst, string separator)
+        {
+            return string.Join(separator, lst.Where(i => !string.IsNullOrEmpty(i)));
+        }
+
         public static string Indent(this string str, int indent = 1)
         {
             string indentString = string.Concat(Enumerable.Repeat(FormattingConstants.Indentation, indent));
@@ -20,6 +25,11 @@ namespace MermaidDotNet.Extensions
         public static List<string> ClearNewLines(this IEnumerable<string> lst)
         {
             return lst.Where(i => !string.IsNullOrEmpty(i)).ToList();
+        }
+
+        public static string FormatAngleBracket(this string str)
+        {
+            return str?.Replace("<", "~").Replace(">", "~") ?? string.Empty;
         }
     }
 }

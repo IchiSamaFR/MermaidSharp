@@ -1,4 +1,5 @@
 ﻿using MermaidDotNet.Enums;
+using MermaidDotNet.Extensions;
 
 namespace MermaidDotNet.Models
 {
@@ -14,7 +15,7 @@ namespace MermaidDotNet.Models
         public ShapeType Shape { get; set; }
         public string ClickAction { get; set; }
 
-        public string GetClickActionString()
+        public string ToClickString()
         {
             if (string.IsNullOrEmpty(ClickAction))
             {
@@ -22,70 +23,10 @@ namespace MermaidDotNet.Models
             }
             return $"click {Name} \"{ClickAction}\"";
         }
+
         protected override string GetSurroundedText()
         {
-            return $"{OpenShape()}{Text}{CloseShape()}";
-        }
-        public string OpenShape()
-        {
-            switch (Shape)
-            {
-                case ShapeType.Rectangle:
-                    return "[";
-                case ShapeType.Rounded:
-                    return "(";
-                case ShapeType.Stadium:
-                    return "([";
-                case ShapeType.Cylinder:
-                    return "[(";
-                case ShapeType.Circle:
-                    return "((";
-                case ShapeType.Rhombus:
-                    return "{";
-                case ShapeType.Hexagon:
-                    return "{{";
-                case ShapeType.Parallelogram:
-                    return "[/";
-                case ShapeType.Trapezoid:
-                    return "[\\";
-                case ShapeType.TrapezoidAlt:
-                    return "[/";
-                case ShapeType.Subroutine:
-                    return "[[";
-                default: // Rectangle is default
-                    return "[";
-            }
-        }
-
-        public string CloseShape()
-        {
-            switch (Shape)
-            {
-                case ShapeType.Rectangle:
-                    return "]";
-                case ShapeType.Rounded:
-                    return ")";
-                case ShapeType.Stadium:
-                    return "])";
-                case ShapeType.Cylinder:
-                    return ")]";
-                case ShapeType.Circle:
-                    return "))";
-                case ShapeType.Rhombus:
-                    return "}";
-                case ShapeType.Hexagon:
-                    return "}}";
-                case ShapeType.Parallelogram:
-                    return "/]";
-                case ShapeType.Trapezoid:
-                    return "\\]";
-                case ShapeType.TrapezoidAlt:
-                    return "\\]";
-                case ShapeType.Subroutine:
-                    return "]]";
-                default: // Rectangle is default
-                    return "]";
-            }
+            return $"{Shape.StartString()}{Text}{Shape.EndString()}";
         }
     }
 }
