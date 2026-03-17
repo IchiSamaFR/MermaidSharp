@@ -1,11 +1,9 @@
 ﻿using MermaidDotNet.EntityFramework.Tests.Mock;
-using MermaidDotNet.EntityFramework.Tests.Mock.Entities;
 using MermaidDotNet.EntityFrameworkCore;
 using MermaidDotNet.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data.Common;
-using System.Data.Entity;
 using System.Data.SQLite;
 
 namespace MermaidDotNet.EntityFramework.Tests
