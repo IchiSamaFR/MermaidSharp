@@ -10,6 +10,27 @@ namespace MermaidDotNet.Tests.Flowcharts
     public class FlowchartCalculationTests
     {
         [TestMethod]
+        public void ValidTitleFlowchart()
+        {
+            // Arrange
+            string title = "My Flowchart Title";
+            string direction = "LR";
+            var flowchart = new FlowchartDiagram(title, direction);
+            string expected = @"---
+title: My Flowchart Title
+---
+flowchart LR";
+
+            // Act
+            string result = flowchart.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(flowchart);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
         public void ValidTDFlowchart()
         {
             //Arrange

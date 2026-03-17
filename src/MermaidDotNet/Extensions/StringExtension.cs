@@ -24,7 +24,7 @@ namespace MermaidDotNet.Extensions
         }
         public static List<string> ClearNewLines(this IEnumerable<string> lst)
         {
-            return lst.Where(i => !string.IsNullOrEmpty(i)).ToList();
+            return lst.Where(i => !string.IsNullOrWhiteSpace(i)).ToList();
         }
 
         public static string FormatAngleBracket(this string str)

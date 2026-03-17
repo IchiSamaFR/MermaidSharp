@@ -34,10 +34,10 @@ namespace MermaidDotNet.Models
             {
                 lines.Add($"direction {Direction}");
             }
-            lines.AddRange(Nodes.Select(n => n.ToString()).ClearNewLines());
-            lines.AddRange(Links.Select(n => n.ToString()).ClearNewLines());
+            lines.AddRange(Nodes.Select(n => n.ToString()));
+            lines.AddRange(Links.Select(n => n.ToString()));
             lines.Add("end");
-            return string.Join(Environment.NewLine, lines);
+            return string.Join(Environment.NewLine, lines.ClearNewLines());
         }
     }
 }

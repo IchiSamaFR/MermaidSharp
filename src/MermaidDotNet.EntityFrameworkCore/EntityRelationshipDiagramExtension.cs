@@ -20,11 +20,32 @@ namespace MermaidDotNet.EntityFrameworkCore
 {
     public static class EntityRelationshipDiagramExtension
     {
+        /// <summary>
+        /// Generates a Mermaid entity-relationship diagram representing the structure of the specified Entity Framework
+        /// database context.
+        /// </summary>
+        /// <remarks>This extension method provides a convenient way to visualize the entities and
+        /// relationships defined in a DbContext using Mermaid syntax. The diagram reflects the current model
+        /// configuration of the context.</remarks>
+        /// <param name="dbContext">The Entity Framework database context to analyze. Cannot be null.</param>
+        /// <returns>An EntityRelationshipDiagram object containing the Mermaid syntax for the entity-relationship diagram of the
+        /// database context.</returns>
         public static EntityRelationshipDiagram ToMermaidEntityDiagram(this DbContext dbContext)
         {
             return dbContext.ToMermaidEntityDiagram(new EntityRelationshipDiagramOptions());
         }
 
+        /// <summary>
+        /// Generates a Mermaid entity-relationship diagram representing the structure of the specified Entity Framework
+        /// database context.
+        /// </summary>
+        /// <remarks>This extension method provides a convenient way to visualize the entities and
+        /// relationships defined in a DbContext using Mermaid syntax. The diagram reflects the current model
+        /// configuration of the context.</remarks>
+        /// <param name="dbContext">The Entity Framework database context to analyze. Cannot be null.</param>
+        /// <param name="options">Options to customize the generation of the entity-relationship diagram, such as whether to include column details, relationships, and other metadata.</param>
+        /// <returns>An EntityRelationshipDiagram object containing the Mermaid syntax for the entity-relationship diagram of the
+        /// database context.</returns>
         public static EntityRelationshipDiagram ToMermaidEntityDiagram(this DbContext dbContext, EntityRelationshipDiagramOptions options)
         {
             var entityTypes = GetEntityTypes(dbContext);

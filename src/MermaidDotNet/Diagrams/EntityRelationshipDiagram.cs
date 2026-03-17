@@ -13,5 +13,12 @@ namespace MermaidDotNet.Diagrams
     public class EntityRelationshipDiagram : ADiagram
     {
         public override string Name => "erDiagram";
+
+        public EntityRelationshipDiagram() : base()
+        {
+        }
+        public EntityRelationshipDiagram(string title) : base(title)
+        {
+        }
     }
 }

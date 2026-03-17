@@ -238,5 +238,116 @@ namespace MermaidDotNet.Tests.EntityRelationships
             Assert.IsNotNull(result);
             Assert.AreEqual(expected, result);
         }
+
+        [TestMethod]
+        public void CalculateDiagram_ShouldHandleVariousRelationTypesAndEdgeCases()
+        {
+            // Arrange
+            var nodes = new List<EntityRelationNode>
+            {
+                new EntityRelationNode("Person", new List<EntityRelationColumn>
+                {
+                    new EntityRelationColumn("PersonId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("SpouseId", "int", ColumnKeyType.ForeignKey)
+                }),
+                new EntityRelationNode("Company", new List<EntityRelationColumn>
+                {
+                    new EntityRelationColumn("CompanyId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("Name", "string")
+                }),
+                new EntityRelationNode("Employee", new List<EntityRelationColumn>
+                {
+                    new EntityRelationColumn("EmployeeId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("PersonId", "int", ColumnKeyType.ForeignKey),
+                    new EntityRelationColumn("CompanyId", "int", ColumnKeyType.ForeignKey)
+                }),
+                new EntityRelationNode("Project", new List<EntityRelationColumn>
+                {
+                    new EntityRelationColumn("ProjectId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("Title", "string")
+                }),
+                new EntityRelationNode("EmployeeProject", new List<EntityRelationColumn>
+                {
+                    new EntityRelationColumn("EmployeeId", "int", ColumnKeyType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("ProjectId", "int", ColumnKeyType.PrimaryKeyForeignKey)
+                }),
+                new EntityRelationNode("Department", new List<EntityRelationColumn>
+                {
+                    new EntityRelationColumn("DepartmentId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("Name", "string")
+                }),
+                new EntityRelationNode("DepartmentManager", new List<EntityRelationColumn>
+                {
+                    new EntityRelationColumn("DepartmentId", "int", ColumnKeyType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("PersonId", "int", ColumnKeyType.PrimaryKeyForeignKey)
+                })
+            };
+
+            var links = new List<EntityRelationLink>
+            {
+		        // One-to-one (circular)
+		        new EntityRelationLink("Person", "Person", "SpouseId", RelationType.ZeroOrOne, RelationType.ZeroOrOne),
+		        // One-to-many
+		        new EntityRelationLink("Company", "Employee", "CompanyId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+		        // Many-to-many
+		        new EntityRelationLink("Employee", "EmployeeProject", "EmployeeId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+                new EntityRelationLink("Project", "EmployeeProject", "ProjectId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+		        // Multiple links between same entities
+		        new EntityRelationLink("Department", "DepartmentManager", "DepartmentId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+                new EntityRelationLink("Person", "DepartmentManager", "PersonId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+		        // No foreign key relation
+		        new EntityRelationLink("Employee", "Department", "DepartmentId", RelationType.ZeroOrMore, RelationType.ZeroOrMore)
+            };
+
+            var expected = @"erDiagram
+    Person {
+        int PersonId PK
+        int SpouseId FK
+    }
+    Company {
+        int CompanyId PK
+        string Name
+    }
+    Employee {
+        int EmployeeId PK
+        int PersonId FK
+        int CompanyId FK
+    }
+    Project {
+        int ProjectId PK
+        string Title
+    }
+    EmployeeProject {
+        int EmployeeId PK, FK
+        int ProjectId PK, FK
+    }
+    Department {
+        int DepartmentId PK
+        string Name
+    }
+    DepartmentManager {
+        int DepartmentId PK, FK
+        int PersonId PK, FK
+    }
+    Person |o--o| Person : ""SpouseId""
+    Company }|--o{ Employee : ""CompanyId""
+    Employee }|--o{ EmployeeProject : ""EmployeeId""
+    Project }|--o{ EmployeeProject : ""ProjectId""
+    Department }|--o{ DepartmentManager : ""DepartmentId""
+    Person }|--o{ DepartmentManager : ""PersonId""
+    Employee }o--o{ Department : ""DepartmentId""";
+
+            // Act
+            var diagram = new EntityRelationshipDiagram();
+            diagram.Nodes.AddRange(nodes);
+            diagram.Links.AddRange(links);
+
+            var result = diagram.CalculateDiagram();
+
+            // Assert
+            Assert.IsNotNull(diagram);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
     }
 }

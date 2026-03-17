@@ -1,4 +1,5 @@
-﻿using MermaidDotNet.Extensions;
+﻿using MermaidDotNet.Constants;
+using MermaidDotNet.Extensions;
 using MermaidDotNet.Models;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,17 @@ namespace MermaidDotNet.Diagrams
     public abstract class ADiagram
     {
         public abstract string Name { get; }
+        public string Title { get; set; }
         public List<Node> Nodes { get; set; } = new List<Node>();
         public List<Link> Links { get; set; } = new List<Link>();
+
+        public ADiagram()
+        {
+        }
+        public ADiagram(string title)
+        {
+            Title = title;
+        }
 
         /// <summary>
         /// Given a list of nodes and links, calculate the mermaid flowchart
@@ -27,12 +37,26 @@ namespace MermaidDotNet.Diagrams
         public virtual string CalculateDiagram()
         {
             var lines = new List<string>();
+            lines.Add(GetTitleString());
             lines.Add(Name);
 
-            lines.AddRange(Nodes.Select(n => n.ToString()).ClearNewLines().Indent());
-            lines.AddRange(Links.Select(n => n.ToString()).ClearNewLines().Indent());
-            lines.AddRange(Nodes.Select(n => n.ToClassString()).ClearNewLines().Indent());
+            lines.AddRange(Nodes.Select(n => n.ToString()).Indent());
+            lines.AddRange(Links.Select(n => n.ToString()).Indent());
+            lines.AddRange(Nodes.Select(n => n.ToClassString()).Indent());
 
+            return string.Join(Environment.NewLine, lines.ClearNewLines());
+        }
+
+        protected string GetTitleString()
+        {
+            if (string.IsNullOrEmpty(Title))
+            {
+                return string.Empty;
+            }
+            var lines = new List<string>();
+            lines.Add(FormattingConstants.TitleSeparator);
+            lines.Add($"title: {Title}");
+            lines.Add(FormattingConstants.TitleSeparator);
             return string.Join(Environment.NewLine, lines);
         }
     }
