@@ -47,7 +47,7 @@ Always reference these instructions first and fallback to search or bash command
 ## Unit Test Standards
 
 ### General Principles
-- **Test Framework:** Use XUnit as appropriate for the project.
+- **Test Framework:** Use MSTest as appropriate for the project.
 - **Test Naming:** Use descriptive method names: `MethodName_ExpectedBehavior_StateUnderTest`.
 - **Test Structure:** Follow Arrange-Act-Assert (AAA) pattern in all tests.
 - **Isolation:** Each test should be independent and not rely on the outcome of other tests.

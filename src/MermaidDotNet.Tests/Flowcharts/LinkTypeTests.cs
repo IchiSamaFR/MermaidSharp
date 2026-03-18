@@ -21,7 +21,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "dotted", null, false, LinkType.Dotted)
+                new FlowLink("node1", "node2", "dotted", null, false, FlowLinkType.Dotted)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -53,7 +53,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "thick", "", false, LinkType.Thick)
+                new FlowLink("node1", "node2", "thick", "", false, FlowLinkType.Thick)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -85,7 +85,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", "", false, LinkType.Invisible)
+                new FlowLink("node1", "node2", "", "", false, FlowLinkType.Invisible)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -117,7 +117,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", null, false, LinkType.Normal, ArrowType.Circle)
+                new FlowLink("node1", "node2", "", null, false, FlowLinkType.Normal, FlowLinkArrowType.Circle)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -149,7 +149,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", null, false, LinkType.Normal, ArrowType.Cross)
+                new FlowLink("node1", "node2", "", null, false, FlowLinkType.Normal, FlowLinkArrowType.Cross)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -181,7 +181,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", null, true, LinkType.Normal, ArrowType.Circle)
+                new FlowLink("node1", "node2", "", null, true, FlowLinkType.Normal, FlowLinkArrowType.Circle)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);

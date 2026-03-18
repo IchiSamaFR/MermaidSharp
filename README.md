@@ -1,13 +1,11 @@
 # MermaidDotNet
-[![CI/CD](https://github.com/samsmithnz/MermaidDotNet/actions/workflows/workflow.yml/badge.svg)](https://github.com/samsmithnz/MermaidDotNet/actions/workflows/workflow.yml)
-[![Coverage Status](https://coveralls.io/repos/github/samsmithnz/MermaidDotNet/badge.svg?branch=main)](https://coveralls.io/github/samsmithnz/MermaidDotNet?branch=main)
-[![Latest NuGet package](https://img.shields.io/nuget/v/MermaidDotNet)](https://www.nuget.org/packages/MermaidDotNet/)
-[![Current Release](https://img.shields.io/github/release/samsmithnz/MermaidDotNet/all.svg)](https://github.com/samsmithnz/MermaidDotNet/releases)
+> **Info:** This project is a fork of the original [MermaidDotNet](https://github.com/samsmithnz/MermaidDotNet) repository. All enhancements, fixes, and additions are based on the initial project.
 
-A comprehensive .NET wrapper to create [Mermaid](https://mermaid.js.org/syntax/flowchart.html) flowcharts with full syntax support, that can then be inserted into markdown or directly displayed in HTML with mermaid.js.
+A comprehensive .NET wrapper to create [Mermaid](https://mermaid.js.org/) diagrams with full syntax support, including flowcharts, entity relationship diagrams, and class diagrams. These can be inserted into markdown or directly displayed in HTML with mermaid.js.
 
 ## Features
 
+### Flowcharts
 - **Directions**: LR (Left-Right), TD/TB (Top-Down/Top-Bottom), BT (Bottom-Top), RL (Right-Left)
 - **Node Shapes**: Rectangle, Rounded, Stadium, Cylinder, Circle, Rhombus, Hexagon, Parallelogram, Trapezoid, TrapezoidAlt, Subroutine
 - **Link Types**: Normal (--), Dotted (-.), Thick (==), Invisible (~~~)
@@ -15,7 +13,21 @@ A comprehensive .NET wrapper to create [Mermaid](https://mermaid.js.org/syntax/f
 - **Advanced Features**: CSS Classes, Click Actions, Bidirectional Links, Link Styling
 - **Subgraphs**: Nested grouping with custom directions
 
-## Basic Example
+### Entity Relationship Diagrams
+- **Entities**: Define entities with columns including data types, keys (PK, FK, PK/FK), and comments
+- **Relationships**: Support for relationship cardinality (Zero or One, One or More, Zero or More, Only One)
+- **Column Types**: Support for all common data types and key constraints
+
+### Class Diagrams
+- **Classes**: Define classes with properties and methods
+- **Visibility**: Public (+), Private (-), Protected (#), Package (~)
+- **Relationships**: Inheritance, Composition, Aggregation, Association, Dependency
+- **Namespaces**: Organize classes within namespaces
+- **Methods**: Support for parameters and return types
+
+## Flowchart Examples
+
+### Basic Example
 
 Very simple example, to create a Left->Right graph (LR), with two nodes linked. 
 ```csharp
@@ -55,8 +67,7 @@ flowchart LR
     node1--3mins-->node3
 ```
 
-
-## Advanced Example
+### Advanced Flowchart Example
 
 Example with multiple node shapes, link types, arrow types, and styling:
 
@@ -119,10 +130,144 @@ flowchart TD
     click start "console.log('Started')"
 ```
 
-## It's also possible to insert into HTML and rendor on the web. Here is a sample, referencing the mermaid.js CDN.
+## Entity Relationship Diagram Examples
+
+### Basic Entity Relationship Diagram
+
+Example showing a simple database schema with users and orders:
+
+```csharp
+    var nodes = new List<EntityRelationNode>
+    {
+        new EntityRelationNode("User", new List<EntityRelationColumn>
+        {
+            new EntityRelationColumn("Id", "int", ColumnKeyType.PrimaryKey),
+            new EntityRelationColumn("Name", "string"),
+            new EntityRelationColumn("Email", "string")
+        }),
+        new EntityRelationNode("Order", new List<EntityRelationColumn>
+        {
+            new EntityRelationColumn("OrderId", "int", ColumnKeyType.PrimaryKey),
+            new EntityRelationColumn("UserId", "int", ColumnKeyType.ForeignKey),
+            new EntityRelationColumn("OrderDate", "datetime")
+        })
+    };
+    var links = new List<EntityRelationLink>
+    {
+        new EntityRelationLink("User", "Order", "UserId", RelationType.OneOrMore, RelationType.ZeroOrMore)
+    };
+    var diagram = new EntityRelationshipDiagram();
+    diagram.Nodes.AddRange(nodes);
+    diagram.Links.AddRange(links);
+    string result = diagram.CalculateDiagram();
+```
+
+The entity relationship mermaid result:
+
+```
+erDiagram
+    User {
+        int Id PK
+        string Name
+        string Email
+    }
+    Order {
+        int OrderId PK
+        int UserId FK
+        datetime OrderDate
+    }
+    User }|--o{ Order : "UserId"
+```
+
+When rendered in mermaid:
+```mermaid
+erDiagram
+    User {
+        int Id PK
+        string Name
+        string Email
+    }
+    Order {
+        int OrderId PK
+        int UserId FK
+        datetime OrderDate
+    }
+    User }|--o{ Order : "UserId"
+```
+
+## Class Diagram Examples
+
+### Basic Class Diagram
+
+Example showing a simple class hierarchy with inheritance:
+
+```csharp
+    var nodes = new List<ClassNode>
+    {
+        new ClassNode("Animal", properties: new List<ClassProperty>
+        {
+            new ClassProperty("Name", "string", ClassPropertyVisibility.Public),
+            new ClassProperty("Age", "int", ClassPropertyVisibility.Protected),
+        }, methods: new List<ClassMethod>
+        {
+            new ClassMethod(name: "Speak", visibility: ClassPropertyVisibility.Public),
+            new ClassMethod(name: "Sleep", visibility: ClassPropertyVisibility.Protected),
+        }),
+        new ClassNode("Dog", properties: new List<ClassProperty>
+        {
+            new ClassProperty("Breed", "string", ClassPropertyVisibility.Public),
+        }, methods: new List<ClassMethod>
+        {
+            new ClassMethod(name: "Fetch", visibility: ClassPropertyVisibility.Public),
+        }),
+    };
+    var links = new List<ClassLink>
+    {
+        new ClassLink("Animal", "Dog", ClassLinkType.Inheritance, "extends")
+    };
+    var diagram = new ClassDiagram();
+    diagram.Nodes.AddRange(nodes);
+    diagram.Links.AddRange(links);
+    string result = diagram.CalculateDiagram();
+```
+
+The class diagram mermaid result:
+
+```
+classDiagram
+    class Animal {
+        +string Name
+        #int Age
+        +Speak()
+        #Sleep()
+    }
+    class Dog {
+        +string Breed
+        +Fetch()
+    }
+    Animal<|--Dog : extends
+```
+
+When rendered in mermaid:
+```mermaid
+classDiagram
+    class Animal {
+        +string Name
+        #int Age
+        +Speak()
+        #Sleep()
+    }
+    class Dog {
+        +string Breed
+        +Fetch()
+    }
+    Animal<|--Dog : extends
+```
+
+## HTML Integration
 
 ```html
-<h2>Production Graph</h2>
+<h2>Mermaid Diagram</h2>
 <body>
     Here is a mermaid diagram:
     <pre class="mermaid">
@@ -138,13 +283,14 @@ flowchart LR
         mermaid.initialize({ startOnLoad: true });
     </script>
 </body>
+```
 
 ## Sample Projects
 
 ### [MermaidDotNet.MVCWeb](src/MermaidDotNet.MVCWeb)
 
-This is a sample ASP.NET Core MVC web application that demonstrates how to use the MermaidDotNet library to create and render Mermaid diagrams in an MVC web application. The project includes examples of creating flowcharts and rendering them using the Mermaid.js library.
+This is a sample ASP.NET Core MVC web application that demonstrates how to use the MermaidDotNet library to create and render Mermaid diagrams in an MVC web application. The project includes examples of creating flowcharts, entity relationship diagrams, and class diagrams using the Mermaid.js library.
 
 ### [MermaidDotNet.BlazorApp](src/MermaidDotNet.BlazorApp)
 
-This is a sample Blazor application that demonstrates how to use the MermaidDotNet library to create and render Mermaid diagrams in a Blazor web application. The project includes examples of creating flowcharts and rendering them using the Mermaid.js library.
+This is a sample Blazor application that demonstrates how to use the MermaidDotNet library to create and render Mermaid diagrams in a Blazor web application. The project includes examples of creating flowcharts, entity relationship diagrams, and class diagrams using the Mermaid.js library.

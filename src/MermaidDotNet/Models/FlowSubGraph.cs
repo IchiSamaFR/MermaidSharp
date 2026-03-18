@@ -5,24 +5,36 @@ using System.Linq;
 
 namespace MermaidDotNet.Models
 {
+    /// <summary>
+    /// Represents a subgraph within a flowchart, containing a collection of nodes and links with an optional layout
+    /// direction.
+    /// </summary>
+    /// <remarks>Use this class to group related nodes and links within a flowchart, allowing for logical
+    /// organization and custom layout direction. The subgraph can be configured to use different flow directions, such
+    /// as left-to-right or top-to-bottom, to control the visual arrangement of its elements.</remarks>
     public class FlowSubGraph
     {
         public string Name { get; set; }
         //Can be TB, BT, RL, LR (default: LR) (Top/Bottom/Left/Right, respectively)
-        public string Direction { get; set; } = null;
-        public List<FlowNode> Nodes { get; set; } = new List<FlowNode>();
-        public List<FlowLink> Links { get; set; } = new List<FlowLink>();
+        public string Direction { get; set; }
+        public List<FlowNode> Nodes { get; }
+        public List<FlowLink> Links { get; }
 
-        public FlowSubGraph(string name, string direction = null)
+        /// <summary>
+        /// Initializes a new instance of the FlowSubGraph class with the specified name, nodes, links, and optional
+        /// direction.
+        /// </summary>
+        /// <remarks>Use this constructor to define a subgraph within a flowchart, specifying its nodes,
+        /// links, and layout direction as needed.</remarks>
+        /// <param name="name">The unique identifier for the subgraph. Spaces will be removed from this value.</param>
+        /// <param name="nodes">The collection of nodes to include in the subgraph. If null, an empty list is used.</param>
+        /// <param name="links">The collection of links connecting nodes within the subgraph. If null, an empty list is used.</param>
+        /// <param name="direction">The layout direction for the subgraph. If null, the default direction is used.</param>
+        public FlowSubGraph(string name, List<FlowNode> nodes = null, List<FlowLink> links = null, string direction = null)
         {
             Name = name.Replace(" ", "");
-            Direction = direction;
-        }
-        public FlowSubGraph(string name, List<FlowNode> nodes, List<FlowLink> links, string direction = null)
-        {
-            Name = name.Replace(" ", "");
-            Nodes = nodes;
-            Links = links;
+            Nodes = nodes ?? new List<FlowNode>();
+            Links = links ?? new List<FlowLink>();
             Direction = direction;
         }
 

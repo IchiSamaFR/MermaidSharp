@@ -1,11 +1,9 @@
 ﻿using MermaidDotNet.Attributes;
 using System;
-using System.ComponentModel;
-using System.Reflection;
 
 namespace MermaidDotNet.Extensions
 {
-    public static class EnumExtension
+    internal static class EnumExtension
     {
         public static string StartString(this Enum value)
         {

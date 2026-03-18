@@ -20,23 +20,23 @@ namespace MermaidDotNet.Tests.Flowcharts
             List<FlowNode> nodes = new List<FlowNode>
             {
                 // Various new node shapes with styling and click actions
-                new FlowNode("start", "Start Process", ShapeType.Circle, "startNode", "startFlow()"),
-                new FlowNode("input", "Input Data", ShapeType.Parallelogram, "inputClass"),
-                new FlowNode("validate", "Validate?", ShapeType.Rhombus),
-                new FlowNode("process", "Process", ShapeType.Subroutine, null, "processData()"),
-                new FlowNode("store", "Store Result", ShapeType.Cylinder),
-                new FlowNode("finish", "Complete", ShapeType.Stadium)
+                new FlowNode("start", "Start Process", FlowNodeShapeType.Circle, "startNode", "startFlow()"),
+                new FlowNode("input", "Input Data", FlowNodeShapeType.Parallelogram, "inputClass"),
+                new FlowNode("validate", "Validate?", FlowNodeShapeType.Rhombus),
+                new FlowNode("process", "Process", FlowNodeShapeType.Subroutine, null, "processData()"),
+                new FlowNode("store", "Store Result", FlowNodeShapeType.Cylinder),
+                new FlowNode("finish", "Complete", FlowNodeShapeType.Stadium)
             };
 
             List<FlowLink> links = new List<FlowLink>
             {
                 // Various new link types and arrow types
-                new FlowLink("start", "input", "begin", null, false, LinkType.Normal),
-                new FlowLink("input", "validate", "check", null, false, LinkType.Dotted),
-                new FlowLink("validate", "process", "valid", "stroke:green,stroke-width:3px", false, LinkType.Thick),
-                new FlowLink("process", "store", "", null, false, LinkType.Normal, ArrowType.Circle),
-                new FlowLink("store", "finish", "", null, false, LinkType.Invisible),
-                new FlowLink("validate", "input", "invalid", null, true, LinkType.Normal, ArrowType.Cross)
+                new FlowLink("start", "input", "begin", null, false, FlowLinkType.Normal),
+                new FlowLink("input", "validate", "check", null, false, FlowLinkType.Dotted),
+                new FlowLink("validate", "process", "valid", "stroke:green,stroke-width:3px", false, FlowLinkType.Thick),
+                new FlowLink("process", "store", "", null, false, FlowLinkType.Normal, FlowLinkArrowType.Circle),
+                new FlowLink("store", "finish", "", null, false, FlowLinkType.Invisible),
+                new FlowLink("validate", "input", "invalid", null, true, FlowLinkType.Normal, FlowLinkArrowType.Cross)
             };
 
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);

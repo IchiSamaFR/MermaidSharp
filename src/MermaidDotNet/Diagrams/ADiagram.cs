@@ -19,13 +19,14 @@ namespace MermaidDotNet.Diagrams
     {
         public abstract string Name { get; }
         public string Title { get; set; }
-        public List<Node> Nodes { get; set; } = new List<Node>();
-        public List<Link> Links { get; set; } = new List<Link>();
+        public List<ANode> Nodes { get; set; } = new List<ANode>();
+        public List<ALink> Links { get; set; } = new List<ALink>();
 
-        public ADiagram()
-        {
-        }
-        public ADiagram(string title)
+        /// <summary>
+        /// Initializes a new instance of the ADiagram class with the specified title.
+        /// </summary>
+        /// <param name="title">The title to assign to the diagram. If not specified, the title is set to an empty string.</param>
+        public ADiagram(string title = "")
         {
             Title = title;
         }

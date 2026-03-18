@@ -1,42 +1,43 @@
 ﻿using MermaidDotNet.Enums;
 using MermaidDotNet.Extensions;
-using System.Xml.Linq;
 
 namespace MermaidDotNet.Models
 {
-    public class EntityRelationLink : Link
+    /// <summary>
+    /// Represents a directional link between two entities with specified relation types at the source and destination
+    /// nodes, and an optional label.
+    /// </summary>
+    /// <remarks>Use this class to model relationships between entities where the type of relation at each end
+    /// may differ, such as in entity-relationship diagrams. The label can be used to annotate the link with additional
+    /// information.</remarks>
+    public class EntityRelationLink : ALink
     {
         public string Label { get; }
-        public RelationType SourceRelation { get; }
-        public RelationType DestinationRelation { get; }
+        public RelationLinkType SourceRelation { get; }
+        public RelationLinkType DestinationRelation { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the EntityRelationLink class, representing a relationship between two nodes
+        /// with specified relation types and an optional label.
+        /// </summary>
+        /// <param name="sourceNode">The identifier of the source node in the relationship.</param>
+        /// <param name="destinationNode">The identifier of the destination node in the relationship.</param>
+        /// <param name="sourceRelation">The relation type from the source node.</param>
+        /// <param name="destinationRelation">The relation type from the destination node.</param>
+        /// <param name="label">An optional label describing the relationship. The default is an empty string.</param>
         public EntityRelationLink(
             string sourceNode,
             string destinationNode,
-            string label,
-            RelationType sourceRelation,
-            RelationType destinationRelation)
+            RelationLinkType sourceRelation,
+            RelationLinkType destinationRelation,
+            string label = "")
             : base(
                 sourceNode,
                 destinationNode)
         {
-            Label = label;
             SourceRelation = sourceRelation;
             DestinationRelation = destinationRelation;
-        }
-
-        public EntityRelationLink(
-            string sourceNode,
-            string destinationNode,
-            RelationType sourceRelation,
-            RelationType destinationRelation)
-            : this(
-                sourceNode,
-                destinationNode,
-                null,
-                sourceRelation,
-                destinationRelation)
-        {
+            Label = label;
         }
 
         public override string ToString()

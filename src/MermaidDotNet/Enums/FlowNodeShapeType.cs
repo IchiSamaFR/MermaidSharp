@@ -1,9 +1,14 @@
 ﻿using MermaidDotNet.Attributes;
-using System.ComponentModel;
 
 namespace MermaidDotNet.Enums
 {
-    public enum ShapeType
+    /// <summary>
+    /// Specifies the available node shapes for flowchart elements in Mermaid diagrams.
+    /// </summary>
+    /// <remarks>Use this enumeration to select the visual representation of nodes when generating Mermaid
+    /// flowcharts. Each value corresponds to a specific Mermaid syntax for node shapes, such as rectangles, circles, or
+    /// hexagons. The selected shape determines how the node appears in the rendered diagram.</remarks>
+    public enum FlowNodeShapeType
     {
         [MermaidEnum("[", "]")]
         Rectangle,

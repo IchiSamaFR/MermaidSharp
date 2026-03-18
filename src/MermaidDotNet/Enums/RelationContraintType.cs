@@ -1,11 +1,17 @@
 ﻿using MermaidDotNet.Attributes;
 using System;
-using System.ComponentModel;
 
 namespace MermaidDotNet.Enums
 {
+    /// <summary>
+    /// Specifies the type of key constraint applied to a database column, such as primary key, foreign key, or unique
+    /// key. Supports bitwise combination of its member values.
+    /// </summary>
+    /// <remarks>Use this enumeration to indicate one or more key constraints for a column in a database
+    /// schema. Multiple values can be combined using a bitwise OR operation to represent columns that participate in
+    /// multiple key constraints.</remarks>
     [Flags]
-    public enum ColumnKeyType
+    public enum RelationContraintType
     {
         None = 0,
 

@@ -104,8 +104,8 @@ flowchart LR";
             string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
-                new FlowNode("node1", "This is node 1", ShapeType.Rounded),
-                new FlowNode("node2", "This is node 2", ShapeType.Rounded)
+                new FlowNode("node1", "This is node 1", FlowNodeShapeType.Rounded),
+                new FlowNode("node2", "This is node 2", FlowNodeShapeType.Rounded)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -505,13 +505,13 @@ flowchart LR";
             string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
-                new FlowNode("node1", "This is node 1", ShapeType.Rectangle),
-                new FlowNode("node2", "This is node 2", ShapeType.Rounded),
-                new FlowNode("node3", "This is node 3", ShapeType.Stadium),
-                new FlowNode("node4", "This is node 4", ShapeType.Cylinder),
-                new FlowNode("node5", "This is node 5", ShapeType.Circle),
-                new FlowNode("node6", "This is node 6", ShapeType.Rhombus),
-                new FlowNode("node7", "This is node 7", ShapeType.Hexagon)
+                new FlowNode("node1", "This is node 1", FlowNodeShapeType.Rectangle),
+                new FlowNode("node2", "This is node 2", FlowNodeShapeType.Rounded),
+                new FlowNode("node3", "This is node 3", FlowNodeShapeType.Stadium),
+                new FlowNode("node4", "This is node 4", FlowNodeShapeType.Cylinder),
+                new FlowNode("node5", "This is node 5", FlowNodeShapeType.Circle),
+                new FlowNode("node6", "This is node 6", FlowNodeShapeType.Rhombus),
+                new FlowNode("node7", "This is node 7", FlowNodeShapeType.Hexagon)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
