@@ -1,8 +1,4 @@
-﻿using MermaidDotNet.Models;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace MermaidDotNet.Diagrams
+﻿namespace MermaidDotNet.Diagrams
 {
     /// <summary>
     /// Represents an entity-relationship diagram that models entities and their relationships using Mermaid syntax.
@@ -14,10 +10,11 @@ namespace MermaidDotNet.Diagrams
     {
         public override string Name => "erDiagram";
 
-        public EntityRelationshipDiagram() : base()
-        {
-        }
-        public EntityRelationshipDiagram(string title) : base(title)
+        /// <summary>
+        /// Initializes a new instance of the EntityRelationshipDiagram class with the specified title.
+        /// </summary>
+        /// <param name="title">The title of the entity-relationship diagram. If not specified, the diagram will have an empty title.</param>
+        public EntityRelationshipDiagram(string title = "") : base(title)
         {
         }
     }

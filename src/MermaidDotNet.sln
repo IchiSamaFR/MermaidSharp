@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MermaidDotNet.EntityFramewo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MermaidDotNet.EntityFramework.Tests", "MermaidDotNet.EntityFramework.Tests\MermaidDotNet.EntityFramework.Tests.csproj", "{1DB3D834-AFDB-4772-9E9C-AC6B4BC6ABAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{59CCB380-EAA5-4E5B-A12A-DF064BC16BEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,8 +68,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{ADA8DF70-1BFD-45C6-8F28-061899BD8457} = {59CCB380-EAA5-4E5B-A12A-DF064BC16BEE}
 		{212AD240-9DA5-4C52-9E04-6AB24B660835} = {FC6DF059-0710-4593-B62D-464CE17355CB}
 		{60367021-B81C-406B-B8A3-2353204C2E0E} = {FC6DF059-0710-4593-B62D-464CE17355CB}
+		{A6C0175F-42CC-E00B-BD41-D0A7BB6FEED8} = {59CCB380-EAA5-4E5B-A12A-DF064BC16BEE}
+		{1DB3D834-AFDB-4772-9E9C-AC6B4BC6ABAC} = {59CCB380-EAA5-4E5B-A12A-DF064BC16BEE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6ECA903-DCDD-4E3C-8E8D-EC5CBACC2C7D}

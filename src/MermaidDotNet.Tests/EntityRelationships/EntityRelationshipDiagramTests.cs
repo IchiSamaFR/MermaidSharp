@@ -15,50 +15,50 @@ namespace MermaidDotNet.Tests.EntityRelationships
             // Arrange
             var nodes = new List<EntityRelationNode>
             {
-                new EntityRelationNode("User", new List<EntityRelationColumn>
+                new EntityRelationNode("User", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("Id", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("Id", "int", RelationContraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string"),
                     new EntityRelationColumn("Email", "string")
                 }),
-                new EntityRelationNode("Order", new List<EntityRelationColumn>
+                new EntityRelationNode("Order", columns:  new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("OrderId", "int", ColumnKeyType.PrimaryKey),
-                    new EntityRelationColumn("UserId", "int", ColumnKeyType.ForeignKey),
+                    new EntityRelationColumn("OrderId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("UserId", "int", RelationContraintType.ForeignKey),
                     new EntityRelationColumn("OrderDate", "datetime")
                 }),
-                new EntityRelationNode("Product", new List<EntityRelationColumn>
+                new EntityRelationNode("Product", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("ProductId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("ProductId", "int", RelationContraintType.PrimaryKey),
                     new EntityRelationColumn("Title", "string"),
                     new EntityRelationColumn("Price", "decimal")
                 }),
-                new EntityRelationNode("OrderItem", new List<EntityRelationColumn>
+                new EntityRelationNode("OrderItem", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("OrderItemId", "int", ColumnKeyType.PrimaryKey),
-                    new EntityRelationColumn("OrderId", "int", ColumnKeyType.ForeignKey),
-                    new EntityRelationColumn("ProductId", "int", ColumnKeyType.ForeignKey),
+                    new EntityRelationColumn("OrderItemId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("OrderId", "int", RelationContraintType.ForeignKey),
+                    new EntityRelationColumn("ProductId", "int", RelationContraintType.ForeignKey),
                     new EntityRelationColumn("Quantity", "int")
                 }),
-                new EntityRelationNode("Category", new List<EntityRelationColumn>
+                new EntityRelationNode("Category", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("CategoryId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("CategoryId", "int", RelationContraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string")
                 }),
-                new EntityRelationNode("ProductCategory", new List<EntityRelationColumn>
+                new EntityRelationNode("ProductCategory", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("ProductId", "int", ColumnKeyType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("CategoryId", "int", ColumnKeyType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("ProductId", "int", RelationContraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("CategoryId", "int", RelationContraintType.PrimaryKeyForeignKey)
                 })
             };
 
             var links = new List<EntityRelationLink>
             {
-                new EntityRelationLink("User", "Order", "UserId (Cascade)", RelationType.OneOrMore, RelationType.ZeroOrMore),
-                new EntityRelationLink("Order", "OrderItem", "OrderId", RelationType.OneOrMore, RelationType.ZeroOrMore),
-                new EntityRelationLink("Product", "OrderItem", "ProductId", RelationType.OneOrMore, RelationType.ZeroOrMore),
-                new EntityRelationLink("Product", "ProductCategory", "ProductId", RelationType.OneOrMore, RelationType.ZeroOrMore),
-                new EntityRelationLink("Category", "ProductCategory", "CategoryId", RelationType.OneOrMore, RelationType.ZeroOrMore)
+                new EntityRelationLink("User", "Order", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "UserId (Cascade)"),
+                new EntityRelationLink("Order", "OrderItem", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "OrderId"),
+                new EntityRelationLink("Product", "OrderItem", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "ProductId"),
+                new EntityRelationLink("Product", "ProductCategory", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "ProductId"),
+                new EntityRelationLink("Category", "ProductCategory", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "CategoryId")
             };
             var diagram = new EntityRelationshipDiagram();
             diagram.Nodes.AddRange(nodes);
@@ -128,7 +128,7 @@ namespace MermaidDotNet.Tests.EntityRelationships
             // Arrange
             var nodes = new List<EntityRelationNode>
             {
-                new EntityRelationNode("Customer", new List<EntityRelationColumn>
+                new EntityRelationNode("Customer", columns: new List<EntityRelationColumn>
                 {
                     new EntityRelationColumn("CustomerId", "int"),
                     new EntityRelationColumn("FullName", "string")
@@ -158,15 +158,15 @@ namespace MermaidDotNet.Tests.EntityRelationships
             // Arrange
             var nodes = new List<EntityRelationNode>
             {
-                new EntityRelationNode("Person", new List<EntityRelationColumn>
+                new EntityRelationNode("Person", columns : new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("PersonId", "int", ColumnKeyType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("ManagerId", "int", ColumnKeyType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("PersonId", "int", RelationContraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("ManagerId", "int", RelationContraintType.PrimaryKeyForeignKey)
                 })
             };
             var links = new List<EntityRelationLink>
             {
-                new EntityRelationLink("Person", "Person", "ManagerId", RelationType.ZeroOrOne, RelationType.ZeroOrMore)
+                new EntityRelationLink("Person", "Person", RelationLinkType.ZeroOrOne, RelationLinkType.ZeroOrMore, "ManagerId")
             };
             var diagram = new EntityRelationshipDiagram();
             diagram.Nodes.AddRange(nodes);
@@ -194,12 +194,12 @@ namespace MermaidDotNet.Tests.EntityRelationships
             // Arrange
             var nodes = new List<EntityRelationNode>
             {
-                new EntityRelationNode("Author", new List<EntityRelationColumn>
+                new EntityRelationNode("Author", columns: new List<EntityRelationColumn>
                 {
                     new EntityRelationColumn("AuthorId", "int"),
                     new EntityRelationColumn("Name", "string")
                 }),
-                new EntityRelationNode("Book", new List<EntityRelationColumn>
+                new EntityRelationNode("Book", columns: new List<EntityRelationColumn>
                 {
                     new EntityRelationColumn("BookId", "int"),
                     new EntityRelationColumn("Title", "string"),
@@ -209,8 +209,8 @@ namespace MermaidDotNet.Tests.EntityRelationships
             };
             var links = new List<EntityRelationLink>
             {
-                new EntityRelationLink("Author", "Book", "AuthorId", RelationType.OneOrMore, RelationType.ZeroOrMore),
-                new EntityRelationLink("Author", "Book", "EditorId", RelationType.OneOrMore, RelationType.ZeroOrMore)
+                new EntityRelationLink("Author", "Book", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "AuthorId"),
+                new EntityRelationLink("Author", "Book", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "EditorId")
             };
             var diagram = new EntityRelationshipDiagram();
             diagram.Nodes.AddRange(nodes);
@@ -245,58 +245,58 @@ namespace MermaidDotNet.Tests.EntityRelationships
             // Arrange
             var nodes = new List<EntityRelationNode>
             {
-                new EntityRelationNode("Person", new List<EntityRelationColumn>
+                new EntityRelationNode("Person", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("PersonId", "int", ColumnKeyType.PrimaryKey),
-                    new EntityRelationColumn("SpouseId", "int", ColumnKeyType.ForeignKey)
+                    new EntityRelationColumn("PersonId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("SpouseId", "int", RelationContraintType.ForeignKey)
                 }),
-                new EntityRelationNode("Company", new List<EntityRelationColumn>
+                new EntityRelationNode("Company", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("CompanyId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("CompanyId", "int", RelationContraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string")
                 }),
-                new EntityRelationNode("Employee", new List<EntityRelationColumn>
+                new EntityRelationNode("Employee", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("EmployeeId", "int", ColumnKeyType.PrimaryKey),
-                    new EntityRelationColumn("PersonId", "int", ColumnKeyType.ForeignKey),
-                    new EntityRelationColumn("CompanyId", "int", ColumnKeyType.ForeignKey)
+                    new EntityRelationColumn("EmployeeId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("PersonId", "int", RelationContraintType.ForeignKey),
+                    new EntityRelationColumn("CompanyId", "int", RelationContraintType.ForeignKey)
                 }),
-                new EntityRelationNode("Project", new List<EntityRelationColumn>
+                new EntityRelationNode("Project", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("ProjectId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("ProjectId", "int", RelationContraintType.PrimaryKey),
                     new EntityRelationColumn("Title", "string")
                 }),
-                new EntityRelationNode("EmployeeProject", new List<EntityRelationColumn>
+                new EntityRelationNode("EmployeeProject", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("EmployeeId", "int", ColumnKeyType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("ProjectId", "int", ColumnKeyType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("EmployeeId", "int", RelationContraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("ProjectId", "int", RelationContraintType.PrimaryKeyForeignKey)
                 }),
-                new EntityRelationNode("Department", new List<EntityRelationColumn>
+                new EntityRelationNode("Department", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("DepartmentId", "int", ColumnKeyType.PrimaryKey),
+                    new EntityRelationColumn("DepartmentId", "int", RelationContraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string")
                 }),
-                new EntityRelationNode("DepartmentManager", new List<EntityRelationColumn>
+                new EntityRelationNode("DepartmentManager", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("DepartmentId", "int", ColumnKeyType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("PersonId", "int", ColumnKeyType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("DepartmentId", "int", RelationContraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("PersonId", "int", RelationContraintType.PrimaryKeyForeignKey)
                 })
             };
 
             var links = new List<EntityRelationLink>
             {
 		        // One-to-one (circular)
-		        new EntityRelationLink("Person", "Person", "SpouseId", RelationType.ZeroOrOne, RelationType.ZeroOrOne),
+		        new EntityRelationLink("Person", "Person", RelationLinkType.ZeroOrOne, RelationLinkType.ZeroOrOne, "SpouseId"),
 		        // One-to-many
-		        new EntityRelationLink("Company", "Employee", "CompanyId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+		        new EntityRelationLink("Company", "Employee", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "CompanyId"),
 		        // Many-to-many
-		        new EntityRelationLink("Employee", "EmployeeProject", "EmployeeId", RelationType.OneOrMore, RelationType.ZeroOrMore),
-                new EntityRelationLink("Project", "EmployeeProject", "ProjectId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+		        new EntityRelationLink("Employee", "EmployeeProject", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "EmployeeId"),
+                new EntityRelationLink("Project", "EmployeeProject", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "ProjectId"),
 		        // Multiple links between same entities
-		        new EntityRelationLink("Department", "DepartmentManager", "DepartmentId", RelationType.OneOrMore, RelationType.ZeroOrMore),
-                new EntityRelationLink("Person", "DepartmentManager", "PersonId", RelationType.OneOrMore, RelationType.ZeroOrMore),
+		        new EntityRelationLink("Department", "DepartmentManager", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "DepartmentId"),
+                new EntityRelationLink("Person", "DepartmentManager", RelationLinkType.OneOrMore, RelationLinkType.ZeroOrMore, "PersonId"),
 		        // No foreign key relation
-		        new EntityRelationLink("Employee", "Department", "DepartmentId", RelationType.ZeroOrMore, RelationType.ZeroOrMore)
+		        new EntityRelationLink("Employee", "Department", RelationLinkType.ZeroOrMore, RelationLinkType.ZeroOrMore, "DepartmentId")
             };
 
             var expected = @"erDiagram

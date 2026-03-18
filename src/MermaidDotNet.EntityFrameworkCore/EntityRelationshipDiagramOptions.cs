@@ -1,9 +1,4 @@
 ﻿using MermaidDotNet.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MermaidDotNet.EntityFrameworkCore
 {
@@ -15,7 +10,7 @@ namespace MermaidDotNet.EntityFrameworkCore
         /// <remarks>Use this property to specify which column key types should be included when
         /// generating flowcharts. Setting this property to a value other than None will restrict the output to columns
         /// matching the selected key types.</remarks>
-        public ColumnKeyType FilterColumnByKeyTypes { get; set; } = ColumnKeyType.None;
+        public RelationContraintType FilterColumnByKeyTypes { get; set; } = RelationContraintType.None;
 
         /// <summary>
         /// Gets or sets a value indicating whether column information is included in the output.
@@ -44,7 +39,7 @@ namespace MermaidDotNet.EntityFrameworkCore
         /// <remarks>Set this property to <see langword="true"/> to include links in the generated output. This can be useful
         /// for visualizing relationships between entities in the diagram.</remarks>
         public bool IncludeLinks { get; set; } = true;
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether link labels are included in the generated flowchart output.
         /// </summary>

@@ -1,5 +1,4 @@
-﻿using MermaidDotNet.Constants;
-using MermaidDotNet.Extensions;
+﻿using MermaidDotNet.Extensions;
 using MermaidDotNet.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace MermaidDotNet.Diagrams
     {
         public override string Name => "flowchart";
         public string Direction { get; set; }
-        public List<FlowSubGraph> SubGraphs { get; set; } = new List<FlowSubGraph>();
+        public List<FlowSubGraph> SubGraphs { get; } = new List<FlowSubGraph>();
 
         /// <summary>
         /// Initializes a new instance of the FlowchartDiagram class with the specified title, direction, nodes, links,

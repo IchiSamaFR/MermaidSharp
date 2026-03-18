@@ -22,8 +22,8 @@ namespace MermaidDotNet.MVCWeb.Controllers
             List<FlowNode> nodes = new()
             {
                 new("node1", "This is node 1"),
-                new("node2", "This is node 2", ShapeType.Hexagon),
-                new("node3", "This is node 3", ShapeType.Rounded)
+                new("node2", "This is node 2", FlowNodeShapeType.Hexagon),
+                new("node3", "This is node 3", FlowNodeShapeType.Rounded)
             };
             List<FlowLink> links = new()
             {

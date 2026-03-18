@@ -5,18 +5,29 @@ using System.Linq;
 
 namespace MermaidDotNet.Models
 {
-    public class EntityRelationNode : Node
+    /// <summary>
+    /// Represents an entity node for use in entity-relationship diagrams, containing a collection of columns and
+    /// associated metadata.
+    /// </summary>
+    /// <remarks>Use this class to model entities with columns when generating entity-relationship diagrams
+    /// using Mermaid syntax. The columns define the structure and attributes of the entity. Inherits from Node to
+    /// provide common node functionality.</remarks>
+    public class EntityRelationNode : ANode
     {
         public List<EntityRelationColumn> Columns { get; set; }
-        public EntityRelationNode(string name, List<EntityRelationColumn> columns, string cssClass = "")
-            : this(name, "", columns, cssClass)
-        {
 
-        }
-        public EntityRelationNode(string name, string text, List<EntityRelationColumn> columns, string cssClass = "")
+        /// <summary>
+        /// Initializes a new instance of the EntityRelationNode class with the specified name, display text, columns,
+        /// and optional CSS class.
+        /// </summary>
+        /// <param name="name">The unique identifier for the node.</param>
+        /// <param name="text">The display text associated with the node. This parameter is optional.</param>
+        /// <param name="columns">A list of columns that define the structure of the entity relation. If null, an empty list is used.</param>
+        /// <param name="cssClass">An optional CSS class to apply custom styling to the node.</param>
+        public EntityRelationNode(string name, string text = "", List<EntityRelationColumn> columns = null, string cssClass = "")
             : base(name, text, cssClass)
         {
-            Columns = columns;
+            Columns = columns ?? new List<EntityRelationColumn>();
         }
 
 

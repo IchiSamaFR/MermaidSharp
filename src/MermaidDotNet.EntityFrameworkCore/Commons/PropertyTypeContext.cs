@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
-using MermaidDotNet.EntityFrameworkCore.Enums;
 
 
 
@@ -20,73 +18,73 @@ using MermaidDotNet.EntityFrameworkCore.Extensions;
 
 namespace MermaidDotNet.EntityFrameworkCore.Contexts
 {
-	internal class PropertyTypeContext
-	{
-		public Type ClrType { get; }
-		public string Name { get; }
-		public bool IsNullable { get; }
-		public bool IsPrimaryKey { get; }
-		public bool IsForeignKey { get; }
-		public bool IsRequired { get; }
-		public bool IsUnique { get; }
-		public string Description { get; }
+    internal class PropertyTypeContext
+    {
+        public Type ClrType { get; }
+        public string Name { get; }
+        public bool IsNullable { get; }
+        public bool IsPrimaryKey { get; }
+        public bool IsForeignKey { get; }
+        public bool IsRequired { get; }
+        public bool IsUnique { get; }
+        public string Description { get; }
 
-		public Type ForeignParentType { get; set; }
-		public string ForeignKeyName { get; set; }
-		public Enums.DeleteBehavior DeleteBehavior { get; set; }
+        public Type ForeignParentType { get; set; }
+        public string ForeignKeyName { get; set; }
+        public Enums.DeleteBehavior DeleteBehavior { get; set; }
 
 #if NET48
-		public PropertyTypeContext(EdmProperty property, Type declaringType, bool resolveRelations = true)
-		{
-			Name = property.Name;
+        public PropertyTypeContext(EdmProperty property, Type declaringType, bool resolveRelations = true)
+        {
+            Name = property.Name;
 
-			var primitiveType = property.TypeUsage.EdmType as PrimitiveType;
-			ClrType = primitiveType?.ClrEquivalentType ?? typeof(string);
+            var primitiveType = property.TypeUsage.EdmType as PrimitiveType;
+            ClrType = primitiveType?.ClrEquivalentType ?? typeof(string);
 
-			IsNullable = property.Nullable;
+            IsNullable = property.Nullable;
 
-			var declaringEntityType = property.DeclaringType as EntityType;
+            var declaringEntityType = property.DeclaringType as EntityType;
 
-			IsPrimaryKey = declaringEntityType?.KeyProperties
-				.Any(p => p.Name == property.Name) ?? false;
+            IsPrimaryKey = declaringEntityType?.KeyProperties
+                .Any(p => p.Name == property.Name) ?? false;
 
-			IsForeignKey = declaringEntityType?.NavigationProperties
-				.Any(n => n.GetDependentProperties().Any(p => p.Name == property.Name)) ?? false;
+            IsForeignKey = declaringEntityType?.NavigationProperties
+                .Any(n => n.GetDependentProperties().Any(p => p.Name == property.Name)) ?? false;
 
-			var propInfo = declaringType?.GetProperty(property.Name);
-			if (propInfo != null)
-			{
-				var indexAttrs = propInfo.GetCustomAttributes(typeof(IndexAttribute), true);
-				IsUnique = indexAttrs.Any(attr => ((IndexAttribute)attr).IsUnique);
+            var propInfo = declaringType?.GetProperty(property.Name);
+            if (propInfo != null)
+            {
+                var indexAttrs = propInfo.GetCustomAttributes(typeof(IndexAttribute), true);
+                IsUnique = indexAttrs.Any(attr => ((IndexAttribute)attr).IsUnique);
 
-				var descriptionAttribute = propInfo.GetCustomAttribute<DescriptionAttribute>();
-				Description = descriptionAttribute?.Description ?? string.Empty;
-			}
+                var descriptionAttribute = propInfo.GetCustomAttribute<DescriptionAttribute>();
+                Description = descriptionAttribute?.Description ?? string.Empty;
+            }
 
-			var navigation = declaringEntityType?.NavigationProperties
-				.FirstOrDefault(n => n.GetDependentProperties().Any(p => p.Name == property.Name));
-			if (navigation != null)
-			{
-				IsRequired = !property.Nullable;
-				var principalEntityType = navigation.TypeUsage.EdmType as EntityType;
-				// Recherche dans tous les assemblies chargés
-				ForeignParentType = AppDomain.CurrentDomain.GetAssemblies()
-					.SelectMany(a => a.GetTypes())
-					.FirstOrDefault(t => t.FullName == principalEntityType.FullName);
+            var navigation = declaringEntityType?.NavigationProperties
+                .FirstOrDefault(n => n.GetDependentProperties().Any(p => p.Name == property.Name));
+            if (navigation != null)
+            {
+                IsRequired = !property.Nullable;
+                var principalEntityType = navigation.TypeUsage.EdmType as EntityType;
+                // Recherche dans tous les assemblies chargés
+                ForeignParentType = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(a => a.GetTypes())
+                    .FirstOrDefault(t => t.FullName == principalEntityType.FullName);
 
-				// Fallback si FullName ne correspond pas
-				if (ForeignParentType == null)
-				{
-					ForeignParentType = AppDomain.CurrentDomain.GetAssemblies()
-						.SelectMany(a => a.GetTypes())
-						.FirstOrDefault(t => t.Name == principalEntityType.Name);
-				}
+                // Fallback si FullName ne correspond pas
+                if (ForeignParentType == null)
+                {
+                    ForeignParentType = AppDomain.CurrentDomain.GetAssemblies()
+                        .SelectMany(a => a.GetTypes())
+                        .FirstOrDefault(t => t.Name == principalEntityType.Name);
+                }
 
-				ForeignKeyName = property.Name;
-				DeleteBehavior = Enums.DeleteBehavior.Cascade; // EF6 ne gère pas explicitement le delete behavior
-			}
+                ForeignKeyName = property.Name;
+                DeleteBehavior = Enums.DeleteBehavior.Cascade; // EF6 ne gère pas explicitement le delete behavior
+            }
 
-		}
+        }
 #else
         public PropertyTypeContext(IProperty property)
         {
@@ -108,6 +106,6 @@ namespace MermaidDotNet.EntityFrameworkCore.Contexts
             }
         }
 #endif
-	}
+    }
 
 }

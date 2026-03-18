@@ -3,7 +3,6 @@ using MermaidDotNet.EntityFrameworkCore.Contexts;
 using MermaidDotNet.EntityFrameworkCore.Models;
 using MermaidDotNet.Enums;
 using MermaidDotNet.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -82,15 +81,15 @@ namespace MermaidDotNet.EntityFrameworkCore
         }
 #endif
 
-        private static RelationType GetRelationType(PropertyTypeContext foreignProperty)
+        private static RelationLinkType GetRelationType(PropertyTypeContext foreignProperty)
         {
             if (foreignProperty.IsUnique)
             {
-                return foreignProperty.IsRequired ? RelationType.ExactlyOne : RelationType.ZeroOrOne;
+                return foreignProperty.IsRequired ? RelationLinkType.ExactlyOne : RelationLinkType.ZeroOrOne;
             }
             else
             {
-                return foreignProperty.IsRequired ? RelationType.OneOrMore : RelationType.ZeroOrMore;
+                return foreignProperty.IsRequired ? RelationLinkType.OneOrMore : RelationLinkType.ZeroOrMore;
             }
         }
 
@@ -123,7 +122,7 @@ namespace MermaidDotNet.EntityFrameworkCore
                         Target = targetTable,
                         Label = foreignKey.Name,
                         SourceType = GetRelationType(foreignKey),
-                        TargetType = RelationType.ExactlyOne,
+                        TargetType = RelationLinkType.ExactlyOne,
                         DeleteBehavior = (Enums.DeleteBehavior)foreignKey.DeleteBehavior
                     });
                 }
@@ -142,9 +141,9 @@ namespace MermaidDotNet.EntityFrameworkCore
 
             foreach (var property in entityType.Properties)
             {
-                var referenceType = property.IsPrimaryKey ? ColumnKeyType.PrimaryKey : ColumnKeyType.None;
-                referenceType |= property.IsForeignKey ? ColumnKeyType.ForeignKey : ColumnKeyType.None;
-                referenceType |= property.IsUnique ? ColumnKeyType.UniqueKey : ColumnKeyType.None;
+                var referenceType = property.IsPrimaryKey ? RelationContraintType.PrimaryKey : RelationContraintType.None;
+                referenceType |= property.IsForeignKey ? RelationContraintType.ForeignKey : RelationContraintType.None;
+                referenceType |= property.IsUnique ? RelationContraintType.UniqueKey : RelationContraintType.None;
 
                 table.Columns.Add(new DiagramColumn
                 {
@@ -164,7 +163,7 @@ namespace MermaidDotNet.EntityFrameworkCore
                 foreach (var property in owned.Properties
                     .Where(p => !p.IsForeignKey && !p.IsPrimaryKey))
                 {
-                    var referenceType = property.IsUnique ? ColumnKeyType.UniqueKey : ColumnKeyType.None;
+                    var referenceType = property.IsUnique ? RelationContraintType.UniqueKey : RelationContraintType.None;
                     table.Columns.Add(new DiagramColumn
                     {
                         Property = property,
@@ -183,7 +182,7 @@ namespace MermaidDotNet.EntityFrameworkCore
         {
             var nodes = BuildEntityRelationNodes(schema, options);
             var links = BuildEntityRelationLinks(schema, options);
-            
+
             var diagram = new EntityRelationshipDiagram();
             diagram.Nodes.AddRange(nodes);
             diagram.Links.AddRange(links);
@@ -197,7 +196,7 @@ namespace MermaidDotNet.EntityFrameworkCore
             {
                 nodes.Add(new EntityRelationNode(
                     table.Name,
-                    BuildEntityRelationColumns(table, options)
+                    columns: BuildEntityRelationColumns(table, options)
                 ));
             }
             return nodes;
@@ -212,8 +211,8 @@ namespace MermaidDotNet.EntityFrameworkCore
                 return columns;
             }
 
-            var filteredColumns = options.FilterColumnByKeyTypes != ColumnKeyType.None
-                ? table.Columns.Where(c => c.ColumnKeyType != ColumnKeyType.None && options.FilterColumnByKeyTypes.HasFlag(c.ColumnKeyType))
+            var filteredColumns = options.FilterColumnByKeyTypes != RelationContraintType.None
+                ? table.Columns.Where(c => c.ColumnKeyType != RelationContraintType.None && options.FilterColumnByKeyTypes.HasFlag(c.ColumnKeyType))
                 : table.Columns;
 
             foreach (var column in filteredColumns)
@@ -221,7 +220,7 @@ namespace MermaidDotNet.EntityFrameworkCore
                 var erColumn = new EntityRelationColumn(
                     column.Name,
                     column.Type.Name,
-                    options.IncludeColumnKeyTypes ? column.ColumnKeyType : ColumnKeyType.None,
+                    options.IncludeColumnKeyTypes ? column.ColumnKeyType : RelationContraintType.None,
                     options.IncludeColumnComments ? column.Property.Description : string.Empty
                 );
                 columns.Add(erColumn);
@@ -256,9 +255,9 @@ namespace MermaidDotNet.EntityFrameworkCore
                 links.Add(new EntityRelationLink(
                     link.Source.Name,
                     link.Target.Name,
-                    relationLabel,
                     link.SourceType,
-                    link.TargetType
+                    link.TargetType,
+                    relationLabel
                 ));
             }
             return links;

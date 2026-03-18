@@ -16,7 +16,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
-                new FlowNode("node1", "Styled Node", ShapeType.Rectangle, "myClass")
+                new FlowNode("node1", "Styled Node", FlowNodeShapeType.Rectangle, "myClass")
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -41,7 +41,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
-                new FlowNode("node1", "Clickable Node", ShapeType.Rectangle, null, "https://example.com")
+                new FlowNode("node1", "Clickable Node", FlowNodeShapeType.Rectangle, "", "https://example.com")
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -66,7 +66,7 @@ namespace MermaidDotNet.Tests.Flowcharts
             string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
-                new FlowNode("node1", "Styled Clickable Node", ShapeType.Rectangle, "highlightClass", "alert('Hello!')")
+                new FlowNode("node1", "Styled Clickable Node", FlowNodeShapeType.Rectangle, "highlightClass", "alert('Hello!')")
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -92,17 +92,17 @@ namespace MermaidDotNet.Tests.Flowcharts
             string direction = "TD";
             List<FlowNode> nodes = new List<FlowNode>()
             {
-                new FlowNode("start", "Start", ShapeType.Circle, "startClass", "console.log('Start clicked')"),
-                new FlowNode("process", "Process Data", ShapeType.Rectangle),
-                new FlowNode("decision", "Is Valid?", ShapeType.Rhombus, "decisionClass"),
-                new FlowNode("end", "End", ShapeType.Circle)
+                new FlowNode("start", "Start", FlowNodeShapeType.Circle, "startClass", "console.log('Start clicked')"),
+                new FlowNode("process", "Process Data", FlowNodeShapeType.Rectangle),
+                new FlowNode("decision", "Is Valid?", FlowNodeShapeType.Rhombus, "decisionClass"),
+                new FlowNode("end", "End", FlowNodeShapeType.Circle)
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("start", "process", "", null, false, LinkType.Normal),
-                new FlowLink("process", "decision", "validate", null, false, LinkType.Dotted),
-                new FlowLink("decision", "end", "yes", "stroke:green,stroke-width:3px", false, LinkType.Thick),
-                new FlowLink("decision", "process", "", null, false, LinkType.Normal, ArrowType.Circle)
+                new FlowLink("start", "process", linkType: FlowLinkType.Normal),
+                new FlowLink("process", "decision", "validate", linkType: FlowLinkType.Dotted),
+                new FlowLink("decision", "end", "yes", "stroke:green,stroke-width:3px", linkType: FlowLinkType.Thick),
+                new FlowLink("decision", "process", linkType: FlowLinkType.Normal, arrowType: FlowLinkArrowType.Circle)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
