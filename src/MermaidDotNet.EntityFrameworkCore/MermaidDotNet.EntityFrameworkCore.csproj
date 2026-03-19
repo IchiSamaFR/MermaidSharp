@@ -8,14 +8,28 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/ichisamafr/MermaidDotNet</PackageProjectUrl>
+		<PackageDescription>A project to generate Mermaid Entity Relationship diagrams with .NET and Entity Framework Core</PackageDescription>
+		<PackageTags>mermaid;dotnet;.NET;c#</PackageTags>
+		<IncludeSymbols>false</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	</PropertyGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net48' ">
-		<PackageReference Include="EntityFramework" Version="6.5.1" />
-		<PackageReference Include="System.Data.SQLite" Version="2.0.2" />
-		<PackageReference Include="System.Data.SQLite.EF6" Version="2.0.2" />
+		<PackageReference Include="EntityFramework" Version="[6.5.1,)" />
+		<PackageReference Include="System.Data.SQLite" Version="[2.0.2,)" />
+		<PackageReference Include="System.Data.SQLite.EF6" Version="[2.0.2,)" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' != 'net48' ">
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.25" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="[8.0.25,)" />
 	</ItemGroup>
 
 	<ItemGroup>
