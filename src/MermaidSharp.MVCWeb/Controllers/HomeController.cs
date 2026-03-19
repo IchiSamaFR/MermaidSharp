@@ -18,7 +18,6 @@ namespace MermaidSharp.MVCWeb.Controllers
 
         public IActionResult Index()
         {
-            string direction = "LR";
             List<FlowNode> nodes = new()
             {
                 new("node1", "This is node 1"),
@@ -30,7 +29,9 @@ namespace MermaidSharp.MVCWeb.Controllers
                 new FlowLink("node1", "node2", "12s"),
                 new FlowLink("node1", "node3", "3mins")
             };
-            FlowchartDiagram flowchart = new(direction, nodes, links);
+            FlowchartDiagram flowchart = new();
+            flowchart.Nodes.AddRange(nodes);
+            flowchart.Links.AddRange(links);
             string graph = flowchart.CalculateDiagram();
 
             return View(model: graph);

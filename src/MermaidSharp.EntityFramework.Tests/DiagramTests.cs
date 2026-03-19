@@ -237,7 +237,7 @@ namespace MermaidSharp.EntityFramework.Tests
 
                     var diagramOptions = new EntityRelationshipDiagramOptions
                     {
-                        FilterColumnByKeyTypes = RelationContraintType.PrimaryKey | RelationContraintType.ForeignKey
+                        FilterColumnByKeyTypes = RelationConstraintType.PrimaryKey | RelationConstraintType.ForeignKey
                     };
 
                     var expected = @"erDiagram

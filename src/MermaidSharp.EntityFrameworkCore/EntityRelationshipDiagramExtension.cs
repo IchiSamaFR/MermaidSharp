@@ -141,9 +141,9 @@ namespace MermaidSharp.EntityFrameworkCore
 
             foreach (var property in entityType.Properties)
             {
-                var referenceType = property.IsPrimaryKey ? RelationContraintType.PrimaryKey : RelationContraintType.None;
-                referenceType |= property.IsForeignKey ? RelationContraintType.ForeignKey : RelationContraintType.None;
-                referenceType |= property.IsUnique ? RelationContraintType.UniqueKey : RelationContraintType.None;
+                var referenceType = property.IsPrimaryKey ? RelationConstraintType.PrimaryKey : RelationConstraintType.None;
+                referenceType |= property.IsForeignKey ? RelationConstraintType.ForeignKey : RelationConstraintType.None;
+                referenceType |= property.IsUnique ? RelationConstraintType.UniqueKey : RelationConstraintType.None;
 
                 table.Columns.Add(new DiagramColumn
                 {
@@ -163,7 +163,7 @@ namespace MermaidSharp.EntityFrameworkCore
                 foreach (var property in owned.Properties
                     .Where(p => !p.IsForeignKey && !p.IsPrimaryKey))
                 {
-                    var referenceType = property.IsUnique ? RelationContraintType.UniqueKey : RelationContraintType.None;
+                    var referenceType = property.IsUnique ? RelationConstraintType.UniqueKey : RelationConstraintType.None;
                     table.Columns.Add(new DiagramColumn
                     {
                         Property = property,
@@ -211,8 +211,8 @@ namespace MermaidSharp.EntityFrameworkCore
                 return columns;
             }
 
-            var filteredColumns = options.FilterColumnByKeyTypes != RelationContraintType.None
-                ? table.Columns.Where(c => c.ColumnKeyType != RelationContraintType.None && options.FilterColumnByKeyTypes.HasFlag(c.ColumnKeyType))
+            var filteredColumns = options.FilterColumnByKeyTypes != RelationConstraintType.None
+                ? table.Columns.Where(c => c.ColumnKeyType != RelationConstraintType.None && options.FilterColumnByKeyTypes.HasFlag(c.ColumnKeyType))
                 : table.Columns;
 
             foreach (var column in filteredColumns)
@@ -220,7 +220,7 @@ namespace MermaidSharp.EntityFrameworkCore
                 var erColumn = new EntityRelationColumn(
                     column.Name,
                     column.Type.Name,
-                    options.IncludeColumnKeyTypes ? column.ColumnKeyType : RelationContraintType.None,
+                    options.IncludeColumnKeyTypes ? column.ColumnKeyType : RelationConstraintType.None,
                     options.IncludeColumnComments ? column.Property.Description : string.Empty
                 );
                 columns.Add(erColumn);

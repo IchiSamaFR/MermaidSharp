@@ -11,22 +11,18 @@ namespace MermaidSharp.Diagrams
     /// Represents the base class for diagram types that consist of nodes and links, providing common functionality for
     /// diagram generation.
     /// </summary>
-    /// <remarks>This abstract class defines the structure and core behavior for diagrams such as flowcharts.
-    /// Derived classes should specify the diagram type by implementing the Name property and may override diagram
-    /// calculation logic as needed. The Nodes and Links collections define the elements and relationships within the
-    /// diagram.</remarks>
     public abstract class ADiagram
     {
         public abstract string Name { get; }
         public string Title { get; set; }
-        public List<ANode> Nodes { get; set; } = new List<ANode>();
-        public List<ALink> Links { get; set; } = new List<ALink>();
+        public List<ANode> Nodes { get; } = new List<ANode>();
+        public List<ALink> Links { get; } = new List<ALink>();
 
         /// <summary>
         /// Initializes a new instance of the ADiagram class with the specified title.
         /// </summary>
         /// <param name="title">The title to assign to the diagram. If not specified, the title is set to an empty string.</param>
-        public ADiagram(string title = "")
+        protected ADiagram(string title = "")
         {
             Title = title;
         }

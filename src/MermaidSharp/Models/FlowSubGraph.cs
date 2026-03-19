@@ -1,3 +1,4 @@
+using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace MermaidSharp.Models
     {
         public string Name { get; set; }
         //Can be TB, BT, RL, LR (default: LR) (Top/Bottom/Left/Right, respectively)
-        public string Direction { get; set; }
+        public FlowDirection Direction { get; set; }
         public List<FlowNode> Nodes { get; }
         public List<FlowLink> Links { get; }
 
@@ -30,7 +31,7 @@ namespace MermaidSharp.Models
         /// <param name="nodes">The collection of nodes to include in the subgraph. If null, an empty list is used.</param>
         /// <param name="links">The collection of links connecting nodes within the subgraph. If null, an empty list is used.</param>
         /// <param name="direction">The layout direction for the subgraph. If null, the default direction is used.</param>
-        public FlowSubGraph(string name, List<FlowNode> nodes = null, List<FlowLink> links = null, string direction = null)
+        public FlowSubGraph(string name, List<FlowNode> nodes = null, List<FlowLink> links = null, FlowDirection direction = FlowDirection.None)
         {
             Name = name.Replace(" ", "");
             Nodes = nodes ?? new List<FlowNode>();
@@ -42,9 +43,9 @@ namespace MermaidSharp.Models
         {
             var lines = new List<string>();
             lines.Add($"subgraph {Name}");
-            if (Direction != null)
+            if (Direction != FlowDirection.None)
             {
-                lines.Add($"direction {Direction}");
+                lines.Add($"direction {Direction.StartString()}");
             }
             lines.AddRange(Nodes.Select(n => n.ToString()));
             lines.AddRange(Links.Select(n => n.ToString()));

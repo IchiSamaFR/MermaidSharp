@@ -17,38 +17,38 @@ namespace MermaidSharp.Tests.EntityRelationships
             {
                 new EntityRelationNode("User", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("Id", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("Id", "int", RelationConstraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string"),
                     new EntityRelationColumn("Email", "string")
                 }),
                 new EntityRelationNode("Order", columns:  new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("OrderId", "int", RelationContraintType.PrimaryKey),
-                    new EntityRelationColumn("UserId", "int", RelationContraintType.ForeignKey),
+                    new EntityRelationColumn("OrderId", "int", RelationConstraintType.PrimaryKey),
+                    new EntityRelationColumn("UserId", "int", RelationConstraintType.ForeignKey),
                     new EntityRelationColumn("OrderDate", "datetime")
                 }),
                 new EntityRelationNode("Product", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("ProductId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("ProductId", "int", RelationConstraintType.PrimaryKey),
                     new EntityRelationColumn("Title", "string"),
                     new EntityRelationColumn("Price", "decimal")
                 }),
                 new EntityRelationNode("OrderItem", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("OrderItemId", "int", RelationContraintType.PrimaryKey),
-                    new EntityRelationColumn("OrderId", "int", RelationContraintType.ForeignKey),
-                    new EntityRelationColumn("ProductId", "int", RelationContraintType.ForeignKey),
+                    new EntityRelationColumn("OrderItemId", "int", RelationConstraintType.PrimaryKey),
+                    new EntityRelationColumn("OrderId", "int", RelationConstraintType.ForeignKey),
+                    new EntityRelationColumn("ProductId", "int", RelationConstraintType.ForeignKey),
                     new EntityRelationColumn("Quantity", "int")
                 }),
                 new EntityRelationNode("Category", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("CategoryId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("CategoryId", "int", RelationConstraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string")
                 }),
                 new EntityRelationNode("ProductCategory", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("ProductId", "int", RelationContraintType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("CategoryId", "int", RelationContraintType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("ProductId", "int", RelationConstraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("CategoryId", "int", RelationConstraintType.PrimaryKeyForeignKey)
                 })
             };
 
@@ -160,8 +160,8 @@ namespace MermaidSharp.Tests.EntityRelationships
             {
                 new EntityRelationNode("Person", columns : new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("PersonId", "int", RelationContraintType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("ManagerId", "int", RelationContraintType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("PersonId", "int", RelationConstraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("ManagerId", "int", RelationConstraintType.PrimaryKeyForeignKey)
                 })
             };
             var links = new List<EntityRelationLink>
@@ -247,39 +247,39 @@ namespace MermaidSharp.Tests.EntityRelationships
             {
                 new EntityRelationNode("Person", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("PersonId", "int", RelationContraintType.PrimaryKey),
-                    new EntityRelationColumn("SpouseId", "int", RelationContraintType.ForeignKey)
+                    new EntityRelationColumn("PersonId", "int", RelationConstraintType.PrimaryKey),
+                    new EntityRelationColumn("SpouseId", "int", RelationConstraintType.ForeignKey)
                 }),
                 new EntityRelationNode("Company", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("CompanyId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("CompanyId", "int", RelationConstraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string")
                 }),
                 new EntityRelationNode("Employee", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("EmployeeId", "int", RelationContraintType.PrimaryKey),
-                    new EntityRelationColumn("PersonId", "int", RelationContraintType.ForeignKey),
-                    new EntityRelationColumn("CompanyId", "int", RelationContraintType.ForeignKey)
+                    new EntityRelationColumn("EmployeeId", "int", RelationConstraintType.PrimaryKey),
+                    new EntityRelationColumn("PersonId", "int", RelationConstraintType.ForeignKey),
+                    new EntityRelationColumn("CompanyId", "int", RelationConstraintType.ForeignKey)
                 }),
                 new EntityRelationNode("Project", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("ProjectId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("ProjectId", "int", RelationConstraintType.PrimaryKey),
                     new EntityRelationColumn("Title", "string")
                 }),
                 new EntityRelationNode("EmployeeProject", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("EmployeeId", "int", RelationContraintType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("ProjectId", "int", RelationContraintType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("EmployeeId", "int", RelationConstraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("ProjectId", "int", RelationConstraintType.PrimaryKeyForeignKey)
                 }),
                 new EntityRelationNode("Department", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("DepartmentId", "int", RelationContraintType.PrimaryKey),
+                    new EntityRelationColumn("DepartmentId", "int", RelationConstraintType.PrimaryKey),
                     new EntityRelationColumn("Name", "string")
                 }),
                 new EntityRelationNode("DepartmentManager", columns: new List<EntityRelationColumn>
                 {
-                    new EntityRelationColumn("DepartmentId", "int", RelationContraintType.PrimaryKeyForeignKey),
-                    new EntityRelationColumn("PersonId", "int", RelationContraintType.PrimaryKeyForeignKey)
+                    new EntityRelationColumn("DepartmentId", "int", RelationConstraintType.PrimaryKeyForeignKey),
+                    new EntityRelationColumn("PersonId", "int", RelationConstraintType.PrimaryKeyForeignKey)
                 })
             };
 

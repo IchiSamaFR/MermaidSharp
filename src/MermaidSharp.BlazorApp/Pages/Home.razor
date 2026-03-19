@@ -21,7 +21,6 @@ Welcome to your new app.
 
     protected override async Task OnInitializedAsync()
     {
-        string direction = "LR";
         List<FlowNode> nodes = new()
         {
             new("node1", "This is node 1"),
@@ -33,7 +32,9 @@ Welcome to your new app.
             new FlowLink("node1", "node2", "12s"),
             new FlowLink("node1", "node3", "3mins")
         };
-        FlowchartDiagram flowchart = new(direction, nodes, links);
+        FlowchartDiagram flowchart = new();
+        flowchart.Nodes.AddRange(nodes);
+        flowchart.Links.AddRange(links);
         graph = flowchart.CalculateDiagram();
     }
 

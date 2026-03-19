@@ -14,8 +14,7 @@ namespace MermaidSharp.Tests.Flowcharts
         {
             // Arrange
             string title = "My Flowchart Title";
-            string direction = "LR";
-            var flowchart = new FlowchartDiagram(title, direction);
+            var flowchart = new FlowchartDiagram(title);
             string expected = @"---
 title: My Flowchart Title
 ---
@@ -34,8 +33,7 @@ flowchart LR";
         public void ValidTDFlowchart()
         {
             //Arrange
-            string direction = "LR";
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             string expected = @"flowchart LR";
 
             //Act
@@ -51,12 +49,11 @@ flowchart LR";
         public void SingleNodeFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
 
             string expected = @"flowchart LR
@@ -75,13 +72,12 @@ flowchart LR";
         public void TwoNodesFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1"),
                 new FlowNode("node2", "This is node 2")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
 
             string expected = @"flowchart LR
@@ -101,13 +97,12 @@ flowchart LR";
         public void TwoNodesRoundedNodesFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1", FlowNodeShapeType.Rounded),
                 new FlowNode("node2", "This is node 2", FlowNodeShapeType.Rounded)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
 
             string expected = @"flowchart LR
@@ -127,7 +122,6 @@ flowchart LR";
         public void TwoNodesAndLinkFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1"),
@@ -137,7 +131,7 @@ flowchart LR";
             {
                 new FlowLink("node1", "node2", "")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
 
@@ -159,7 +153,6 @@ flowchart LR";
         public void TwoNodesAndLinkTextFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1"),
@@ -169,7 +162,7 @@ flowchart LR";
             {
                 new FlowLink("node1", "node2", "link text!")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
 
@@ -191,7 +184,6 @@ flowchart LR";
         public void TwoNodesAndBidirectionalLinkTextFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1"),
@@ -201,7 +193,7 @@ flowchart LR";
             {
                 new FlowLink("node1", "node2", "link text!", isBidirectional: true)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
 
@@ -223,7 +215,6 @@ flowchart LR";
         public void ThreeNodesAndTwoLinksFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1"),
@@ -235,7 +226,7 @@ flowchart LR";
                 new FlowLink("node1", "node2", "12s"),
                 new FlowLink("node1", "node3", "3mins")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
 
@@ -259,7 +250,6 @@ flowchart LR";
         public void ThreeNodesAndTwoLinksWithMultipleColorsFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1"),
@@ -271,7 +261,7 @@ flowchart LR";
                 new FlowLink("node1", "node2", "12s", "stroke-width:4px,stroke:red"),
                 new FlowLink("node1", "node3", "3mins")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
 
@@ -296,7 +286,6 @@ flowchart LR";
         public void TwoNodesInASubGraphFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowSubGraph> subGraphs = new List<FlowSubGraph>()
             {
                 new FlowSubGraph("graph1",
@@ -307,7 +296,7 @@ flowchart LR";
                     },
                     new List<FlowLink>())
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.SubGraphs.AddRange(subGraphs);
 
             string expected = @"flowchart LR
@@ -329,7 +318,6 @@ flowchart LR";
         public void FourNodesInTwoSubGraphsFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowSubGraph> subGraphs = new List<FlowSubGraph>()
             {
                 new FlowSubGraph("graph1",
@@ -349,7 +337,7 @@ flowchart LR";
                         new FlowLink("node1", "node3")
                     })
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.SubGraphs.AddRange(subGraphs);
 
             string expected = @"flowchart LR
@@ -376,7 +364,6 @@ flowchart LR";
         public void FourNodesInTwoSubGraphsAndTwoSingleNodesFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node5", "This is node 5"),
@@ -405,7 +392,7 @@ flowchart LR";
                         new FlowLink("node1", "node3")
                     })
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.SubGraphs.AddRange(subGraphs);
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
@@ -437,7 +424,6 @@ flowchart LR";
         public void FourNodesInTwoSubGraphsWithDirectionAndTwoSingleNodesFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node5", "This is node 5"),
@@ -454,9 +440,7 @@ flowchart LR";
                     {
                         new FlowNode("node1", "This is node 1"),
                         new FlowNode("node2", "This is node 2")
-                    },
-                    new List<FlowLink>(),
-                    direction),
+                    }, direction: FlowDirection.LeftRight),
                 new FlowSubGraph("graph2",
                     new List<FlowNode>
                     {
@@ -465,10 +449,9 @@ flowchart LR";
                     },
                     new List<FlowLink> {
                         new FlowLink("node1", "node3")
-                    },
-                    direction)
+                    }, direction: FlowDirection.LeftRight)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.SubGraphs.AddRange(subGraphs);
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
@@ -502,7 +485,6 @@ flowchart LR";
         public void DifferentNodeShapesFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1", FlowNodeShapeType.Rectangle),
@@ -513,7 +495,7 @@ flowchart LR";
                 new FlowNode("node6", "This is node 6", FlowNodeShapeType.Rhombus),
                 new FlowNode("node7", "This is node 7", FlowNodeShapeType.Hexagon)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
 
             string expected = @"flowchart LR
@@ -538,7 +520,6 @@ flowchart LR";
         public void SubgraphsWithDirectionsFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowSubGraph> subGraphs = new List<FlowSubGraph>()
             {
                 new FlowSubGraph("graph1",
@@ -548,7 +529,7 @@ flowchart LR";
                         new FlowNode("node2", "This is node 2")
                     },
                     new List<FlowLink>(),
-                    "TB"),
+                    FlowDirection.TopBottom),
                 new FlowSubGraph("graph2",
                     new List<FlowNode>
                     {
@@ -558,9 +539,9 @@ flowchart LR";
                     new List<FlowLink> {
                         new FlowLink("node1", "node3")
                     },
-                    "BT")
+                    FlowDirection.BottomTop)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.SubGraphs.AddRange(subGraphs);
 
             string expected = @"flowchart LR
@@ -589,7 +570,6 @@ flowchart LR";
         public void LinkStylesFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1"),
@@ -601,7 +581,7 @@ flowchart LR";
                 new FlowLink("node1", "node2", "12s", "stroke-width:4px,stroke:red"),
                 new FlowLink("node1", "node3", "3mins", "stroke-width:2px,stroke:blue")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
 
@@ -627,7 +607,7 @@ flowchart LR";
         public void ValidBTDirectionFlowchart()
         {
             //Arrange
-            string direction = "BT";
+            FlowDirection direction = FlowDirection.BottomTop;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1")
@@ -651,7 +631,7 @@ flowchart LR";
         public void ValidRLDirectionFlowchart()
         {
             //Arrange
-            string direction = "RL";
+            FlowDirection direction = FlowDirection.RightLeft;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1")
@@ -675,7 +655,7 @@ flowchart LR";
         public void ValidTBDirectionFlowchart()
         {
             //Arrange
-            string direction = "TB";
+            FlowDirection direction = FlowDirection.TopBottom;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is node 1")

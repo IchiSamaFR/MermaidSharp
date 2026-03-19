@@ -10,7 +10,7 @@ namespace MermaidSharp.EntityFrameworkCore
         /// <remarks>Use this property to specify which column key types should be included when
         /// generating flowcharts. Setting this property to a value other than None will restrict the output to columns
         /// matching the selected key types.</remarks>
-        public RelationContraintType FilterColumnByKeyTypes { get; set; } = RelationContraintType.None;
+        public RelationConstraintType FilterColumnByKeyTypes { get; set; } = RelationConstraintType.None;
 
         /// <summary>
         /// Gets or sets a value indicating whether column information is included in the output.
