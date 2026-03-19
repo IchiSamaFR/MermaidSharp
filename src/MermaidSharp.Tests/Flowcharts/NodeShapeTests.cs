@@ -13,7 +13,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void ParallelogramNodeShapeFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is a parallelogram", FlowNodeShapeType.Parallelogram)
@@ -37,7 +37,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void TrapezoidNodeShapeFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is a trapezoid", FlowNodeShapeType.Trapezoid)
@@ -61,7 +61,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void TrapezoidAltNodeShapeFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is a trapezoid alt", FlowNodeShapeType.TrapezoidAlt)
@@ -85,7 +85,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void SubroutineNodeShapeFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "This is a subroutine", FlowNodeShapeType.Subroutine)

@@ -1,3 +1,4 @@
+using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using MermaidSharp.Models;
 using System;
@@ -16,15 +17,15 @@ namespace MermaidSharp.Diagrams
     public class FlowchartDiagram : ADiagram
     {
         public override string Name => "flowchart";
-        public string Direction { get; set; }
+        public FlowDirection Direction { get; set; }
         public List<FlowSubGraph> SubGraphs { get; } = new List<FlowSubGraph>();
 
         /// <summary>
         /// Initializes a new instance of the FlowchartDiagram class with the specified title, direction, nodes, links,
         /// and subgraphs.
         /// </summary>
-        /// <param name="direction">Accepts LR, TD, BT, RL, and TB options</param>
-        public FlowchartDiagram(string direction) : this(string.Empty, direction)
+        /// <param name="direction">The direction of the flowchart.</param>
+        public FlowchartDiagram(FlowDirection direction = FlowDirection.LeftRight) : this(string.Empty, direction)
         {
 
         }
@@ -33,15 +34,11 @@ namespace MermaidSharp.Diagrams
         /// Initializes a new instance of the FlowchartDiagram class with the specified title, direction, nodes, links,
         /// and subgraphs.
         /// </summary>
-        /// <param name="direction">Accepts LR, TD, BT, RL, and TB options</param>
+        /// <param name="direction">The direction of the flowchart.</param>
         /// <param name="title">The title of the flowchart diagram</param>
-        public FlowchartDiagram(string title, string direction) : base(title)
+        public FlowchartDiagram(string title, FlowDirection direction = FlowDirection.LeftRight) : base(title)
         {
-            if (direction != "LR" && direction != "TD" && direction != "BT" && direction != "RL" && direction != "TB")
-            {
-                throw new NotSupportedException("Direction " + direction + " is currently unsupported");
-            }
-            Direction = direction;
+            Direction = direction == FlowDirection.None ? FlowDirection.LeftRight : direction;
         }
 
         /// <summary>
@@ -52,7 +49,7 @@ namespace MermaidSharp.Diagrams
         {
             var lines = new List<string>();
             lines.Add(GetTitleString());
-            lines.Add($"{Name} {Direction}");
+            lines.Add($"{Name} {Direction.StartString()}");
 
             lines.AddRange(SubGraphs.Select(sg => sg.ToString()).Indent());
             lines.AddRange(Nodes.Select(n => n.ToString()).Indent());
@@ -65,7 +62,7 @@ namespace MermaidSharp.Diagrams
                 .Concat(SubGraphs.SelectMany(sg => sg.Links))
                 .ToList();
             var linkStyles = allLinks.Where(l => !string.IsNullOrEmpty(l.LinkStyle)).ToList();
-            lines.AddRange(linkStyles.Select(n => n.ToStyleString(linkStyles.IndexOf(n))).Indent());
+            lines.AddRange(linkStyles.Select((n, i) => n.ToStyleString(i)).Indent());
             lines.AddRange(allNodes.Select(n => n.ToClassString()).Indent());
             lines.AddRange(allNodes.Select(n => n.ToClickString()).Indent());
 

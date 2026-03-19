@@ -13,12 +13,11 @@ namespace MermaidSharp.Tests.Flowcharts
         public void NodeWithCssClassFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Styled Node", FlowNodeShapeType.Rectangle, "myClass")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
 
             string expected = @"flowchart LR
@@ -38,12 +37,11 @@ namespace MermaidSharp.Tests.Flowcharts
         public void NodeWithClickActionFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Clickable Node", FlowNodeShapeType.Rectangle, "", "https://example.com")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
 
             string expected = @"flowchart LR
@@ -63,12 +61,11 @@ namespace MermaidSharp.Tests.Flowcharts
         public void NodeWithBothClassAndClickFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Styled Clickable Node", FlowNodeShapeType.Rectangle, "highlightClass", "alert('Hello!')")
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
 
             string expected = @"flowchart LR
@@ -89,7 +86,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void ComplexFlowchartWithAllFeatures()
         {
             //Arrange
-            string direction = "TD";
+            FlowDirection direction = FlowDirection.TopDown;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("start", "Start", FlowNodeShapeType.Circle, "startClass", "console.log('Start clicked')"),

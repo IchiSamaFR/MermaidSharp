@@ -16,7 +16,7 @@ namespace MermaidSharp.Diagrams
     {
         public override string Name => "classDiagram";
 
-        public List<ClassNamespace> Namespaces { get; set; } = new List<ClassNamespace>();
+        public List<ClassNamespace> Namespaces { get; } = new List<ClassNamespace>();
 
         /// <summary>
         /// Initializes a new instance of the ClassDiagram class with the specified title.

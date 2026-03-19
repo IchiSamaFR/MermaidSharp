@@ -13,7 +13,7 @@ namespace MermaidSharp.Models
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        public RelationContraintType ColumnKeyType { get; set; }
+        public RelationConstraintType ColumnKeyType { get; set; }
         public string Comment { get; set; }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace MermaidSharp.Models
         /// <param name="type">The data type of the column. If not specified, an empty string is used.</param>
         /// <param name="columnKeyType">The key type of the column, indicating its role in the entity relation. Defaults to RelationContraintType.None.</param>
         /// <param name="comment">An optional comment describing the column. If not specified, an empty string is used.</param>
-        public EntityRelationColumn(string name, string type = "", RelationContraintType columnKeyType = RelationContraintType.None, string comment = "")
+        public EntityRelationColumn(string name, string type = "", RelationConstraintType columnKeyType = RelationConstraintType.None, string comment = "")
         {
             Name = name;
             Type = type;

@@ -13,7 +13,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void DottedLinkFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Node 1"),
@@ -21,7 +21,7 @@ namespace MermaidSharp.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "dotted", null, false, FlowLinkType.Dotted)
+                new FlowLink("node1", "node2", "dotted", linkType: FlowLinkType.Dotted)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -45,7 +45,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void ThickLinkFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Node 1"),
@@ -77,7 +77,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void InvisibleLinkFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Node 1"),
@@ -109,7 +109,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void CircleArrowLinkFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Node 1"),
@@ -117,7 +117,7 @@ namespace MermaidSharp.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", null, false, FlowLinkType.Normal, FlowLinkArrowType.Circle)
+                new FlowLink("node1", "node2", arrowType: FlowLinkArrowType.Circle)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -141,7 +141,7 @@ namespace MermaidSharp.Tests.Flowcharts
         public void CrossArrowLinkFlowchart()
         {
             //Arrange
-            string direction = "LR";
+            FlowDirection direction = FlowDirection.LeftRight;
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Node 1"),
@@ -149,7 +149,7 @@ namespace MermaidSharp.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", null, false, FlowLinkType.Normal, FlowLinkArrowType.Cross)
+                new FlowLink("node1", "node2", arrowType: FlowLinkArrowType.Cross)
             };
             FlowchartDiagram flowchart = new FlowchartDiagram(direction);
             flowchart.Nodes.AddRange(nodes);
@@ -173,7 +173,6 @@ namespace MermaidSharp.Tests.Flowcharts
         public void BidirectionalCircleArrowLinkFlowchart()
         {
             //Arrange
-            string direction = "LR";
             List<FlowNode> nodes = new List<FlowNode>()
             {
                 new FlowNode("node1", "Node 1"),
@@ -181,9 +180,9 @@ namespace MermaidSharp.Tests.Flowcharts
             };
             List<FlowLink> links = new List<FlowLink>()
             {
-                new FlowLink("node1", "node2", "", null, true, FlowLinkType.Normal, FlowLinkArrowType.Circle)
+                new FlowLink("node1", "node2", "", "", true, FlowLinkType.Normal, FlowLinkArrowType.Circle)
             };
-            FlowchartDiagram flowchart = new FlowchartDiagram(direction);
+            FlowchartDiagram flowchart = new FlowchartDiagram();
             flowchart.Nodes.AddRange(nodes);
             flowchart.Links.AddRange(links);
 

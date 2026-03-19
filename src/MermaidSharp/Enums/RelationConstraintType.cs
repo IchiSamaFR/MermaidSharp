@@ -11,7 +11,7 @@ namespace MermaidSharp.Enums
     /// schema. Multiple values can be combined using a bitwise OR operation to represent columns that participate in
     /// multiple key constraints.</remarks>
     [Flags]
-    public enum RelationContraintType
+    public enum RelationConstraintType
     {
         None = 0,
 
