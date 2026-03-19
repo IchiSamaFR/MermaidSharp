@@ -6,14 +6,6 @@ namespace MermaidSharp.EntityFramework.Tests.Mock
 {
     public class DatabaseContextMock : DbContext
     {
-        public DatabaseContextMock() : base("name=DefaultConnection")
-        {
-        }
-
-        public DatabaseContextMock(string nameOrConnectionString) : base(nameOrConnectionString)
-        {
-        }
-
         public DatabaseContextMock(DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
