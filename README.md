@@ -1,4 +1,4 @@
-# MermaidDotNet
+# MermaidSharp
 > **Info:** This project is a fork of the original [MermaidDotNet](https://github.com/samsmithnz/MermaidDotNet) repository. All enhancements, fixes, and additions are based on the initial project.
 
 A comprehensive .NET wrapper to create [Mermaid](https://mermaid.js.org/) diagrams with full syntax support, including flowcharts, entity relationship diagrams, and class diagrams. These can be inserted into markdown or directly displayed in HTML with mermaid.js.
@@ -287,10 +287,10 @@ flowchart LR
 
 ## Sample Projects
 
-### [MermaidDotNet.MVCWeb](src/MermaidDotNet.MVCWeb)
+### [MermaidSharp.MVCWeb](src/MermaidSharp.MVCWeb)
 
-This is a sample ASP.NET Core MVC web application that demonstrates how to use the MermaidDotNet library to create and render Mermaid diagrams in an MVC web application. The project includes examples of creating flowcharts, entity relationship diagrams, and class diagrams using the Mermaid.js library.
+This is a sample ASP.NET Core MVC web application that demonstrates how to use the MermaidSharp library to create and render Mermaid diagrams in an MVC web application. The project includes examples of creating flowcharts, entity relationship diagrams, and class diagrams using the Mermaid.js library.
 
-### [MermaidDotNet.BlazorApp](src/MermaidDotNet.BlazorApp)
+### [MermaidSharp.BlazorApp](src/MermaidSharp.BlazorApp)
 
-This is a sample Blazor application that demonstrates how to use the MermaidDotNet library to create and render Mermaid diagrams in a Blazor web application. The project includes examples of creating flowcharts, entity relationship diagrams, and class diagrams using the Mermaid.js library.
+This is a sample Blazor application that demonstrates how to use the MermaidSharp library to create and render Mermaid diagrams in a Blazor web application. The project includes examples of creating flowcharts, entity relationship diagrams, and class diagrams using the Mermaid.js library.
