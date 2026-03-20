@@ -1,6 +1,6 @@
-# MermaidDotNet
+# MermaidSharp
 
-MermaidDotNet is a comprehensive .NET wrapper library for creating Mermaid flowcharts with full syntax support. The solution includes a core .NET 8 library, unit tests, and sample applications (MVC Web and Blazor) demonstrating usage.
+MermaidSharp is a comprehensive .NET wrapper library for creating Mermaid flowcharts with full syntax support. The solution includes a core .NET 8 library, unit tests, and sample applications (MVC Web and Blazor) demonstrating usage.
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
@@ -47,7 +47,7 @@ Always reference these instructions first and fallback to search or bash command
 ## Unit Test Standards
 
 ### General Principles
-- **Test Framework:** Use XUnit as appropriate for the project.
+- **Test Framework:** Use MSTest as appropriate for the project.
 - **Test Naming:** Use descriptive method names: `MethodName_ExpectedBehavior_StateUnderTest`.
 - **Test Structure:** Follow Arrange-Act-Assert (AAA) pattern in all tests.
 - **Isolation:** Each test should be independent and not rely on the outcome of other tests.
@@ -74,17 +74,17 @@ export PATH="/home/runner/.dotnet:$PATH"
 Run these commands in this exact sequence:
 
 ```bash
-cd /home/runner/work/MermaidDotNet/MermaidDotNet
+cd /home/runner/work/MermaidSharp/MermaidSharp
 export PATH="/home/runner/.dotnet:$PATH"
 
 # Restore packages - takes 2-3 seconds. NEVER CANCEL. Set timeout to 5+ minutes.
-dotnet restore src/MermaidDotNet.sln
+dotnet restore src/MermaidSharp.sln
 
 # Build solution - takes 5-6 seconds. NEVER CANCEL. Set timeout to 5+ minutes.
-dotnet build src/MermaidDotNet.sln -c Release
+dotnet build src/MermaidSharp.sln -c Release
 
 # Run tests - takes 3-4 seconds. NEVER CANCEL. Set timeout to 2+ minutes.
-dotnet test src/MermaidDotNet.Tests/MermaidDotNet.Tests.csproj -c Release
+dotnet test src/MermaidSharp.Tests/MermaidSharp.Tests.csproj -c Release
 ```
 
 **CRITICAL**: NEVER CANCEL build or test commands. Builds may take 15-20 seconds, tests take ~4 seconds. Always use timeouts of 5+ minutes for builds and 2+ minutes for tests.
@@ -94,13 +94,13 @@ For development focused on the core library without sample apps:
 
 ```bash
 # Core library restore - takes 1 second
-dotnet restore src/MermaidDotNet/MermaidDotNet.csproj
+dotnet restore src/MermaidSharp/MermaidSharp.csproj
 
 # Core library build - takes 2 seconds 
-dotnet build src/MermaidDotNet/MermaidDotNet.csproj -c Release
+dotnet build src/MermaidSharp/MermaidSharp.csproj -c Release
 
 # Run tests - takes 3-4 seconds
-dotnet test src/MermaidDotNet.Tests/MermaidDotNet.Tests.csproj -c Release
+dotnet test src/MermaidSharp.Tests/MermaidSharp.Tests.csproj -c Release
 ```
 
 ### Run Sample Applications
@@ -108,7 +108,7 @@ Both sample applications demonstrate the library in action:
 
 **MVC Web Application:**
 ```bash
-cd src/MermaidDotNet.MVCWeb
+cd src/MermaidSharp.MVCWeb
 export PATH="/home/runner/.dotnet:$PATH"
 dotnet run --urls=http://localhost:5000
 # Access at http://localhost:5000
@@ -116,7 +116,7 @@ dotnet run --urls=http://localhost:5000
 
 **Blazor WebAssembly Application:**
 ```bash
-cd src/MermaidDotNet.BlazorApp  
+cd src/MermaidSharp.BlazorApp  
 export PATH="/home/runner/.dotnet:$PATH"
 dotnet run --urls=http://localhost:5001
 # Access at http://localhost:5001
@@ -125,8 +125,8 @@ dotnet run --urls=http://localhost:5001
 ### NuGet Package Creation
 ```bash
 # Create NuGet package - takes 1-2 seconds
-dotnet pack src/MermaidDotNet/MermaidDotNet.csproj -c Release
-# Output: src/MermaidDotNet/bin/Release/MermaidDotNet.{version}.nupkg
+dotnet pack src/MermaidSharp/MermaidSharp.csproj -c Release
+# Output: src/MermaidSharp/bin/Release/MermaidSharp.{version}.nupkg
 ```
 
 ## Validation
@@ -136,27 +136,27 @@ Run this complete validation sequence after making any code changes:
 
 1. **Build Validation:**
    ```bash
-   dotnet build src/MermaidDotNet.sln -c Release
+   dotnet build src/MermaidSharp.sln -c Release
    # Expected: Success with XML documentation warnings (58 warnings normal)
    ```
 
 2. **Test Validation:**
    ```bash
-   dotnet test src/MermaidDotNet.Tests/MermaidDotNet.Tests.csproj -c Release
+   dotnet test src/MermaidSharp.Tests/MermaidSharp.Tests.csproj -c Release
    # Expected: 43 tests pass, 0 failures
    ```
 
 3. **Sample Application Validation:**
    ```bash
    # Start MVC app
-   cd src/MermaidDotNet.MVCWeb && dotnet run --urls=http://localhost:5000 &
+   cd src/MermaidSharp.MVCWeb && dotnet run --urls=http://localhost:5000 &
    
    # Test response
    curl -I http://localhost:5000
    # Expected: HTTP/1.1 200 OK
    
    # Start Blazor app  
-   cd ../MermaidDotNet.BlazorApp && dotnet run --urls=http://localhost:5001 &
+   cd ../MermaidSharp.BlazorApp && dotnet run --urls=http://localhost:5001 &
    
    # Test response
    curl -I http://localhost:5001  
@@ -171,7 +171,7 @@ Run this complete validation sequence after making any code changes:
 ### Example Manual Test
 Create this test to validate core functionality works correctly:
 ```csharp
-using MermaidDotNet.Models;
+using MermaidSharp.Models;
 
 [TestMethod]
 public void BasicFlowchartValidation()
@@ -207,29 +207,29 @@ public void BasicFlowchartValidation()
 
 ### Repository Structure
 ```
-MermaidDotNet/
+MermaidSharp/
 ├── src/
-│   ├── MermaidDotNet/              # Core library (.NET 8)
-│   ├── MermaidDotNet.Tests/        # Unit tests (.NET 8)  
-│   ├── MermaidDotNet.MVCWeb/       # Sample MVC app (.NET 9)
-│   ├── MermaidDotNet.BlazorApp/    # Sample Blazor app (.NET 9)
-│   └── MermaidDotNet.sln           # Solution file
+│   ├── MermaidSharp/              # Core library (.NET 8)
+│   ├── MermaidSharp.Tests/        # Unit tests (.NET 8)  
+│   ├── MermaidSharp.MVCWeb/       # Sample MVC app (.NET 9)
+│   ├── MermaidSharp.BlazorApp/    # Sample Blazor app (.NET 9)
+│   └── MermaidSharp.sln           # Solution file
 ├── .github/workflows/workflow.yml  # CI/CD pipeline
 ├── GitVersion.yml                  # Version configuration
 └── README.md                       # Documentation
 ```
 
 ### Key Project Files
-- **Core Library**: `src/MermaidDotNet/MermaidDotNet.csproj`
-- **Tests**: `src/MermaidDotNet.Tests/MermaidDotNet.Tests.csproj`  
-- **Solution**: `src/MermaidDotNet.sln`
+- **Core Library**: `src/MermaidSharp/MermaidSharp.csproj`
+- **Tests**: `src/MermaidSharp.Tests/MermaidSharp.Tests.csproj`  
+- **Solution**: `src/MermaidSharp.sln`
 
 ### Common Scenarios
 
 **Adding New Node Types:**
 1. Update `Node.cs` ShapeType enum
 2. Update `Node.OpenShape()` and `Node.CloseShape()` methods  
-3. Add unit tests in `MermaidDotNet.Tests`
+3. Add unit tests in `MermaidSharp.Tests`
 4. Run full validation sequence
 
 **Adding New Link Types:**
