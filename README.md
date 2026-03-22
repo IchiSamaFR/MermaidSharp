@@ -318,6 +318,54 @@ flowchart LR
 </body>
 ```
 
+## EntityFrameworkCore Integration
+
+MermaidSharp provides a dedicated package — **MermaidSharp.EntityFrameworkCore** — that generates entity relationship diagrams automatically from your `DbContext`.
+
+It supports both **Entity Framework 6** (.NET Framework 4.8) and **Entity Framework Core** (.NET 8+).
+
+### Usage
+
+Call the `ToMermaidEntityDiagram()` extension method on any `DbContext` instance:
+```csharp
+using MermaidSharp.EntityFrameworkCore;
+var diagram = myDbContext.ToMermaidEntityDiagram(); string result = diagram.CalculateDiagram();
+```
+
+### Customization with `EntityRelationshipDiagramOptions`
+
+Pass an `EntityRelationshipDiagramOptions` instance to control what is included in the diagram:
+```csharp
+var options = new EntityRelationshipDiagramOptions
+{
+    // Include entity columns (default: true)
+    IncludeColumns = true,
+    // Show PK/FK/UK annotations (default: true)
+    IncludeColumnKeyTypes = true,
+    // Show column comments (default: true)
+    IncludeColumnComments = true,
+    // Show relationships between entities (default: true)
+    IncludeLinks = true,
+    // Show foreign key name on links (default: true)
+    IncludeLinkLabels = true,
+    // Append delete behavior to link labels (default: true)
+    IncludeLinkDeleteBehaviors = true,
+    // Only show PK and FK columns
+    FilterColumnByKeyTypes = RelationConstraintType.PrimaryKey | RelationConstraintType.ForeignKey
+};
+var diagram = myDbContext.ToMermaidEntityDiagram(options); string result = diagram.CalculateDiagram();
+```
+
+### What is generated automatically
+
+| Feature | Description |
+|---|---|
+| **Entities** | One node per non-owned entity type, ordered alphabetically |
+| **Columns** | Properties with their CLR type name, PK/FK/UK annotation, and optional comment |
+| **Owned entities** | Owned entity properties are inlined into the parent entity (EF Core only) |
+| **Relationships** | Foreign key links with cardinality automatically inferred from `IsRequired` and `IsUnique` |
+| **Delete behaviors** | Cascade, Restrict, etc. appended to the link label |
+
 ## Sample Projects
 
 - [MermaidSharp.MVCWeb](src/MermaidSharp.MVCWeb): Sample ASP.NET Core MVC web application demonstrating MermaidSharp usage.
