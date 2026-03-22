@@ -27,6 +27,26 @@ namespace MermaidSharp.EntityFramework.Tests
         }
 
         [TestMethod]
+        public void GenerateIdentityDiagram()
+        {
+            // Arrange
+            var context = new DatabaseIdentityContextMock(_connection, false);
+            var diagram = context.ToMermaidEntityDiagram();
+            var expected = @"erDiagram
+    User {
+        Int32 Id PK
+        String Name
+    }";
+
+            // Act
+            var result = diagram.CalculateDiagram();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
         public void GenerateDiagram()
         {
             // Arrange
