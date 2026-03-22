@@ -56,6 +56,7 @@ namespace MermaidSharp.EntityFrameworkCore.Tests
     User {
         Int32 Id PK
         Int32 AccessFailedCount
+        Int32 AuditId FK
         String ConcurrencyStamp
         String Email
         Boolean EmailConfirmed
@@ -70,12 +71,20 @@ namespace MermaidSharp.EntityFrameworkCore.Tests
         Boolean TwoFactorEnabled
         String UserName
     }
+    UserAuditInfo {
+        Int32 Id PK
+        DateTime CreatedAt
+        Int32 CreatedBy
+        DateTime ModifiedAt
+        Int32 ModifiedBy
+    }
     IdentityRoleClaim }|--|| IdentityRole : ""RoleId (Cascade)""
     IdentityUserClaim }|--|| User : ""UserId (Cascade)""
     IdentityUserLogin }|--|| User : ""UserId (Cascade)""
     IdentityUserRole }|--|| IdentityRole : ""RoleId (Cascade)""
     IdentityUserRole }|--|| User : ""UserId (Cascade)""
-    IdentityUserToken }|--|| User : ""UserId (Cascade)""";
+    IdentityUserToken }|--|| User : ""UserId (Cascade)""
+    User }|--|| UserAuditInfo : ""AuditId (Cascade)""";
 
             // Act
             var diagram = context.ToMermaidEntityDiagram();
