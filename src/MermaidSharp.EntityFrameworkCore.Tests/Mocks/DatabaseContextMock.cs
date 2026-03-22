@@ -8,7 +8,7 @@ namespace MermaidSharp.EntityFrameworkCore.Tests.Mock
         public DatabaseContextMock(DbContextOptions<DatabaseContextMock> options) : base(options)
         {
         }
-
+        
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Teacher> Teachers => Set<Teacher>();
         public DbSet<SchoolClass> SchoolClasses => Set<SchoolClass>();
@@ -86,6 +86,7 @@ namespace MermaidSharp.EntityFrameworkCore.Tests.Mock
                       .HasForeignKey(s => s.StudentId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

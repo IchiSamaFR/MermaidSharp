@@ -8,6 +8,94 @@ namespace MermaidSharp.EntityFrameworkCore.Tests
     public class DiagramTests
     {
         [TestMethod]
+        public void GenerateIdentityDiagram()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<DatabaseIdentityContextMock>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var context = new DatabaseIdentityContextMock(options);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            var expected = @"erDiagram
+    IdentityRole {
+        Int32 Id PK
+        String ConcurrencyStamp
+        String Name
+        String NormalizedName UK
+    }
+    IdentityRoleClaim {
+        Int32 Id PK
+        String ClaimType
+        String ClaimValue
+        Int32 RoleId FK
+    }
+    IdentityUserClaim {
+        Int32 Id PK
+        String ClaimType
+        String ClaimValue
+        Int32 UserId FK
+    }
+    IdentityUserLogin {
+        String LoginProvider PK
+        String ProviderKey PK
+        String ProviderDisplayName
+        Int32 UserId FK
+    }
+    IdentityUserRole {
+        Int32 RoleId PK, FK
+        Int32 UserId PK, FK
+    }
+    IdentityUserToken {
+        String LoginProvider PK
+        String Name PK
+        Int32 UserId PK, FK
+        String Value
+    }
+    User {
+        Int32 Id PK
+        Int32 AccessFailedCount
+        Int32 AuditId FK
+        String ConcurrencyStamp
+        String Email
+        Boolean EmailConfirmed
+        Boolean LockoutEnabled
+        DateTimeOffset LockoutEnd
+        String NormalizedEmail
+        String NormalizedUserName UK
+        String PasswordHash
+        String PhoneNumber
+        Boolean PhoneNumberConfirmed
+        String SecurityStamp
+        Boolean TwoFactorEnabled
+        String UserName
+    }
+    UserAuditInfo {
+        Int32 Id PK
+        DateTime CreatedAt
+        Int32 CreatedBy
+        DateTime ModifiedAt
+        Int32 ModifiedBy
+    }
+    IdentityRoleClaim }|--|| IdentityRole : ""RoleId (Cascade)""
+    IdentityUserClaim }|--|| User : ""UserId (Cascade)""
+    IdentityUserLogin }|--|| User : ""UserId (Cascade)""
+    IdentityUserRole }|--|| IdentityRole : ""RoleId (Cascade)""
+    IdentityUserRole }|--|| User : ""UserId (Cascade)""
+    IdentityUserToken }|--|| User : ""UserId (Cascade)""
+    User }|--|| UserAuditInfo : ""AuditId (Cascade)""";
+
+            // Act
+            var diagram = context.ToMermaidEntityDiagram();
+            var result = diagram.CalculateDiagram();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
         public void GenerateDiagram()
         {
             // Arrange
