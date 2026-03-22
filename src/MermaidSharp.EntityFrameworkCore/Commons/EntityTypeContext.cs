@@ -48,7 +48,7 @@ namespace MermaidSharp.EntityFrameworkCore.Contexts
         {
             _entityType = entityType;
             ClrType = _entityType.ClrType;
-            Name = _entityType.ClrType.Name;
+            Name = _entityType.ClrType.Name.Split('`').FirstOrDefault() ?? _entityType.Name;
             IsOwned = _entityType.IsOwned();
             Properties = _entityType.GetProperties()
                 .Select(p => new PropertyTypeContext(p))
