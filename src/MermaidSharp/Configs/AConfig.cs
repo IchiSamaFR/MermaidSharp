@@ -2,9 +2,6 @@
 using MermaidSharp.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MermaidSharp.Configs
 {
@@ -46,7 +43,7 @@ namespace MermaidSharp.Configs
             var paramsList = GetParams();
             if (paramsList.Count == 0)
                 return string.Empty;
-            
+
             paramsList.Insert(0, $"{Name}:");
 
             // Surround parameters with "---" to create a block in Mermaid syntax

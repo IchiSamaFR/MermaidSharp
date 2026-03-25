@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MermaidSharp.Models
+﻿namespace MermaidSharp.Models
 {
     /// <summary>
     /// Represents a Git merge action for merging a specified branch into the current branch within a Mermaid diagram context.
