@@ -48,7 +48,7 @@ namespace MermaidSharp.Diagrams
         public override string CalculateDiagram()
         {
             var lines = new List<string>();
-            lines.Add(GetTitleString());
+            lines.Add(GetHeaderString());
             lines.Add($"{Name} {Direction.StartString()}");
 
             lines.AddRange(SubGraphs.Select(sg => sg.ToString()).Indent());
