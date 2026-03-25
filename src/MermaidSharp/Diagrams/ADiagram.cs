@@ -11,10 +11,8 @@ namespace MermaidSharp.Diagrams
     /// Represents the base class for diagram types that consist of nodes and links, providing common functionality for
     /// diagram generation.
     /// </summary>
-    public abstract class ADiagram
+    public abstract class ADiagram : AMermaid
     {
-        public abstract string Name { get; }
-        public string Title { get; set; }
         public List<ANode> Nodes { get; } = new List<ANode>();
         public List<ALink> Links { get; } = new List<ALink>();
 
@@ -31,10 +29,10 @@ namespace MermaidSharp.Diagrams
         /// Given a list of nodes and links, calculate the mermaid flowchart
         /// </summary>
         /// <returns>a mermaid graph as a string</returns>
-        public virtual string CalculateDiagram()
+        public override string CalculateDiagram()
         {
             var lines = new List<string>();
-            lines.Add(GetTitleString());
+            lines.Add(GetHeaderString());
             lines.Add(Name);
 
             lines.AddRange(Nodes.Select(n => n.ToString()).Indent());
@@ -42,19 +40,6 @@ namespace MermaidSharp.Diagrams
             lines.AddRange(Nodes.Select(n => n.ToClassString()).Indent());
 
             return string.Join(Environment.NewLine, lines.ClearNewLines());
-        }
-
-        protected string GetTitleString()
-        {
-            if (string.IsNullOrEmpty(Title))
-            {
-                return string.Empty;
-            }
-            var lines = new List<string>();
-            lines.Add(FormattingConstants.TitleSeparator);
-            lines.Add($"title: {Title}");
-            lines.Add(FormattingConstants.TitleSeparator);
-            return string.Join(Environment.NewLine, lines);
         }
     }
 }
