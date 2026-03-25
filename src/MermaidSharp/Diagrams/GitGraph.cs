@@ -33,7 +33,14 @@ namespace MermaidSharp.Diagrams
         /// <summary>
         /// Gets the name of the main branch used by the configuration.
         /// </summary>
-        public string MainBranch => Config?.MainBranchName ?? "main";
+        public string MainBranch
+        {
+            get
+            {
+                var mainBranchName = Config?.MainBranchName;
+                return string.IsNullOrWhiteSpace(mainBranchName) ? "main" : mainBranchName;
+            }
+        }
         /// <summary>
         /// Gets the collection of actions associated with this instance.
         /// </summary>
