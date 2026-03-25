@@ -26,6 +26,7 @@ namespace MermaidSharp.Models
         /// <param name="text">The display text or label for the class node. This parameter is optional.</param>
         /// <param name="properties">A list of properties associated with the class. If null, an empty list is used.</param>
         /// <param name="methods">A list of methods associated with the class. If null, an empty list is used.</param>
+        /// <param name="cssClass">The CSS class to apply to the class node for styling purposes. This parameter is optional.</param>
         public ClassNode(string name, string type = "", string text = "", List<ClassProperty> properties = null, List<ClassMethod> methods = null, string cssClass = "") : base(name, text, cssClass)
         {
             Type = type;
