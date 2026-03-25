@@ -7,9 +7,21 @@ using System.Threading.Tasks;
 
 namespace MermaidSharp.Diagrams
 {
+    /// <summary>
+    /// Represents the base class for Mermaid diagram generators, providing common properties and methods for creating
+    /// and formatting diagram output.
+    /// </summary>
+    /// <remarks>Derive from this class to implement specific types of Mermaid diagrams. This class defines
+    /// the contract for generating diagram content and managing diagram titles.</remarks>
     public abstract class AMermaid
     {
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
         public abstract string Name { get; }
+        /// <summary>
+        /// Gets or sets the title associated with the object.
+        /// </summary>
         public string Title { get; set; }
 
         /// <summary>
@@ -42,6 +54,10 @@ namespace MermaidSharp.Diagrams
             return string.Join(Environment.NewLine, lines);
         }
 
+        /// <summary>
+        /// Generates the complete Mermaid diagram as a formatted string.
+        /// </summary>
+        /// <returns>A string containing the full Mermaid diagram.</returns>
         public abstract string CalculateDiagram();
     }
 }
