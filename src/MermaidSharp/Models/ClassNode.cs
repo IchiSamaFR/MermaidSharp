@@ -13,8 +13,17 @@ namespace MermaidSharp.Models
     /// detailed representation of class definitions in UML or class diagrams.</remarks>
     public class ClassNode : ANode
     {
+        /// <summary>
+        /// Gets or sets the type or category of the class.
+        /// </summary>
         public string Type { get; set; }
+        /// <summary>
+        /// Gets the collection of properties defined for the class.
+        /// </summary>
         public List<ClassProperty> Properties { get; }
+        /// <summary>
+        /// Gets the collection of methods defined for the class.
+        /// </summary>
         public List<ClassMethod> Methods { get; }
 
         /// <summary>
@@ -34,6 +43,9 @@ namespace MermaidSharp.Models
             Methods = methods ?? new List<ClassMethod>();
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             var lines = new List<string>();

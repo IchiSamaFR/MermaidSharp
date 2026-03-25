@@ -12,8 +12,17 @@ namespace MermaidSharp.Models
     /// information.</remarks>
     public class EntityRelationLink : ALink
     {
+        /// <summary>
+        /// Gets the label associated with the relationship.
+        /// </summary>
         public string Label { get; }
+        /// <summary>
+        /// Gets the type of relation that originates from the source element.
+        /// </summary>
         public RelationLinkType SourceRelation { get; }
+        /// <summary>
+        /// Gets the type of relation that points to the destination element.
+        /// </summary>
         public RelationLinkType DestinationRelation { get; }
 
         /// <summary>
@@ -40,6 +49,9 @@ namespace MermaidSharp.Models
             Label = label;
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             string label = !string.IsNullOrEmpty(Label) ? $": \"{Label}\"" : string.Empty;
@@ -47,7 +59,7 @@ namespace MermaidSharp.Models
             var returnedParts = new string[]
             {
                 SourceNode,
-                $"{SourceRelation.StartString()}--{DestinationRelation.EndString()}",
+                $"{SourceRelation.PrimaryString()}--{DestinationRelation.SecondaryString()}",
                 DestinationNode,
                 label
             };

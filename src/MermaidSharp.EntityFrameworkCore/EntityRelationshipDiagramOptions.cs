@@ -2,6 +2,12 @@ using MermaidSharp.Enums;
 
 namespace MermaidSharp.EntityFrameworkCore
 {
+    /// <summary>
+    /// Represents configuration options for generating entity-relationship diagrams in Mermaid flowcharts.
+    /// </summary>
+    /// <remarks>Use this class to customize the inclusion of columns, key types, comments, links, and related
+    /// metadata when generating entity-relationship diagrams. Adjust the properties to control the level of detail and
+    /// filtering applied to the generated output.</remarks>
     public class EntityRelationshipDiagramOptions
     {
         /// <summary>

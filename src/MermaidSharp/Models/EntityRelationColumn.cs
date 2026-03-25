@@ -11,9 +11,21 @@ namespace MermaidSharp.Models
     /// indicates its role in the relationship, such as primary key, foreign key, or none.</remarks>
     public class EntityRelationColumn
     {
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the data type of the column.
+        /// </summary>
         public string Type { get; set; }
+        /// <summary>
+        /// Gets or sets the key type of the column, indicating its role in the entity relation.
+        /// </summary>
         public RelationConstraintType ColumnKeyType { get; set; }
+        /// <summary>
+        /// Gets or sets the comment associated with the column.
+        /// </summary>
         public string Comment { get; set; }
 
         /// <summary>
@@ -32,6 +44,9 @@ namespace MermaidSharp.Models
             Comment = comment;
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             var comment = !string.IsNullOrEmpty(Comment) ? $"\"{Comment}\"" : string.Empty;
@@ -40,7 +55,7 @@ namespace MermaidSharp.Models
             {
                 Type,
                 Name,
-                ColumnKeyType.StartString(),
+                ColumnKeyType.PrimaryString(),
                 comment
             };
             return returnedParts.JoinNonEmpty(" ");

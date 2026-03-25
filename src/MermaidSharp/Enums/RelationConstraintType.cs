@@ -13,6 +13,7 @@ namespace MermaidSharp.Enums
     [Flags]
     public enum RelationConstraintType
     {
+#pragma warning disable CS1591
         None = 0,
 
         [MermaidEnum("PK")]
@@ -35,5 +36,6 @@ namespace MermaidSharp.Enums
 
         [MermaidEnum("PK, FK, UK")]
         PrimaryKeyForeignKeyUniqueKey = PrimaryKey | ForeignKey | UniqueKey,
+#pragma warning restore CS1591
     }
 }

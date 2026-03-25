@@ -10,6 +10,7 @@ namespace MermaidSharp.Enums
     /// syntax in Mermaid diagrams.</remarks>
     public enum ClassLinkType
     {
+#pragma warning disable CS1591
         [MermaidEnum("<|--")]
         Inheritance,
 
@@ -33,5 +34,6 @@ namespace MermaidSharp.Enums
 
         [MermaidEnum("..")]
         DashedLink
+#pragma warning restore CS1591
     }
 }

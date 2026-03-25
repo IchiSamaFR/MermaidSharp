@@ -15,10 +15,23 @@ namespace MermaidSharp.Models
     /// as left-to-right or top-to-bottom, to control the visual arrangement of its elements.</remarks>
     public class FlowSubGraph
     {
+        /// <summary>
+        /// Gets or sets the name of the subgraph.
+        /// </summary>
         public string Name { get; set; }
-        //Can be TB, BT, RL, LR (default: LR) (Top/Bottom/Left/Right, respectively)
+
+        /// <summary>
+        /// Gets or sets the flow direction for the diagram layout.
+        /// </summary>
         public FlowDirection Direction { get; set; }
+
+        /// <summary>
+        /// Gets the collection of nodes contained in the current structure.
+        /// </summary>
         public List<FlowNode> Nodes { get; }
+        /// <summary>
+        /// Gets the collection of links associated with the current instance.
+        /// </summary>
         public List<FlowLink> Links { get; }
 
         /// <summary>
@@ -39,13 +52,16 @@ namespace MermaidSharp.Models
             Direction = direction;
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             var lines = new List<string>();
             lines.Add($"subgraph {Name}");
             if (Direction != FlowDirection.None)
             {
-                lines.Add($"direction {Direction.StartString()}");
+                lines.Add($"direction {Direction.PrimaryString()}");
             }
             lines.AddRange(Nodes.Select(n => n.ToString()));
             lines.AddRange(Links.Select(n => n.ToString()));

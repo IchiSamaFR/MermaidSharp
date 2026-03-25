@@ -9,7 +9,13 @@ namespace MermaidSharp.Models
     /// documentation. The type information may be empty if not specified.</remarks>
     public class ClassMethodParam
     {
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the type of the method parameter.
+        /// </summary>
         public string Type { get; set; }
 
         /// <summary>
@@ -23,6 +29,9 @@ namespace MermaidSharp.Models
             Type = type;
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             var returnedParts = new string[]

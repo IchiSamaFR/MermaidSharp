@@ -12,7 +12,14 @@ namespace MermaidSharp.Models
     /// while the label provides additional context or description for the link.</remarks>
     public class ClassLink : ALink
     {
+        /// <summary>
+        /// Gets or sets the label associated with the element.
+        /// </summary>
         public string Label { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of link represented by the class association.
+        /// </summary>
         public ClassLinkType LinkType { get; set; }
 
         /// <summary>
@@ -29,6 +36,9 @@ namespace MermaidSharp.Models
             Label = label;
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             if (string.IsNullOrEmpty(Label))
@@ -38,9 +48,13 @@ namespace MermaidSharp.Models
             return $"{SourceNode}{GetLink()}{DestinationNode} : {Label}";
         }
 
+        /// <summary>
+        /// Retrieves the link associated with the current instance.
+        /// </summary>
+        /// <returns>A string representing the primary link type.</returns>
         protected override string GetLink()
         {
-            return LinkType.StartString();
+            return LinkType.PrimaryString();
         }
     }
 }

@@ -12,7 +12,13 @@ namespace MermaidSharp.Models
     /// contained classes can be accessed and modified as needed.</remarks>
     public class ClassNamespace
     {
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Gets the collection of class nodes associated with the namespace.
+        /// </summary>
         public List<ClassNode> Classes { get; }
 
         /// <summary>
@@ -27,6 +33,9 @@ namespace MermaidSharp.Models
             Classes = classes ?? new List<ClassNode>();
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             var lines = new List<string>();

@@ -10,8 +10,14 @@ namespace MermaidSharp.Attributes
     /// diagram generation.</remarks>
     public class MermaidEnumAttribute : Attribute
     {
-        public string Start { get; }
-        public string End { get; }
+        /// <summary>
+        /// Gets the primary value associated with this instance.
+        /// </summary>
+        public string Primary { get; }
+        /// <summary>
+        /// Gets the secondary value associated with this instance.
+        /// </summary>
+        public string Secondary { get; }
 
         /// <summary>
         /// Initializes a new instance of the MermaidEnumAttribute class with optional start and end delimiters for the
@@ -23,8 +29,8 @@ namespace MermaidSharp.Attributes
         /// applied.</param>
         public MermaidEnumAttribute(string start = "", string end = "")
         {
-            Start = start;
-            End = string.IsNullOrEmpty(end) ? start : end;
+            Primary = start;
+            Secondary = string.IsNullOrEmpty(end) ? start : end;
         }
     }
 }

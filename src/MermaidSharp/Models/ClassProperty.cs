@@ -11,8 +11,17 @@ namespace MermaidSharp.Models
     /// the property is exposed in the class definition.</remarks>
     public class ClassProperty
     {
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the type of the property.
+        /// </summary>
         public string Type { get; set; }
+        /// <summary>
+        /// Gets or sets the visibility level of the class property.
+        /// </summary>
         public ClassPropertyVisibility Visibility { get; set; }
 
         /// <summary>
@@ -29,9 +38,12 @@ namespace MermaidSharp.Models
             Visibility = visibility;
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
-            var visibilitySymbol = Visibility.StartString();
+            var visibilitySymbol = Visibility.PrimaryString();
             return $"{visibilitySymbol}{Type.FormatAngleBracket()} {Name}";
         }
     }

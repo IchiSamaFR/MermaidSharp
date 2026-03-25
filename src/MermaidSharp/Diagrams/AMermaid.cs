@@ -15,7 +15,7 @@ namespace MermaidSharp.Diagrams
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
-        public abstract string Name { get; }
+        protected abstract string Name { get; }
         /// <summary>
         /// Gets or sets the title associated with the object.
         /// </summary>

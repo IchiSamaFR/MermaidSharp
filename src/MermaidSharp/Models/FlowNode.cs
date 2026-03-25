@@ -12,7 +12,13 @@ namespace MermaidSharp.Models
     /// that require nodes with distinct shapes or interactive capabilities.</remarks>
     public class FlowNode : ANode
     {
+        /// <summary>
+        /// Gets or sets the shape type used to render the flow node.
+        /// </summary>
         public FlowNodeShapeType Shape { get; set; }
+        /// <summary>
+        /// Gets or sets the click action associated with the flow node.
+        /// </summary>
         public string ClickAction { get; set; }
 
         /// <summary>
@@ -33,6 +39,13 @@ namespace MermaidSharp.Models
             ClickAction = clickAction;
         }
 
+        /// <summary>
+        /// Generates a Mermaid click directive string for the current node if a click action is defined.
+        /// </summary>
+        /// <remarks>Use this method to produce a valid Mermaid syntax for node click actions. If no click
+        /// action is set, the method returns an empty string, indicating that no click directive should be
+        /// rendered.</remarks>
+        /// <returns>A Mermaid click directive string if a click action is specified; otherwise, an empty string.</returns>
         public string ToClickString()
         {
             if (string.IsNullOrEmpty(ClickAction))
@@ -42,9 +55,13 @@ namespace MermaidSharp.Models
             return $"click {Name} \"{ClickAction}\"";
         }
 
+        /// <summary>
+        /// Generates the text surrounded by the primary and secondary shape delimiters.
+        /// </summary>
+        /// <returns>A string consisting of the primary shape delimiter, the text, and the secondary shape delimiter.</returns>
         protected override string GetSurroundedText()
         {
-            return $"{Shape.StartString()}{Text}{Shape.EndString()}";
+            return $"{Shape.PrimaryString()}{Text}{Shape.SecondaryString()}";
         }
     }
 }

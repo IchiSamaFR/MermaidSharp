@@ -14,8 +14,14 @@ namespace MermaidSharp.Diagrams
     /// class diagram generation.</remarks>
     public class ClassDiagram : ADiagram
     {
-        public override string Name => "classDiagram";
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
+        protected override string Name => "classDiagram";
 
+        /// <summary>
+        /// Gets the collection of class namespaces represented in the model.
+        /// </summary>
         public List<ClassNamespace> Namespaces { get; } = new List<ClassNamespace>();
 
         /// <summary>
@@ -27,6 +33,10 @@ namespace MermaidSharp.Diagrams
         {
         }
 
+        /// <summary>
+        /// Generates the complete Mermaid diagram as a formatted string.
+        /// </summary>
+        /// <returns>A string containing the full Mermaid diagram.</returns>
         public override string CalculateDiagram()
         {
             var lines = new List<string>();

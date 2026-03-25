@@ -10,6 +10,7 @@ namespace MermaidSharp.Enums
     /// diagram.</remarks>
     public enum FlowLinkArrowType
     {
+#pragma warning disable CS1591
         [MermaidEnum("<", ">")]
         Normal,
 
@@ -18,5 +19,6 @@ namespace MermaidSharp.Enums
 
         [MermaidEnum("x")]
         Cross
+#pragma warning restore CS1591
     }
 }

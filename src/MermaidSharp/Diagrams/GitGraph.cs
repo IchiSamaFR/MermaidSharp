@@ -19,7 +19,7 @@ namespace MermaidSharp.Diagrams
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
-        public override string Name => "gitGraph";
+        protected override string Name => "gitGraph";
         /// <summary>
         /// Gets the configuration settings specific to the Git graph rendering.
         /// </summary>
