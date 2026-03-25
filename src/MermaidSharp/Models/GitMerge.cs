@@ -4,8 +4,8 @@
     /// Represents a Git merge action for merging a specified branch into the current branch within a Mermaid diagram context.
     /// </summary>
     /// <remarks>Use this class to represent a merge operation in a Git graph diagram. The resulting graph can be used to
-    /// generate Mermaid diagrams for documentation or visualization purposes. The class enforces branch existence and naming
-    /// constraints to ensure valid Git graph construction.</remarks>
+    /// generate Mermaid diagrams for documentation or visualization purposes. This class does not perform validation of branch
+    /// existence or naming; such validation should be handled by the caller or a higher-level component.</remarks>
     public class GitMerge : AGitAction
     {
         /// <summary>
