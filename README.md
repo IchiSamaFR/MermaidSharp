@@ -26,6 +26,13 @@ MermaidSharp is a comprehensive .NET wrapper to create [Mermaid](https://mermaid
 - **Namespaces**: Organize classes within namespaces
 - **Methods**: Support for parameters and return types
 
+### Git Graphs
+- **Branches**: Create and manage multiple branches
+- **Commits**: Add commits with optional identifiers and tags
+- **Merges**: Merge branches with optional tag annotations
+- **Checkouts**: Switch between branches
+- **Configuration**: Customize main branch name and diagram appearance
+
 ## Getting Started
 
 ### Prerequisites
@@ -295,6 +302,64 @@ classDiagram
         +Fetch()
     }
     Animal<|--Dog : extends
+```
+
+### Git Graph Example
+
+Example showing a typical Git workflow with feature branches and merges:
+
+```csharp
+using MermaidSharp.Diagrams;
+
+var gitGraph = new GitGraph();
+gitGraph
+    .Commit("Initial commit")
+    .Branch("develop")
+    .Checkout("develop")
+    .Commit("Add feature structure")
+    .Branch("feature/login")
+    .Checkout("feature/login")
+    .Commit("Implement login UI")
+    .Commit("Add authentication", "v0.1")
+    .Checkout("develop")
+    .Merge("feature/login")
+    .Checkout("main")
+    .Merge("develop", "v1.0");
+string result = gitGraph.CalculateDiagram();
+```
+
+Resulting Mermaid code:
+```
+gitGraph
+    commit id: "Initial commit"
+    branch develop
+    checkout develop
+    commit id: "Add feature structure"
+    branch feature/login
+    checkout feature/login
+    commit id: "Implement login UI"
+    commit id: "Add authentication" tag: "v0.1"
+    checkout develop
+    merge feature/login
+    checkout main
+    merge develop tag: "v1.0"
+```
+
+When rendered in mermaid:
+```mermaid
+gitGraph
+    commit id: "Initial commit"
+    branch develop
+    checkout develop
+    commit id: "Add feature structure"
+    branch feature/login
+    checkout feature/login
+    commit id: "Implement login UI"
+    commit id: "Add authentication" tag: "v0.1"
+    checkout develop
+    merge feature/login
+    checkout main
+    merge develop tag: "v1.0"
 ```
 
 ## HTML Integration
