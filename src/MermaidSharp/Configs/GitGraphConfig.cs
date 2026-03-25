@@ -62,13 +62,13 @@ namespace MermaidSharp.Configs
             var lst = new List<string>();
 
             if (ShowCommitLabel != null)
-                lst.Add($"showCommitLabel: {ShowCommitLabel.ToString().ToLower()}");
+                lst.Add($"showCommitLabel: {ShowCommitLabel.ToString().ToLowerInvariant()}");
 
             if (ShowBranches != null)
-                lst.Add($"showBranches: {ShowBranches.ToString().ToLower()}");
+                lst.Add($"showBranches: {ShowBranches.ToString().ToLowerInvariant()}");
 
             if (RotateCommitLabel != null)
-                lst.Add($"rotateCommitLabel: {RotateCommitLabel.ToString().ToLower()}");
+                lst.Add($"rotateCommitLabel: {RotateCommitLabel.ToString().ToLowerInvariant()}");
 
             if (!string.IsNullOrWhiteSpace(MainBranchName))
                 lst.Add($"mainBranchName: {MainBranchName}");
