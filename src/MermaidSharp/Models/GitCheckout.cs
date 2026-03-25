@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MermaidSharp.Models
+﻿namespace MermaidSharp.Models
 {
     /// <summary>
     /// Represents a Git checkout action for switching to a specified branch within a Mermaid diagram context.
@@ -20,7 +14,7 @@ namespace MermaidSharp.Models
         /// Gets the name of the branch to switch.
         /// </summary>
         public string Branch { get; }
-        
+
         /// <summary>
         /// Initializes a new instance with the specified branch name.
         /// </summary>

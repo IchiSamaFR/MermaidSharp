@@ -1,11 +1,6 @@
 ﻿using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace MermaidSharp.Configs
 {
@@ -78,7 +73,7 @@ namespace MermaidSharp.Configs
             if (!string.IsNullOrWhiteSpace(MainBranchName))
                 lst.Add($"mainBranchName: {MainBranchName}");
 
-            if(lst.Count == 0)
+            if (lst.Count == 0)
                 return baseLst;
 
             lst = lst.Indent();

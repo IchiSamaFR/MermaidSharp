@@ -1,11 +1,4 @@
-﻿using MermaidSharp.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MermaidSharp.Models
+﻿namespace MermaidSharp.Models
 {
     /// <summary>
     /// Represents a Git commit action with an associated identifier and tag for use in Mermaid diagrams.

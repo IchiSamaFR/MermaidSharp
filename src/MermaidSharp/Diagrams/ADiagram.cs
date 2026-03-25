@@ -1,4 +1,3 @@
-using MermaidSharp.Constants;
 using MermaidSharp.Extensions;
 using MermaidSharp.Models;
 using System;

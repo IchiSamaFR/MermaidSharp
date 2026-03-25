@@ -1,11 +1,4 @@
-﻿using MermaidSharp.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MermaidSharp.Models
+﻿namespace MermaidSharp.Models
 {
     /// <summary>
     /// Represents the base class for actions that can be rendered as Mermaid syntax elements.
