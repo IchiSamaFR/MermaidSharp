@@ -1,4 +1,5 @@
 ﻿using MermaidSharp.Configs;
+using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using MermaidSharp.Models;
 using System;
@@ -20,6 +21,7 @@ namespace MermaidSharp.Diagrams
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
         protected override string Name => "gitGraph";
+
         /// <summary>
         /// Gets the configuration settings specific to the Git graph rendering.
         /// </summary>
@@ -41,14 +43,22 @@ namespace MermaidSharp.Diagrams
                 return string.IsNullOrWhiteSpace(mainBranchName) ? "main" : mainBranchName;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the direction of the Git operation.
+        /// </summary>
+        public GitDirection Direction { get; set; }
+
         /// <summary>
         /// Gets the collection of actions associated with this instance.
         /// </summary>
         public IReadOnlyList<AGitAction> Actions => _actions;
+
         /// <summary>
         /// Gets the collection of branch names associated with the current instance.
         /// </summary>
         public IReadOnlyList<string> Branches => _branches;
+
         /// <summary>
         /// Gets the collection of tag names associated with the current instance.
         /// </summary>
@@ -58,9 +68,12 @@ namespace MermaidSharp.Diagrams
         /// Initializes a new instance of the GitGraph class with the specified title and configuration.
         /// </summary>
         /// <param name="title">The title to display for the Git graph. If not specified, the title is empty.</param>
+        /// <param name="direction">The direction of the Git graph. If not specified, the direction is set to None.</param>
         /// <param name="config">The configuration settings to apply to the Git graph. If null, default settings are used.</param>
-        public GitGraph(string title = "", GitGraphConfig config = null) : base(title, config)
+        public GitGraph(string title = "", GitDirection direction = GitDirection.None, GitGraphConfig config = null)
+            : base(title, config)
         {
+            Direction = direction;
         }
 
         /// <summary>
@@ -80,7 +93,10 @@ namespace MermaidSharp.Diagrams
         {
             var lines = new List<string>();
             lines.Add(GetHeaderString());
-            lines.Add(Name);
+            var name = Name;
+            if (Direction != GitDirection.None)
+                name += $" {Direction.PrimaryString()}:";
+            lines.Add(name);
 
             lines.AddRange(Actions.Select(n => n.ToString()).Indent());
 
@@ -126,13 +142,14 @@ namespace MermaidSharp.Diagrams
         /// </summary>
         /// <param name="id">The unique identifier for the commit to add.</param>
         /// <param name="tag">An optional tag to associate with the commit. If not specified, no tag is added.</param>
+        /// <param name="commitType">The type of the commit, which may affect its visual representation in the diagram.</param>
         /// <returns>The current instance of the graph, enabling method chaining.</returns>
-        public GitGraph Commit(string id, string tag = "")
+        public GitGraph Commit(string id, string tag = "", GitCommitType commitType = GitCommitType.None)
         {
             if (!string.IsNullOrWhiteSpace(id) && _commits.Contains(id))
                 throw new InvalidOperationException($"Commit '{id}' already exists.");
 
-            _actions.Add(new GitCommit(id, tag));
+            _actions.Add(new GitCommit(id, tag, commitType));
 
             if (!string.IsNullOrWhiteSpace(tag))
                 _tags.Add(tag);
@@ -144,9 +161,11 @@ namespace MermaidSharp.Diagrams
         /// </summary>
         /// <param name="branch">The name of the branch to merge into the current branch. Must refer to an existing branch or the main
         /// branch.</param>
+        /// <param name="id">The unique identifier for the merge commit to add.</param>
         /// <param name="tag">An optional tag to associate with the merge. If specified, the tag is added to the graph.</param>
+        /// <param name="commitType">The type of the commit, which may affect its visual representation in the diagram.</param>
         /// <returns>The current GitGraph instance, enabling method chaining.</returns>
-        public GitGraph Merge(string branch, string tag = "")
+        public GitGraph Merge(string branch, string id = "", string tag = "", GitCommitType commitType = GitCommitType.None)
         {
             if (string.IsNullOrWhiteSpace(branch))
                 throw new ArgumentException("Branch name cannot be null or whitespace.", nameof(branch));
@@ -154,11 +173,68 @@ namespace MermaidSharp.Diagrams
             if (Branches.All(b => b != branch) && branch != MainBranch)
                 throw new InvalidOperationException($"Branch '{branch}' does not exist. Please create it first using Branch('{branch}').");
 
-            _actions.Add(new GitMerge(branch, tag));
+            _actions.Add(new GitMerge(branch, id, tag, commitType));
 
             if (!string.IsNullOrWhiteSpace(tag))
                 _tags.Add(tag);
             return this;
+        }
+
+        /// <summary>
+        /// Applies a cherry-pick of the specified commit to the current branch.
+        /// </summary>
+        /// <remarks>
+        /// When <paramref name="commitId"/> refers to a merge commit (matched by its id in the graph),
+        /// the parent id is resolved automatically by finding the last commit with an id on the merged branch
+        /// before the merge occurred.
+        /// </remarks>
+        /// <param name="commitId">The identifier of the commit to cherry-pick. Cannot be null or whitespace.</param>
+        /// <param name="tag">An optional tag to associate with the cherry-pick operation. If specified, the tag is added to the graph.</param>
+        /// <returns>The current GitGraph instance, enabling method chaining.</returns>
+        public GitGraph CherryPick(string commitId, string tag = "")
+        {
+            if (string.IsNullOrWhiteSpace(commitId))
+                throw new ArgumentException("Commit ID cannot be null or whitespace.", nameof(commitId));
+
+            var parentId = string.Empty;
+            var mergeReference = Actions.OfType<GitMerge>().FirstOrDefault(m => m.Id == commitId);
+            if (mergeReference != null)
+            {
+                // For a merge commit, the parent must be the last commit with an id on the merged branch
+                parentId = FindLastCommitOnBranch(mergeReference.Branch, mergeReference);
+
+                if (string.IsNullOrWhiteSpace(parentId))
+                    throw new InvalidOperationException(
+                        $"Cannot cherry-pick merge '{commitId}': no commit with an id found on branch '{mergeReference.Branch}'. To cherry-pick a merge, ensure that the merged branch has at least one commit with an id.");
+            }
+
+            _actions.Add(new GitCherryPick(commitId, parentId, tag));
+            return this;
+        }
+
+        /// <summary>
+        /// Finds the id of the last commit made on the specified branch before the given action.
+        /// </summary>
+        /// <param name="branchName">The name of the branch to search commits on.</param>
+        /// <param name="beforeAction">The action at which to stop the search (exclusive).</param>
+        /// <returns>The id of the last commit found on the branch, or an empty string if none is found.</returns>
+        private string FindLastCommitOnBranch(string branchName, AGitAction beforeAction)
+        {
+            var currentBranch = MainBranch;
+            var lastCommitId = string.Empty;
+
+            foreach (var action in _actions)
+            {
+                if (action == beforeAction)
+                    break;
+
+                if (action is GitCheckout checkout)
+                    currentBranch = checkout.Branch;
+                else if (action is GitCommit commit && currentBranch == branchName && !string.IsNullOrWhiteSpace(commit.Id))
+                    lastCommitId = commit.Id;
+            }
+
+            return lastCommitId;
         }
     }
 }

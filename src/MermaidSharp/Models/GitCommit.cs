@@ -1,4 +1,7 @@
-﻿namespace MermaidSharp.Models
+﻿using MermaidSharp.Enums;
+using MermaidSharp.Extensions;
+
+namespace MermaidSharp.Models
 {
     /// <summary>
     /// Represents a Git commit action with an associated identifier and tag for use in Mermaid diagrams.
@@ -23,14 +26,21 @@
         public string Tag { get; }
 
         /// <summary>
+        /// Gets the type of the Git commit represented by this instance, which can be used to specify different commit types in Mermaid diagrams.
+        /// </summary>
+        public GitCommitType CommitType { get; }
+
+        /// <summary>
         /// Initializes a new instance of the GitCommit class with the specified commit identifier and tag.
         /// </summary>
         /// <param name="id">The unique identifier of the commit. If not specified, an empty string is used.</param>
         /// <param name="tag">The tag associated with the commit. If not specified, an empty string is used.</param>
-        public GitCommit(string id = "", string tag = "")
+        /// <param name="commitType">The type of the Git commit. If not specified, defaults to GitCommitType.None.</param>
+        public GitCommit(string id = "", string tag = "", GitCommitType commitType = GitCommitType.None)
         {
             Id = id;
             Tag = tag;
+            CommitType = commitType;
         }
 
         /// <summary>
@@ -39,10 +49,16 @@
         public override string ToString()
         {
             var returned = Name;
+
             if (!string.IsNullOrWhiteSpace(Id))
                 returned += $" id: \"{Id}\"";
+
             if (!string.IsNullOrWhiteSpace(Tag))
                 returned += $" tag: \"{Tag}\"";
+
+            if (CommitType != GitCommitType.None)
+                returned += $" type: {CommitType.PrimaryString()}";
+
             return returned;
         }
     }
