@@ -1,4 +1,5 @@
 ﻿using MermaidSharp.Configs;
+using MermaidSharp.Constants;
 using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using MermaidSharp.Models;
@@ -74,15 +75,6 @@ namespace MermaidSharp.Diagrams
             : base(title, config)
         {
             Direction = direction;
-        }
-
-        /// <summary>
-        /// Retrieves the string representation of the current configuration header.
-        /// </summary>
-        /// <returns>A string that represents the configuration header, or null if the configuration is not set.</returns>
-        protected override string GetHeaderString()
-        {
-            return Config?.ToString();
         }
 
         /// <summary>

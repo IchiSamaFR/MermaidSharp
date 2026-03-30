@@ -1,4 +1,5 @@
 ﻿using MermaidSharp.Configs;
+using System.Collections.Generic;
 
 namespace MermaidSharp.Diagrams
 {
@@ -23,6 +24,17 @@ namespace MermaidSharp.Diagrams
         public AGraph(string title = "", AConfig config = null) : base(title)
         {
             Config = config;
+        }
+
+        /// <summary>
+        /// Creates a list of configuration lines representing the current object's settings.
+        /// </summary>
+        /// <returns>A list of strings containing configuration lines.</returns>
+        protected override List<string> GetConfigLines()
+        {
+            var lines = base.GetConfigLines();
+            lines.AddRange(Config?.GetConfigLines() ?? new List<string>());
+            return lines;
         }
     }
 }

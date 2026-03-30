@@ -90,6 +90,115 @@ gitGraph";
 
         #endregion
 
+        #region Title
+
+        [TestMethod]
+        public void GitGraph_WithTitle()
+        {
+            //Arrange
+            var graph = new GitGraph(title: "My Git Repository");
+            graph.Commit("c1");
+
+            string expected = @"---
+title: My Git Repository
+---
+gitGraph
+    commit id: ""c1""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_WithTitleAndConfig()
+        {
+            //Arrange
+            var config = new GitGraphConfig(ConfigTheme.Dark)
+            {
+                ShowCommitLabel = true
+            };
+            var graph = new GitGraph(title: "Development Workflow", config: config);
+            graph.Commit("c1");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2");
+
+            string expected = @"---
+title: Development Workflow
+config:
+    theme: dark
+    gitGraph:
+        showCommitLabel: true
+---
+gitGraph
+    commit id: ""c1""
+    branch develop
+    checkout develop
+    commit id: ""c2""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_WithTitleAndDirection()
+        {
+            //Arrange
+            var graph = new GitGraph(title: "Feature Development", direction: GitDirection.LeftRight);
+            graph.Commit("c1");
+            graph.Branch("feature");
+            graph.Checkout("feature");
+            graph.Commit("c2");
+
+            string expected = @"---
+title: Feature Development
+---
+gitGraph LR:
+    commit id: ""c1""
+    branch feature
+    checkout feature
+    commit id: ""c2""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_EmptyTitle()
+        {
+            //Arrange
+            var graph = new GitGraph(title: "");
+            graph.Commit("c1");
+
+            string expected = @"gitGraph
+    commit id: ""c1""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
         #region Complex Workflows
 
         [TestMethod]
@@ -514,6 +623,64 @@ gitGraph LR:
     merge hotfix id: ""m2""
     checkout master
     cherry-pick id:""m2"" parent: ""c4""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_FullWorkflowWithTitle()
+        {
+            // Combines all features including title: config, direction, commit types, tags, merges with id/tag/type, cherry picks
+
+            //Arrange
+            var config = new GitGraphConfig(ConfigTheme.Forest)
+            {
+                ShowCommitLabel = true,
+                ShowBranches = true,
+                RotateCommitLabel = false,
+                MainBranchName = "master"
+            };
+            var graph = new GitGraph(title: "Complete Git Workflow", direction: GitDirection.LeftRight, config: config);
+            graph.Commit("c1", tag: "v1.0", commitType: GitCommitType.Normal);
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2", commitType: GitCommitType.Reverse);
+            graph.Commit("c3", tag: "feature");
+            graph.Checkout("master");
+            graph.Merge("develop", "m1", "v1.1", GitCommitType.Highlight);
+            graph.Branch("hotfix");
+            graph.Checkout("hotfix");
+            graph.CherryPick("c3");
+            graph.Commit("c4");
+
+            string expected = @"---
+title: Complete Git Workflow
+config:
+    theme: forest
+    gitGraph:
+        showCommitLabel: true
+        showBranches: true
+        rotateCommitLabel: false
+        mainBranchName: master
+---
+gitGraph LR:
+    commit id: ""c1"" tag: ""v1.0"" type: NORMAL
+    branch develop
+    checkout develop
+    commit id: ""c2"" type: REVERSE
+    commit id: ""c3"" tag: ""feature""
+    checkout master
+    merge develop id: ""m1"" tag: ""v1.1"" type: HIGHLIGHT
+    branch hotfix
+    checkout hotfix
+    cherry-pick id:""c3""
+    commit id: ""c4""";
 
             //Act
             string result = graph.CalculateDiagram();

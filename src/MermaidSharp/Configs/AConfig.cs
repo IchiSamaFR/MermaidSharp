@@ -35,22 +35,29 @@ namespace MermaidSharp.Configs
         /// </summary>
         public override string ToString()
         {
-            return GetConfig();
+            var lines = GetConfigLines();
+            if (lines.Count == 0)
+                return string.Empty;
+
+            lines.Insert(0, $"---");
+            lines.Add("---");
+
+            return string.Join(Environment.NewLine, lines);
         }
 
-        private string GetConfig()
+        /// <summary>
+        /// Returns the configuration lines for the current instance as a list of strings.
+        /// </summary>
+        /// <returns>A list of strings representing the configuration lines. The list is empty if there are no parameters.</returns>
+        public List<string> GetConfigLines()
         {
             var paramsList = GetParams();
             if (paramsList.Count == 0)
-                return string.Empty;
+                return new List<string>();
 
             paramsList.Insert(0, $"{Name}:");
 
-            // Surround parameters with "---" to create a block in Mermaid syntax
-            paramsList.Insert(0, "---");
-            paramsList.Add("---");
-
-            return string.Join(Environment.NewLine, paramsList);
+            return paramsList;
         }
 
         /// <summary>
@@ -62,8 +69,10 @@ namespace MermaidSharp.Configs
         protected virtual List<string> GetParams()
         {
             var lst = new List<string>();
+
             if (Theme != ConfigTheme.None)
                 lst.Add($"theme: {Theme.PrimaryString()}");
+
             return lst.Indent();
         }
     }

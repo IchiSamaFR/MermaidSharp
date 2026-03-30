@@ -55,15 +55,31 @@ namespace MermaidSharp.Diagrams
         /// otherwise, an empty string.</returns>
         protected virtual string GetHeaderString()
         {
-            if (string.IsNullOrEmpty(Title))
+            var configLines = GetConfigLines();
+            if (configLines.Count == 0)
             {
                 return string.Empty;
             }
+
             var lines = new List<string>();
             lines.Add(FormattingConstants.TitleSeparator);
-            lines.Add($"title: {Title}");
+            lines.AddRange(configLines);
             lines.Add(FormattingConstants.TitleSeparator);
             return string.Join(Environment.NewLine, lines);
+        }
+
+        /// <summary>
+        /// Creates a list of configuration lines representing the current object's settings.
+        /// </summary>
+        /// <returns>A list of strings containing configuration lines.</returns>
+        protected virtual List<string> GetConfigLines()
+        {
+            var lines = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(Title))
+                lines.Add($"title: {Title}");
+
+            return lines;
         }
 
         /// <summary>
