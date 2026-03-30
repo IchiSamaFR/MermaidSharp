@@ -46,13 +46,12 @@ namespace MermaidSharp.Tests.GitGraphs
             Assert.AreEqual(expected, result);
         }
 
-
         [TestMethod]
         public void GitGraph_EmptyConfig()
         {
             //Arrange
             var config = new GitGraphConfig(); // All properties null/None
-            var graph = new GitGraph("", config);
+            var graph = new GitGraph(config: config);
             graph.Commit("c1");
 
             string expected = @"gitGraph
@@ -72,7 +71,7 @@ namespace MermaidSharp.Tests.GitGraphs
         {
             //Arrange
             var config = new GitGraphConfig(ConfigTheme.Neutral);
-            var graph = new GitGraph("", config);
+            var graph = new GitGraph(config: config);
 
             string expected = @"---
 config:
@@ -131,7 +130,7 @@ gitGraph";
                 ShowCommitLabel = true,
                 MainBranchName = "master"
             };
-            var graph = new GitGraph("", config);
+            var graph = new GitGraph(config: config);
             graph.Commit("c1");
             graph.Branch("develop");
             graph.Checkout("develop");
@@ -174,7 +173,7 @@ gitGraph
                 ShowBranches = false,
                 MainBranchName = "master"
             };
-            var graph = new GitGraph("", config);
+            var graph = new GitGraph(config: config);
             graph.Commit("c1");
             graph.Branch("develop");
             graph.Checkout("develop");
@@ -197,6 +196,324 @@ gitGraph
     commit id: ""c3""
     checkout master
     merge develop";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
+        #region Commit Types
+
+        [TestMethod]
+        public void GitGraph_WithCommitType()
+        {
+            //Arrange
+            var graph = new GitGraph();
+            graph.Commit("c1", commitType: GitCommitType.Reverse);
+
+            string expected = @"gitGraph
+    commit id: ""c1"" type: REVERSE";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_WithCommitTypeOnMerge()
+        {
+            //Arrange
+            var graph = new GitGraph();
+            graph.Commit("c1");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2");
+            graph.Checkout("main");
+            graph.Merge("develop", commitType: GitCommitType.Highlight);
+
+            string expected = @"gitGraph
+    commit id: ""c1""
+    branch develop
+    checkout develop
+    commit id: ""c2""
+    checkout main
+    merge develop type: HIGHLIGHT";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
+        #region Tags
+
+        [TestMethod]
+        public void GitGraph_WithCommitTag()
+        {
+            //Arrange
+            var graph = new GitGraph();
+            graph.Commit("c1", tag: "v1.0");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2", tag: "feature-1");
+            graph.Checkout("main");
+            graph.Merge("develop");
+
+            string expected = @"gitGraph
+    commit id: ""c1"" tag: ""v1.0""
+    branch develop
+    checkout develop
+    commit id: ""c2"" tag: ""feature-1""
+    checkout main
+    merge develop";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_WithMergeTag()
+        {
+            //Arrange
+            var graph = new GitGraph();
+            graph.Commit("c1");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2");
+            graph.Checkout("main");
+            graph.Merge("develop", tag: "v1.1");
+
+            string expected = @"gitGraph
+    commit id: ""c1""
+    branch develop
+    checkout develop
+    commit id: ""c2""
+    checkout main
+    merge develop tag: ""v1.1""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
+        #region Cherry Pick
+
+        [TestMethod]
+        public void GitGraph_WithCherryPick()
+        {
+            //Arrange
+            var graph = new GitGraph();
+            graph.Commit("c1");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2");
+            graph.Checkout("main");
+            graph.CherryPick("c2");
+
+            string expected = @"gitGraph
+    commit id: ""c1""
+    branch develop
+    checkout develop
+    commit id: ""c2""
+    checkout main
+    cherry-pick id:""c2""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_WithCherryPickFromMerge()
+        {
+            // A cherry-pick on a merge commit automatically resolves the parent
+            // to the last commit with an id on the merged branch before the merge
+
+            //Arrange
+            var graph = new GitGraph();
+            graph.Commit("c1");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2");
+            graph.Checkout("main");
+            graph.Merge("develop", "m1");
+            graph.Branch("hotfix");
+            graph.Checkout("hotfix");
+            graph.CherryPick("m1"); // parent resolved automatically: last id on develop = "c2"
+
+            string expected = @"gitGraph
+    commit id: ""c1""
+    branch develop
+    checkout develop
+    commit id: ""c2""
+    checkout main
+    merge develop id: ""m1""
+    branch hotfix
+    checkout hotfix
+    cherry-pick id:""m1"" parent: ""c2""";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
+        #region Direction
+
+        [TestMethod]
+        public void GitGraph_WithDirection_LeftRight()
+        {
+            //Arrange
+            var graph = new GitGraph(gitDirection: GitDirection.LeftRight);
+            graph.Commit("c1");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2");
+            graph.Checkout("main");
+            graph.Merge("develop");
+
+            string expected = @"gitGraph LR:
+    commit id: ""c1""
+    branch develop
+    checkout develop
+    commit id: ""c2""
+    checkout main
+    merge develop";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GitGraph_WithDirection_TopBottom()
+        {
+            //Arrange
+            var graph = new GitGraph(gitDirection: GitDirection.TopBottom);
+            graph.Commit("c1");
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2");
+            graph.Checkout("main");
+            graph.Merge("develop");
+
+            string expected = @"gitGraph TB:
+    commit id: ""c1""
+    branch develop
+    checkout develop
+    commit id: ""c2""
+    checkout main
+    merge develop";
+
+            //Act
+            string result = graph.CalculateDiagram();
+
+            //Assert
+            Assert.IsNotNull(graph);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
+        #region Full Workflow
+
+        [TestMethod]
+        public void GitGraph_FullWorkflow()
+        {
+            // Combines all features: config, direction, commit types, tags, merges with id/tag/type, cherry picks
+
+            //Arrange
+            var config = new GitGraphConfig(ConfigTheme.Forest)
+            {
+                ShowCommitLabel = true,
+                ShowBranches = true,
+                RotateCommitLabel = false,
+                MainBranchName = "master"
+            };
+            var graph = new GitGraph(gitDirection: GitDirection.LeftRight, config: config);
+            graph.Commit("c1", tag: "v1.0", commitType: GitCommitType.Normal);
+            graph.Branch("develop");
+            graph.Checkout("develop");
+            graph.Commit("c2", commitType: GitCommitType.Reverse);
+            graph.Commit("c3", tag: "feature");
+            graph.Checkout("master");
+            graph.Merge("develop", "m1", "v1.1", GitCommitType.Highlight);
+            graph.Branch("hotfix");
+            graph.Checkout("hotfix");
+            graph.CherryPick("c3");                 // regular commit cherry-pick, no parent
+            graph.Commit("c4");
+            graph.Checkout("develop");
+            graph.Commit("c5");
+            graph.Merge("hotfix", "m2");           // merge without id/tag/type, id auto-generated
+            graph.Checkout("master");
+            graph.CherryPick("m2");                 // merge cherry-pick, parent resolved to "c3" (last id on develop)
+
+            string expected = @"---
+config:
+    theme: forest
+    gitGraph:
+        showCommitLabel: true
+        showBranches: true
+        rotateCommitLabel: false
+        mainBranchName: master
+---
+gitGraph LR:
+    commit id: ""c1"" tag: ""v1.0"" type: NORMAL
+    branch develop
+    checkout develop
+    commit id: ""c2"" type: REVERSE
+    commit id: ""c3"" tag: ""feature""
+    checkout master
+    merge develop id: ""m1"" tag: ""v1.1"" type: HIGHLIGHT
+    branch hotfix
+    checkout hotfix
+    cherry-pick id:""c3""
+    commit id: ""c4""
+    checkout develop
+    commit id: ""c5""
+    merge hotfix id: ""m2""
+    checkout master
+    cherry-pick id:""m2"" parent: ""c4""";
 
             //Act
             string result = graph.CalculateDiagram();

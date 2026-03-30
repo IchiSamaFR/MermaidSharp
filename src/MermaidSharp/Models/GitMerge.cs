@@ -1,4 +1,7 @@
-﻿namespace MermaidSharp.Models
+﻿using MermaidSharp.Enums;
+using MermaidSharp.Extensions;
+
+namespace MermaidSharp.Models
 {
     /// <summary>
     /// Represents a Git merge action for merging a specified branch into the current branch within a Mermaid diagram context.
@@ -18,20 +21,26 @@
         /// </summary>
         public string Branch { get; }
 
+        public string Id { get; }
+
         /// <summary>
         /// Gets the tag associated with the merge action.
         /// </summary>
         public string Tag { get; }
+
+        public GitCommitType CommitType { get; }
 
         /// <summary>
         /// Initializes a new instance with the specified branch and optional tag.
         /// </summary>
         /// <param name="branch">The name of the branch to merge.</param>
         /// <param name="tag">An optional tag associated with the merge. If not specified, no tag is used.</param>
-        public GitMerge(string branch, string tag = "")
+        public GitMerge(string branch, string id = "", string tag = "", GitCommitType commitType = GitCommitType.None)
         {
             Branch = branch;
+            Id = id;
             Tag = tag;
+            CommitType = commitType;
         }
 
         /// <summary>
@@ -40,8 +49,16 @@
         public override string ToString()
         {
             var returned = $"{Name} {Branch}";
+
+            if (!string.IsNullOrWhiteSpace(Id))
+                returned += $" id: \"{Id}\"";
+
             if (!string.IsNullOrWhiteSpace(Tag))
                 returned += $" tag: \"{Tag}\"";
+
+            if (CommitType != GitCommitType.None)
+                returned += $" type: {CommitType.PrimaryString()}";
+
             return returned;
         }
     }
