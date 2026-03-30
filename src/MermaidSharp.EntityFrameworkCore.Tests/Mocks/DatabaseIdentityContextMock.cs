@@ -1,4 +1,3 @@
-using MermaidSharp.EntityFrameworkCore.Tests.Mock.Entities;
 using MermaidSharp.EntityFrameworkCore.Tests.Mocks.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

@@ -25,7 +25,7 @@ namespace MermaidSharp.Diagrams
         /// Gets or sets the direction of the flowchart.
         /// </summary>
         public FlowDirection Direction { get; set; }
-        
+
         /// <summary>
         /// Gets the collection of subgraphs contained within the flowchart.
         /// </summary>

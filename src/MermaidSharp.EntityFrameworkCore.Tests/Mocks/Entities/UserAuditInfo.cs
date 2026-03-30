@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MermaidSharp.EntityFrameworkCore.Tests.Mocks.Entities
+﻿namespace MermaidSharp.EntityFrameworkCore.Tests.Mocks.Entities
 {
     internal class UserAuditInfo<T>
     {
