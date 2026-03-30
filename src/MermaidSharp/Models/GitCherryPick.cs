@@ -16,7 +16,7 @@
         /// <summary>
         /// Gets the unique identifier of the commit associated with this instance.
         /// </summary>
-        public string CommitId { get; }
+        public string Id { get; }
 
         /// <summary>
         /// Gets the identifier of the parent element.
@@ -31,12 +31,12 @@
         /// <summary>
         /// Initializes a new instance of the GitCherryPick class with the specified commit identifier, parent, and tag.
         /// </summary>
-        /// <param name="commitId">The unique identifier of the commit to cherry-pick. Cannot be null or empty.</param>
+        /// <param name="id">The unique identifier of the commit to cherry-pick. Cannot be null or empty.</param>
         /// <param name="parent">The parent commit identifier. If not specified, defaults to an empty string.</param>
         /// <param name="tag">The tag associated with the cherry-pick operation. If not specified, defaults to an empty string.</param>
-        public GitCherryPick(string commitId, string parent = "", string tag = "")
+        public GitCherryPick(string id, string parent = "", string tag = "")
         {
-            CommitId = commitId;
+            Id = id;
             Parent = parent;
             Tag = tag;
         }
@@ -46,7 +46,7 @@
         /// </summary>
         public override string ToString()
         {
-            var returned = $"{Name} id:\"{CommitId}\"";
+            var returned = $"{Name} id:\"{Id}\"";
 
             if (!string.IsNullOrWhiteSpace(Parent))
                 returned += $" parent: \"{Parent}\"";

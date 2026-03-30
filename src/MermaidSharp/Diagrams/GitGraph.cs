@@ -184,20 +184,20 @@ namespace MermaidSharp.Diagrams
         /// Applies a cherry-pick of the specified commit to the current branch.
         /// </summary>
         /// <remarks>
-        /// When <paramref name="commitId"/> refers to a merge commit (matched by its id in the graph),
+        /// When <paramref name="id"/> refers to a merge commit (matched by its id in the graph),
         /// the parent id is resolved automatically by finding the last commit with an id on the merged branch
         /// before the merge occurred.
         /// </remarks>
-        /// <param name="commitId">The identifier of the commit to cherry-pick. Cannot be null or whitespace.</param>
+        /// <param name="id">The identifier of the commit to cherry-pick. Cannot be null or whitespace.</param>
         /// <param name="tag">An optional tag to associate with the cherry-pick operation. If specified, the tag is added to the graph.</param>
         /// <returns>The current GitGraph instance, enabling method chaining.</returns>
-        public GitGraph CherryPick(string commitId, string tag = "")
+        public GitGraph CherryPick(string id, string tag = "")
         {
-            if (string.IsNullOrWhiteSpace(commitId))
-                throw new ArgumentException("Commit ID cannot be null or whitespace.", nameof(commitId));
+            if (string.IsNullOrWhiteSpace(id))
+                throw new ArgumentException("Commit ID cannot be null or whitespace.", nameof(id));
 
             var parentId = string.Empty;
-            var mergeReference = Actions.OfType<GitMerge>().FirstOrDefault(m => m.Id == commitId);
+            var mergeReference = Actions.OfType<GitMerge>().FirstOrDefault(m => m.Id == id);
             if (mergeReference != null)
             {
                 // For a merge commit, the parent must be the last commit with an id on the merged branch
@@ -205,10 +205,10 @@ namespace MermaidSharp.Diagrams
 
                 if (string.IsNullOrWhiteSpace(parentId))
                     throw new InvalidOperationException(
-                        $"Cannot cherry-pick merge '{commitId}': no commit with an id found on branch '{mergeReference.Branch}'. To cherry-pick a merge, ensure that the merged branch has at least one commit with an id.");
+                        $"Cannot cherry-pick merge '{id}': no commit with an id found on branch '{mergeReference.Branch}'. To cherry-pick a merge, ensure that the merged branch has at least one commit with an id.");
             }
 
-            _actions.Add(new GitCherryPick(commitId, parentId, tag));
+            _actions.Add(new GitCherryPick(id, parentId, tag));
             return this;
         }
 
