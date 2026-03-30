@@ -5,7 +5,14 @@ namespace MermaidSharp.Models
     /// </summary>
     public abstract class ALink
     {
+        /// <summary>
+        /// Gets or sets the identifier of the source node in the diagram.
+        /// </summary>
         public string SourceNode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identifier of the destination node.
+        /// </summary>
         public string DestinationNode { get; set; }
 
         /// <summary>
@@ -19,10 +26,18 @@ namespace MermaidSharp.Models
             DestinationNode = destinationNode.Replace(" ", "");
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             return $"{SourceNode}{GetLink()}{DestinationNode}";
         }
+
+        /// <summary>
+        /// Returns the default link representation used in Mermaid diagrams.
+        /// </summary>
+        /// <returns>A string that represents the default link symbol.</returns>
         protected virtual string GetLink()
         {
             return "-->";

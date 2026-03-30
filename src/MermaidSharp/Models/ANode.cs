@@ -8,8 +8,17 @@ namespace MermaidSharp.Models
     /// </summary>
     public abstract class ANode
     {
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the text content associated with this instance.
+        /// </summary>
         public string Text { get; set; }
+        /// <summary>
+        /// Gets or sets the CSS class or classes to apply to the element.
+        /// </summary>
         public string CssClass { get; set; }
 
         /// <summary>
@@ -25,6 +34,9 @@ namespace MermaidSharp.Models
             CssClass = cssClass;
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -37,6 +49,12 @@ namespace MermaidSharp.Models
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Generates a Mermaid class diagram string representation for the current class, including its CSS class if
+        /// specified.
+        /// </summary>
+        /// <returns>A string representing the class in Mermaid syntax with its CSS class, or an empty string if no CSS class is
+        /// defined.</returns>
         public virtual string ToClassString()
         {
             if (string.IsNullOrEmpty(CssClass))
@@ -46,6 +64,10 @@ namespace MermaidSharp.Models
 
             return $"class {Name} {CssClass}";
         }
+        /// <summary>
+        /// Returns the text value surrounded by square brackets.
+        /// </summary>
+        /// <returns>A string containing the current text value enclosed in square brackets.</returns>
         protected virtual string GetSurroundedText()
         {
             return $"[{Text}]";

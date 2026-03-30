@@ -9,6 +9,7 @@ namespace MermaidSharp.Enums
     /// customization of the appearance and semantics of connections between nodes.</remarks>
     public enum FlowLinkType
     {
+#pragma warning disable CS1591
         [MermaidEnum("--")]
         Normal,
 
@@ -20,5 +21,6 @@ namespace MermaidSharp.Enums
 
         [MermaidEnum("~~~")]
         Invisible
+#pragma warning restore CS1591
     }
 }

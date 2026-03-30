@@ -2,6 +2,12 @@ using MermaidSharp.Enums;
 
 namespace MermaidSharp.EntityFrameworkCore
 {
+    /// <summary>
+    /// Represents configuration options for generating entity-relationship diagrams in Mermaid flowcharts.
+    /// </summary>
+    /// <remarks>Use this class to customize the inclusion of columns, key types, comments, links, and related
+    /// metadata when generating entity-relationship diagrams. Adjust the properties to control the level of detail and
+    /// filtering applied to the generated output.</remarks>
     public class EntityRelationshipDiagramOptions
     {
         /// <summary>
@@ -15,7 +21,8 @@ namespace MermaidSharp.EntityFrameworkCore
         /// <summary>
         /// Gets or sets a value indicating whether column information is included in the output.
         /// </summary>
-        /// <remarks>Set this property to <see langword="true"/> to include column information such as column names and types
+        /// <remarks>Set this property to <see langword="true"/> to include column information, such as column names and types,
+        /// in the generated output. Set this property to <see langword="false"/> to omit column details from the diagram.</remarks>
         public bool IncludeColumns { get; set; } = true;
 
         /// <summary>

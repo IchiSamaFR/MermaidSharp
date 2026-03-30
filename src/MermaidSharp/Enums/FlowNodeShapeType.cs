@@ -10,6 +10,7 @@ namespace MermaidSharp.Enums
     /// hexagons. The selected shape determines how the node appears in the rendered diagram.</remarks>
     public enum FlowNodeShapeType
     {
+#pragma warning disable CS1591
         [MermaidEnum("[", "]")]
         Rectangle,
 
@@ -42,5 +43,6 @@ namespace MermaidSharp.Enums
 
         [MermaidEnum("[[", "]]")]
         Subroutine
+#pragma warning restore CS1591
     }
 }

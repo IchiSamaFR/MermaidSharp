@@ -12,7 +12,13 @@ namespace MermaidSharp.Diagrams
     /// </summary>
     public abstract class ADiagram : AMermaid
     {
+        /// <summary>
+        /// Gets the collection of nodes contained in the current structure.
+        /// </summary>
         public List<ANode> Nodes { get; } = new List<ANode>();
+        /// <summary>
+        /// Gets the collection of links associated with the current instance.
+        /// </summary>
         public List<ALink> Links { get; } = new List<ALink>();
 
         /// <summary>
@@ -25,9 +31,9 @@ namespace MermaidSharp.Diagrams
         }
 
         /// <summary>
-        /// Given a list of nodes and links, calculate the mermaid flowchart
+        /// Generates the complete Mermaid diagram as a formatted string.
         /// </summary>
-        /// <returns>a mermaid graph as a string</returns>
+        /// <returns>A string containing the full Mermaid diagram.</returns>
         public override string CalculateDiagram()
         {
             var lines = new List<string>();

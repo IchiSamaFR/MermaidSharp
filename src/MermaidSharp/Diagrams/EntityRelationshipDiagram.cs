@@ -8,7 +8,10 @@ namespace MermaidSharp.Diagrams
     /// supports Mermaid's ER diagram features.</remarks>
     public class EntityRelationshipDiagram : ADiagram
     {
-        public override string Name => "erDiagram";
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
+        protected override string Name => "erDiagram";
 
         /// <summary>
         /// Initializes a new instance of the EntityRelationshipDiagram class with the specified title.

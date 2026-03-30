@@ -14,6 +14,9 @@ namespace MermaidSharp.Models
     /// provide common node functionality.</remarks>
     public class EntityRelationNode : ANode
     {
+        /// <summary>
+        /// Gets or sets the collection of columns that define the relationship between entities.
+        /// </summary>
         public List<EntityRelationColumn> Columns { get; set; }
 
         /// <summary>
@@ -31,6 +34,9 @@ namespace MermaidSharp.Models
         }
 
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
             var lines = new List<string>();

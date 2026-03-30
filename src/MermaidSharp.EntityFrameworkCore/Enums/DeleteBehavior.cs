@@ -1,5 +1,15 @@
 namespace MermaidSharp.EntityFrameworkCore.Enums
 {
+    /// <summary>
+    /// Specifies the actions to take on dependent entities when a principal entity is deleted or the relationship is
+    /// changed.
+    /// </summary>
+    /// <remarks>Use this enumeration to configure the delete behavior for relationships in an Entity
+    /// Framework Core model. The selected value determines how changes to principal entities affect related dependents,
+    /// including whether foreign key values are set to null, dependents are deleted, or no action is taken. Some
+    /// options may have different effects depending on database provider capabilities and constraints. For more
+    /// information and examples, see EF Core cascade deletes and deleting orphans at
+    /// https://aka.ms/efcore-docs-cascading.</remarks>
     public enum DeleteBehavior
     {
         /// <summary>

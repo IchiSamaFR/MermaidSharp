@@ -13,9 +13,21 @@ namespace MermaidSharp.Models
     /// provided.</remarks>
     public class ClassMethod
     {
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the return type of the method.
+        /// </summary>
         public string ReturnType { get; set; }
+        /// <summary>
+        /// Gets or sets the visibility level of the class property.
+        /// </summary>
         public ClassPropertyVisibility Visibility { get; set; }
+        /// <summary>
+        /// Gets the collection of parameters associated with the method or class.
+        /// </summary>
         public List<ClassMethodParam> Parameters { get; }
 
         /// <summary>
@@ -34,9 +46,12 @@ namespace MermaidSharp.Models
             Parameters = parameters ?? new List<ClassMethodParam>();
         }
 
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
         public override string ToString()
         {
-            var visibilitySymbol = Visibility.StartString();
+            var visibilitySymbol = Visibility.PrimaryString();
             var returnTypeString = ReturnType.FormatAngleBracket();
             var parametersString = string.Join(", ", Parameters.Select(p => p.ToString()));
 

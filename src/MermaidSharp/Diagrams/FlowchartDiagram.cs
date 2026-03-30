@@ -16,8 +16,19 @@ namespace MermaidSharp.Diagrams
     /// an unsupported direction will result in a NotSupportedException.</remarks>
     public class FlowchartDiagram : ADiagram
     {
-        public override string Name => "flowchart";
+        /// <summary>
+        /// Gets the Mermaid name associated with the current instance.
+        /// </summary>
+        protected override string Name => "flowchart";
+
+        /// <summary>
+        /// Gets or sets the direction of the flowchart.
+        /// </summary>
         public FlowDirection Direction { get; set; }
+        
+        /// <summary>
+        /// Gets the collection of subgraphs contained within the flowchart.
+        /// </summary>
         public List<FlowSubGraph> SubGraphs { get; } = new List<FlowSubGraph>();
 
         /// <summary>
@@ -49,7 +60,7 @@ namespace MermaidSharp.Diagrams
         {
             var lines = new List<string>();
             lines.Add(GetHeaderString());
-            lines.Add($"{Name} {Direction.StartString()}");
+            lines.Add($"{Name} {Direction.PrimaryString()}");
 
             lines.AddRange(SubGraphs.Select(sg => sg.ToString()).Indent());
             lines.AddRange(Nodes.Select(n => n.ToString()).Indent());

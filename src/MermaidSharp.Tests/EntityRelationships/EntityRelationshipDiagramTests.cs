@@ -119,7 +119,9 @@ namespace MermaidSharp.Tests.EntityRelationships
             var result = diagram.CalculateDiagram();
 
             // Assert
-            Assert.AreEqual("erDiagram", diagram.Name);
+#pragma warning disable CS0618
+            Assert.AreEqual("erDiagram", diagram.DiagramName);
+#pragma warning restore CS0618
         }
 
         [TestMethod]

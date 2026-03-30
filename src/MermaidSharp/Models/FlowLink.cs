@@ -13,10 +13,25 @@ namespace MermaidSharp.Models
     /// Mermaid diagrams.</remarks>
     public class FlowLink : ALink
     {
+        /// <summary>
+        /// Gets or sets the label text associated with this element.
+        /// </summary>
         public string Label { get; set; }
+        /// <summary>
+        /// Gets or sets the style applied to links in the diagram.
+        /// </summary>
         public string LinkStyle { get; set; }
+        /// <summary>
+        /// Gets a value indicating whether the relationship is bidirectional.
+        /// </summary>
         public bool IsBidirectional { get; }
+        /// <summary>
+        /// Gets or sets the type of flow link represented by this instance.
+        /// </summary>
         public FlowLinkType Type { get; set; }
+        /// <summary>
+        /// Gets or sets the arrow style used for the flow link.
+        /// </summary>
         public FlowLinkArrowType Arrow { get; set; }
 
         /// <summary>
@@ -40,6 +55,11 @@ namespace MermaidSharp.Models
             Arrow = arrowType;
         }
 
+        /// <summary>
+        /// Generates a Mermaid link style string for the specified link index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the link to which the style should be applied.</param>
+        /// <returns>A Mermaid link style string if a style is defined; otherwise, an empty string.</returns>
         public string ToStyleString(int index)
         {
             if (string.IsNullOrEmpty(LinkStyle))
@@ -49,20 +69,28 @@ namespace MermaidSharp.Models
             return $"linkStyle {index} {LinkStyle}";
         }
 
+        /// <summary>
+        /// Builds and returns the Mermaid diagram link representation based on the current arrow, type, and label
+        /// settings.
+        /// </summary>
+        /// <remarks>The returned string reflects the directionality, type, and optional label of the link
+        /// as defined by the object's properties. The format is suitable for direct inclusion in Mermaid
+        /// diagrams.</remarks>
+        /// <returns>A string containing the Mermaid link syntax representing the configured relationship.</returns>
         protected override string GetLink()
         {
             StringBuilder sb = new StringBuilder();
             if (IsBidirectional)
             {
-                sb.Append(Arrow.StartString());
+                sb.Append(Arrow.PrimaryString());
             }
-            sb.Append(Type.StartString());
+            sb.Append(Type.PrimaryString());
             if (!string.IsNullOrEmpty(Label))
             {
                 sb.Append(Label);
-                sb.Append(Type.EndString());
+                sb.Append(Type.SecondaryString());
             }
-            sb.Append(Arrow.EndString());
+            sb.Append(Arrow.SecondaryString());
             return sb.ToString();
         }
     }

@@ -10,6 +10,7 @@ namespace MermaidSharp.Enums
     /// cardinalities, such as zero or one, exactly one, zero or more, and one or more.</remarks>
     public enum RelationLinkType
     {
+#pragma warning disable CS1591
         [MermaidEnum("|o", "o|")]
         ZeroOrOne,
 
@@ -21,5 +22,6 @@ namespace MermaidSharp.Enums
 
         [MermaidEnum("}|", "|{")]
         OneOrMore
+#pragma warning restore CS1591
     }
 }

@@ -15,7 +15,22 @@ namespace MermaidSharp.Diagrams
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
-        public abstract string Name { get; }
+        protected abstract string Name { get; }
+
+        /// <summary>
+        /// Gets the Mermaid diagram type name for the current instance.
+        /// </summary>
+        /// <remarks>
+        /// This property is provided for backward compatibility and may be removed in a future version.
+        /// </remarks>
+        [Obsolete("Access to the diagram type name is deprecated and will be removed in a future version.")]
+        public string DiagramName
+        {
+            get
+            {
+                return Name;
+            }
+        }
         /// <summary>
         /// Gets or sets the title associated with the object.
         /// </summary>

@@ -63,7 +63,7 @@ namespace MermaidSharp.Configs
         {
             var lst = new List<string>();
             if (Theme != ConfigTheme.None)
-                lst.Add($"theme: {Theme.ToString().ToLower()}");
+                lst.Add($"theme: {Theme.PrimaryString()}");
             return lst.Indent();
         }
     }

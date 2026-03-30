@@ -17,6 +17,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MermaidSharp.EntityFrameworkCore
 {
+    /// <summary>
+    /// Provides extension methods for generating Mermaid entity-relationship diagrams from Entity Framework database
+    /// contexts.
+    /// </summary>
+    /// <remarks>These extension methods enable visualization of the entities and relationships defined in a
+    /// DbContext using Mermaid syntax. The generated diagrams reflect the current model configuration of the context
+    /// and can be customized with various options.</remarks>
     public static class EntityRelationshipDiagramExtension
     {
         /// <summary>
