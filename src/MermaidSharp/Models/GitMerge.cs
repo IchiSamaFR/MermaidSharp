@@ -21,6 +21,9 @@ namespace MermaidSharp.Models
         /// </summary>
         public string Branch { get; }
 
+        /// <summary>
+        /// Gets the unique identifier for this instance.
+        /// </summary>
         public string Id { get; }
 
         /// <summary>
@@ -28,13 +31,18 @@ namespace MermaidSharp.Models
         /// </summary>
         public string Tag { get; }
 
+        /// <summary>
+        /// Gets the type of the Git commit represented by this instance, which can be used to specify different commit types in Mermaid diagrams.
+        /// </summary>
         public GitCommitType CommitType { get; }
 
         /// <summary>
         /// Initializes a new instance with the specified branch and optional tag.
         /// </summary>
         /// <param name="branch">The name of the branch to merge.</param>
+        /// <param name="id">The unique identifier of the merge. If not specified, an empty string is used.</param>
         /// <param name="tag">An optional tag associated with the merge. If not specified, no tag is used.</param>
+        /// <param name="commitType">The type of the Git commit. If not specified, defaults to GitCommitType.None.</param>
         public GitMerge(string branch, string id = "", string tag = "", GitCommitType commitType = GitCommitType.None)
         {
             Branch = branch;

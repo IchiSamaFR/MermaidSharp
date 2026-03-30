@@ -399,7 +399,7 @@ gitGraph
         public void GitGraph_WithDirection_LeftRight()
         {
             //Arrange
-            var graph = new GitGraph(gitDirection: GitDirection.LeftRight);
+            var graph = new GitGraph(direction: GitDirection.LeftRight);
             graph.Commit("c1");
             graph.Branch("develop");
             graph.Checkout("develop");
@@ -428,7 +428,7 @@ gitGraph
         public void GitGraph_WithDirection_TopBottom()
         {
             //Arrange
-            var graph = new GitGraph(gitDirection: GitDirection.TopBottom);
+            var graph = new GitGraph(direction: GitDirection.TopBottom);
             graph.Commit("c1");
             graph.Branch("develop");
             graph.Checkout("develop");
@@ -470,7 +470,7 @@ gitGraph
                 RotateCommitLabel = false,
                 MainBranchName = "master"
             };
-            var graph = new GitGraph(gitDirection: GitDirection.LeftRight, config: config);
+            var graph = new GitGraph(direction: GitDirection.LeftRight, config: config);
             graph.Commit("c1", tag: "v1.0", commitType: GitCommitType.Normal);
             graph.Branch("develop");
             graph.Checkout("develop");

@@ -21,6 +21,7 @@ namespace MermaidSharp.Diagrams
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
         protected override string Name => "gitGraph";
+
         /// <summary>
         /// Gets the configuration settings specific to the Git graph rendering.
         /// </summary>
@@ -42,15 +43,22 @@ namespace MermaidSharp.Diagrams
                 return string.IsNullOrWhiteSpace(mainBranchName) ? "main" : mainBranchName;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the direction of the Git operation.
+        /// </summary>
         public GitDirection Direction { get; set; }
+
         /// <summary>
         /// Gets the collection of actions associated with this instance.
         /// </summary>
         public IReadOnlyList<AGitAction> Actions => _actions;
+
         /// <summary>
         /// Gets the collection of branch names associated with the current instance.
         /// </summary>
         public IReadOnlyList<string> Branches => _branches;
+
         /// <summary>
         /// Gets the collection of tag names associated with the current instance.
         /// </summary>
@@ -60,11 +68,12 @@ namespace MermaidSharp.Diagrams
         /// Initializes a new instance of the GitGraph class with the specified title and configuration.
         /// </summary>
         /// <param name="title">The title to display for the Git graph. If not specified, the title is empty.</param>
+        /// <param name="direction">The direction of the Git graph. If not specified, the direction is set to None.</param>
         /// <param name="config">The configuration settings to apply to the Git graph. If null, default settings are used.</param>
-        public GitGraph(string title = "", GitDirection gitDirection = GitDirection.None, GitGraphConfig config = null)
+        public GitGraph(string title = "", GitDirection direction = GitDirection.None, GitGraphConfig config = null)
             : base(title, config)
         {
-            Direction = gitDirection;
+            Direction = direction;
         }
 
         /// <summary>

@@ -25,6 +25,9 @@ namespace MermaidSharp.Models
         /// </summary>
         public string Tag { get; }
 
+        /// <summary>
+        /// Gets the type of the Git commit represented by this instance, which can be used to specify different commit types in Mermaid diagrams.
+        /// </summary>
         public GitCommitType CommitType { get; }
 
         /// <summary>
@@ -32,6 +35,7 @@ namespace MermaidSharp.Models
         /// </summary>
         /// <param name="id">The unique identifier of the commit. If not specified, an empty string is used.</param>
         /// <param name="tag">The tag associated with the commit. If not specified, an empty string is used.</param>
+        /// <param name="commitType">The type of the Git commit. If not specified, defaults to GitCommitType.None.</param>
         public GitCommit(string id = "", string tag = "", GitCommitType commitType = GitCommitType.None)
         {
             Id = id;
