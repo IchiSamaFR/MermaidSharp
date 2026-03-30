@@ -394,7 +394,8 @@ It supports both **Entity Framework 6** (.NET Framework 4.8) and **Entity Framew
 Call the `ToMermaidEntityDiagram()` extension method on any `DbContext` instance:
 ```csharp
 using MermaidSharp.EntityFrameworkCore;
-var diagram = myDbContext.ToMermaidEntityDiagram(); string result = diagram.CalculateDiagram();
+var diagram = myDbContext.ToMermaidEntityDiagram();
+string result = diagram.CalculateDiagram();
 ```
 
 ### Customization with `EntityRelationshipDiagramOptions`
@@ -418,7 +419,8 @@ var options = new EntityRelationshipDiagramOptions
     // Only show PK and FK columns
     FilterColumnByKeyTypes = RelationConstraintType.PrimaryKey | RelationConstraintType.ForeignKey
 };
-var diagram = myDbContext.ToMermaidEntityDiagram(options); string result = diagram.CalculateDiagram();
+var diagram = myDbContext.ToMermaidEntityDiagram(options);
+string result = diagram.CalculateDiagram();
 ```
 
 ### What is generated automatically
