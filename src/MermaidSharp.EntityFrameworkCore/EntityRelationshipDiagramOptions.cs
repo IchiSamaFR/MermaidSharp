@@ -21,7 +21,8 @@ namespace MermaidSharp.EntityFrameworkCore
         /// <summary>
         /// Gets or sets a value indicating whether column information is included in the output.
         /// </summary>
-        /// <remarks>Set this property to <see langword="true"/> to include column information such as column names and types</remarks>
+        /// <remarks>Set this property to <see langword="true"/> to include column information, such as column names and types,
+        /// in the generated output. Set this property to <see langword="false"/> to omit column details from the diagram.</remarks>
         public bool IncludeColumns { get; set; } = true;
 
         /// <summary>

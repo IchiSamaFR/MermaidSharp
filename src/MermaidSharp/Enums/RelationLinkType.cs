@@ -1,5 +1,4 @@
 using MermaidSharp.Attributes;
-using System.Diagnostics.CodeAnalysis;
 
 namespace MermaidSharp.Enums
 {
