@@ -1,15 +1,15 @@
-using Effort.Provider;
 using MermaidSharp.EntityFramework.Tests.Mock;
 using MermaidSharp.EntityFrameworkCore;
 using MermaidSharp.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data.Common;
 
 namespace MermaidSharp.EntityFramework.Tests
 {
     [TestClass]
     public class DiagramTests
     {
-        private static EffortConnection _connection;
+        private static DbConnection _connection;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
