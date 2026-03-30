@@ -2,22 +2,19 @@ using MermaidSharp.EntityFramework.Tests.Mock;
 using MermaidSharp.EntityFrameworkCore;
 using MermaidSharp.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Data.Common;
-using System.Data.SQLite;
 
 namespace MermaidSharp.EntityFramework.Tests
 {
     [TestClass]
     public class DiagramTests
     {
-        private static SQLiteConnection _connection;
+        private static DbConnection _connection;
 
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
-            _connection = new SQLiteConnection("Data Source=:memory:;Version=3;New=True;");
-            _connection.Open();
+            _connection = Effort.DbConnectionFactory.CreateTransient();
         }
 
         [ClassCleanup]

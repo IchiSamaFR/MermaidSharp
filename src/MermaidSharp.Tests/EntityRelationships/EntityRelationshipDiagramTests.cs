@@ -114,14 +114,15 @@ namespace MermaidSharp.Tests.EntityRelationships
         {
             // Arrange
             var diagram = new EntityRelationshipDiagram();
+            var expected = "erDiagram";
 
             // Act
             var result = diagram.CalculateDiagram();
 
             // Assert
-#pragma warning disable CS0618
-            Assert.AreEqual("erDiagram", diagram.DiagramName);
-#pragma warning restore CS0618
+            Assert.IsNotNull(diagram);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
