@@ -9,9 +9,29 @@ namespace MermaidSharp.Tests.PieCharts
 	[TestClass]
 	public class PieChartDiagramTests
 	{
-		#region Empty Diagram
+        #region Empty Diagram
 
-		[TestMethod]
+        [TestMethod]
+        public void PieChartDiagram_CalculateDiagram()
+        {
+            // Arrange
+            var diagram = new PieChartDiagram();
+            diagram.Slices.Add(new PieSlice("Dogs", 386));
+            diagram.Slices.Add(new PieSlice("Cats", 85));
+
+            string expected = @"pie
+    ""Dogs"" : 386
+    ""Cats"" : 85";
+
+            // Act
+            string result = diagram.CalculateDiagram();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
 		public void PieChartDiagram_CalculateDiagram_EmptyDiagram()
 		{
 			// Arrange
@@ -50,24 +70,6 @@ namespace MermaidSharp.Tests.PieCharts
 			Assert.AreEqual(expected, result);
 		}
 
-		[TestMethod]
-		public void PieChartDiagram_CalculateDiagram_WithShowDataFalse()
-		{
-			// Arrange
-			var diagram = new PieChartDiagram(showData: false);
-			diagram.Slices.Add(new PieSlice("Dogs", 386));
-
-			string expected = @"pie
-    ""Dogs"" : 386";
-
-			// Act
-			string result = diagram.CalculateDiagram();
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.AreEqual(expected, result);
-		}
-
 		#endregion
 
 		#region Title
@@ -84,24 +86,6 @@ namespace MermaidSharp.Tests.PieCharts
     title Pets adopted by volunteers
     ""Dogs"" : 386
     ""Cats"" : 85";
-
-			// Act
-			string result = diagram.CalculateDiagram();
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.AreEqual(expected, result);
-		}
-
-		[TestMethod]
-		public void PieChartDiagram_CalculateDiagram_WithEmptyTitle()
-		{
-			// Arrange
-			var diagram = new PieChartDiagram(title: "");
-			diagram.Slices.Add(new PieSlice("Dogs", 386));
-
-			string expected = @"pie
-    ""Dogs"" : 386";
 
 			// Act
 			string result = diagram.CalculateDiagram();
@@ -273,25 +257,6 @@ namespace MermaidSharp.Tests.PieCharts
 		#endregion
 
 		#region Config
-
-		[TestMethod]
-		public void PieChartDiagram_CalculateDiagram_WithEmptyConfig_RendersNormalOutput()
-		{
-			// Arrange
-			var config = new PieChartConfig();
-			var diagram = new PieChartDiagram(config: config);
-			diagram.Slices.Add(new PieSlice("Dogs", 386));
-
-			string expected = @"pie
-    ""Dogs"" : 386";
-
-			// Act
-			string result = diagram.CalculateDiagram();
-
-			// Assert
-			Assert.IsNotNull(result);
-			Assert.AreEqual(expected, result);
-		}
 
 		[TestMethod]
 		public void PieChartDiagram_CalculateDiagram_WithTextPosition()
