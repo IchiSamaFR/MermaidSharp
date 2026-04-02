@@ -118,7 +118,7 @@ namespace MermaidSharp.Tests.PieCharts
 				// Assert
 				Assert.Fail("Expected ArgumentException was not thrown.");
 			}
-			catch (ArgumentException ex) when (ex is not ArgumentNullException)
+			catch (ArgumentException ex)
 			{
 				Assert.IsNotNull(ex);
 			}
@@ -136,7 +136,7 @@ namespace MermaidSharp.Tests.PieCharts
 				// Assert
 				Assert.Fail("Expected ArgumentException was not thrown.");
 			}
-			catch (ArgumentException ex) when (ex is not ArgumentNullException)
+			catch (ArgumentException ex)
 			{
 				Assert.IsNotNull(ex);
 			}
