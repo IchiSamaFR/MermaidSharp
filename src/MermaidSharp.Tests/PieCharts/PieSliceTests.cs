@@ -107,6 +107,136 @@ namespace MermaidSharp.Tests.PieCharts
 		}
 
 		[TestMethod]
+		public void PieSlice_Constructor_ThrowsArgumentException_WhenLabelIsEmpty()
+		{
+			// Arrange
+			try
+			{
+				// Act
+				var slice = new PieSlice("", 42);
+
+				// Assert
+				Assert.Fail("Expected ArgumentException was not thrown.");
+			}
+			catch (ArgumentException ex) when (ex is not ArgumentNullException)
+			{
+				Assert.IsNotNull(ex);
+			}
+		}
+
+		[TestMethod]
+		public void PieSlice_Constructor_ThrowsArgumentException_WhenLabelIsWhitespace()
+		{
+			// Arrange
+			try
+			{
+				// Act
+				var slice = new PieSlice("   ", 42);
+
+				// Assert
+				Assert.Fail("Expected ArgumentException was not thrown.");
+			}
+			catch (ArgumentException ex) when (ex is not ArgumentNullException)
+			{
+				Assert.IsNotNull(ex);
+			}
+		}
+
+		[TestMethod]
+		public void PieSlice_Constructor_ThrowsArgumentOutOfRangeException_WhenValueIsNaN()
+		{
+			// Arrange
+			try
+			{
+				// Act
+				var slice = new PieSlice("Dogs", double.NaN);
+
+				// Assert
+				Assert.Fail("Expected ArgumentOutOfRangeException was not thrown.");
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.IsNotNull(ex);
+			}
+		}
+
+		[TestMethod]
+		public void PieSlice_Constructor_ThrowsArgumentOutOfRangeException_WhenValueIsPositiveInfinity()
+		{
+			// Arrange
+			try
+			{
+				// Act
+				var slice = new PieSlice("Dogs", double.PositiveInfinity);
+
+				// Assert
+				Assert.Fail("Expected ArgumentOutOfRangeException was not thrown.");
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.IsNotNull(ex);
+			}
+		}
+
+		[TestMethod]
+		public void PieSlice_Constructor_ThrowsArgumentOutOfRangeException_WhenValueIsNegativeInfinity()
+		{
+			// Arrange
+			try
+			{
+				// Act
+				var slice = new PieSlice("Dogs", double.NegativeInfinity);
+
+				// Assert
+				Assert.Fail("Expected ArgumentOutOfRangeException was not thrown.");
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.IsNotNull(ex);
+			}
+		}
+
+		[TestMethod]
+		public void PieSlice_Value_IsRoundedToTwoDecimalPlaces()
+		{
+			// Arrange
+			var slice = new PieSlice("Dogs", 42.129);
+
+			// Assert
+			Assert.AreEqual(42.13, slice.Value);
+		}
+
+		[TestMethod]
+		public void PieSlice_Value_IsRoundedDown_WhenThirdDecimalIsLessThanFive()
+		{
+			// Arrange
+			var slice = new PieSlice("Dogs", 42.124);
+
+			// Assert
+			Assert.AreEqual(42.12, slice.Value);
+		}
+
+		[TestMethod]
+		public void PieSlice_Value_IsUnchanged_WhenExactlyTwoDecimalPlaces()
+		{
+			// Arrange
+			var slice = new PieSlice("Dogs", 42.13);
+
+			// Assert
+			Assert.AreEqual(42.13, slice.Value);
+		}
+
+		[TestMethod]
+		public void PieSlice_Value_IsRoundedUp_WhenThirdDecimalIsExactlyFive()
+		{
+			// Arrange
+			var slice = new PieSlice("Dogs", 42.125);
+
+			// Assert
+			Assert.AreEqual(42.13, slice.Value);
+		}
+
+		[TestMethod]
 		public void PieSlice_Properties_AreSetCorrectly()
 		{
 			// Arrange
