@@ -1,4 +1,5 @@
 # MermaidSharp
+[![NuGet Version](https://img.shields.io/nuget/v/MermaidSharp)](https://www.nuget.org/packages/MermaidSharp)
 
 > **Info:** This project is a fork of the original [MermaidDotNet](https://github.com/samsmithnz/MermaidDotNet) repository. All enhancements, fixes, and additions are based on the initial project.
 
