@@ -34,9 +34,16 @@ MermaidSharp is a comprehensive .NET wrapper to create [Mermaid](https://mermaid
 - **Checkouts**: Switch between branches
 - **Configuration**: Customize main branch name and diagram appearance
 
+### Pie Charts
+- **Title**: Optional title displayed above the chart
+- **ShowData**: Optionally display actual data values next to the legend labels
+- **Slices**: Define slices with a label, a positive numeric value, and an optional CSS color
+- **Configuration**: Customize label text position (0.0–1.0) and visual theme
+
 ## Getting Started
 
 ### Prerequisites
+- .NET Framework 4.8 (required for core library and tests)
 - .NET 8.0 SDK (required for core library and tests)
 - .NET 9.0 SDK (required for sample applications)
 
@@ -382,6 +389,43 @@ flowchart LR
         mermaid.initialize({ startOnLoad: true });
     </script>
 </body>
+```
+
+### Pie Chart Example
+
+Example showing pet adoption statistics as a pie chart with data values displayed:
+
+```csharp
+using MermaidSharp.Diagrams;
+using MermaidSharp.Models;
+
+var diagram = new PieChartDiagram("Pet Adoption", showData: true);
+diagram
+    .AddSlice("Dogs", 386)
+    .AddSlice("Cats", 85)
+    .AddSlice("Birds", 35)
+    .AddSlice("Fish", 40);
+string result = diagram.CalculateDiagram();
+```
+
+Resulting Mermaid code:
+```
+pie showData
+    title Pet Adoption
+    "Dogs" : 386
+    "Cats" : 85
+    "Birds" : 35
+    "Fish" : 40
+```
+
+When rendered in mermaid:
+```mermaid
+pie showData
+    title Pet Adoption
+    "Dogs" : 386
+    "Cats" : 85
+    "Birds" : 35
+    "Fish" : 40
 ```
 
 ## EntityFrameworkCore Integration
