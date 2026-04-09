@@ -1,6 +1,9 @@
 ﻿using MermaidSharp.Extensions;
+using MermaidSharp.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace MermaidSharp.Configs
 {
@@ -10,6 +13,14 @@ namespace MermaidSharp.Configs
     public class ThemeVariables : AConfigurable
     {
         private readonly string Name = "themeVariables";
+
+        internal IReadOnlyList<PieSlice> PieSlices { get; set; }
+
+        /// <summary>
+        /// Gets the list of colors used for the pie chart sections.
+        /// Each color should be specified in a valid CSS color format (e.g., "#RRGGBB", "rgb(255, 0, 0)", "red").
+        /// </summary>
+        public IReadOnlyList<string> PieColors => PieSlices?.Select(s => s.Color).ToList() ?? new List<string>();
 
         /// <summary>
         /// Gets or sets the font size for the pie chart title text. (e.g., "16px", "1.5em", "large")
@@ -63,6 +74,17 @@ namespace MermaidSharp.Configs
         protected override List<string> GetParams()
         {
             var lst = new List<string>();
+
+            var pieColors = PieColors;
+
+            for (int index = 0; index < pieColors.Count; index++)
+            {
+                var color = pieColors[index];
+                if (string.IsNullOrEmpty(color))
+                    continue;
+
+                lst.Add($"pie{index + 1}: \"{color}\"");
+            }
 
             if (!string.IsNullOrEmpty(PieTitleTextSize))
                 lst.Add($"pieTitleTextSize: \"{PieTitleTextSize}\"");

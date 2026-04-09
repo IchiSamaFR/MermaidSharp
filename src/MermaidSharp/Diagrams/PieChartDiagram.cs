@@ -48,6 +48,11 @@ namespace MermaidSharp.Diagrams
         public PieChartDiagram(string title = "", bool showData = false, PieChartConfig config = null) : base(title, config)
         {
             ShowData = showData;
+
+            if (Config?.ThemeVariables != null)
+            {
+                Config.ThemeVariables.PieSlices = Slices;
+            }
         }
 
         /// <summary>
