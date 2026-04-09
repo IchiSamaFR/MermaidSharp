@@ -11,14 +11,49 @@ namespace MermaidSharp.Configs
     {
         private readonly string Name = "themeVariables";
 
+        /// <summary>
+        /// Gets or sets the font size for the pie chart title text. (e.g., "16px", "1.5em", "large")
+        /// </summary>
         public string PieTitleTextSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color used for the pie chart title text. (e.g., "#RRGGBB", "rgb(255, 0, 0)", "red")
+        /// </summary>
         public string PieTitleTextColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the font size for the pie chart section text. (e.g., "16px", "1.5em", "large")
+        /// </summary>
         public string PieSectionTextSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color used for the pie chart section text. (e.g., "#RRGGBB", "rgb(255, 0, 0)", "red")
+        /// </summary>
         public string PieSectionTextColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the font size for the pie chart legend text. (e.g., "16px", "1.5em", "large")
+        /// </summary>
         public string PieLegendTextSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color used for the pie chart legend text. (e.g., "#RRGGBB", "rgb(255, 0, 0)", "red")
+        /// </summary>
         public string PieLegendTextColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color used for the pie chart stroke. (e.g., "#RRGGBB", "rgb(255, 0, 0)", "red")
+        /// </summary>
         public string PieStrokeColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the width of the pie chart's outer stroke. (e.g., "1px", "0.5em", "thin")
+        /// </summary>
         public string PieOuterStrokeWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the opacity level for the pie chart, where 0.0 is fully transparent and 1.0 is fully opaque.
+        /// </summary>
         public double? PieOpacity { get; set; }
 
         /// <summary>
