@@ -31,6 +31,9 @@ namespace MermaidSharp.Configs
             }
         }
 
+        /// <summary>
+        /// Gets or sets the theme variables to apply to the diagram. If null, no theme variables are applied.
+        /// </summary>
         public ThemeVariables ThemeVariables { get; set; }
 
         /// <summary>
@@ -40,6 +43,7 @@ namespace MermaidSharp.Configs
         /// <param name="textPosition">
         /// The axial position of the pie slice labels (0.0 to 1.0 inclusive). If null, Mermaid's default value (0.75) is used.
         /// </param>
+        /// <param name="themeVariables">The theme variables to apply to the diagram. If null, no theme variables are applied.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
         public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, ThemeVariables themeVariables = null) : base(theme)
         {
