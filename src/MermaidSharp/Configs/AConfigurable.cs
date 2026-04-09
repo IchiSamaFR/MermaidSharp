@@ -1,6 +1,4 @@
-﻿using MermaidSharp.Enums;
-using MermaidSharp.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 
