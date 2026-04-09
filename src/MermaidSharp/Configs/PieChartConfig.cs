@@ -31,17 +31,20 @@ namespace MermaidSharp.Configs
 			}
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the PieChartConfig class with the specified theme and text position.
-		/// </summary>
-		/// <param name="theme">The visual theme to apply to the diagram. Defaults to <see cref="ConfigTheme.None"/>.</param>
-		/// <param name="textPosition">
-		/// The axial position of the pie slice labels (0.0 to 1.0 inclusive). If null, Mermaid's default value (0.75) is used.
-		/// </param>
-		/// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
-		public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null) : base(theme)
+		public ThemeVariables ThemeVariables { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the PieChartConfig class with the specified theme and text position.
+        /// </summary>
+        /// <param name="theme">The visual theme to apply to the diagram. Defaults to <see cref="ConfigTheme.None"/>.</param>
+        /// <param name="textPosition">
+        /// The axial position of the pie slice labels (0.0 to 1.0 inclusive). If null, Mermaid's default value (0.75) is used.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
+        public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, ThemeVariables themeVariables = null) : base(theme)
 		{
 			TextPosition = textPosition;
+			ThemeVariables = themeVariables ?? new ThemeVariables();
 		}
 
 		/// <summary>
@@ -62,8 +65,9 @@ namespace MermaidSharp.Configs
 			lst = lst.Indent();
 			lst.Insert(0, $"{Name}:");
 			baseLst.AddRange(lst.Indent());
+            baseLst.AddRange(ThemeVariables.GetConfigLines().Indent());
 
-			return baseLst;
+            return baseLst;
 		}
 	}
 }

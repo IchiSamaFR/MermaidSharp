@@ -19,14 +19,21 @@ namespace MermaidSharp.Models
 		public double Value { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the PieSlice class with the specified label and value.
+		/// Gets or sets the background color for this pie slice as a CSS-compatible color value, such as a hex code
+		/// like <c>#RRGGBB</c> or a named CSS color.
 		/// </summary>
-		/// <param name="label">The display label for the pie slice.</param>
-		/// <param name="value">The positive numeric value for the pie slice. Values are rounded to a maximum of two decimal places.</param>
-		/// <exception cref="ArgumentNullException">Thrown when label is null.</exception>
-		/// <exception cref="ArgumentException">Thrown when label is empty or consists only of white-space characters.</exception>
-		/// <exception cref="ArgumentOutOfRangeException">Thrown when value is not a finite number greater than zero.</exception>
-		public PieSlice(string label, double value)
+		public string Color { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the PieSlice class with the specified label, value, and color.
+        /// </summary>
+        /// <param name="label">The display label for the pie slice.</param>
+        /// <param name="value">The positive numeric value for the pie slice. Values are rounded to a maximum of two decimal places.</param>
+        /// <param name="color">The background color for the pie slice as a CSS-compatible color value, such as a hex code like <c>#RRGGBB</c> or a named CSS color.</param>
+        /// <exception cref="ArgumentNullException">Thrown when label is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when label is empty or consists only of white-space characters.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when value is not a finite number greater than zero.</exception>
+        public PieSlice(string label, double value, string color = "")
 		{
 			if (label == null)
 				throw new ArgumentNullException(nameof(label));
@@ -37,6 +44,7 @@ namespace MermaidSharp.Models
 
 			Label = label;
 			Value = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+			Color = color;
 		}
 
 		/// <summary>

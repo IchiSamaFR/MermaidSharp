@@ -287,9 +287,21 @@ pie
 		[TestMethod]
 		public void PieChartDiagram_CalculateDiagram_WithAllOptions_AndConfig()
 		{
-			// Arrange
-			var config = new PieChartConfig(textPosition: 0.5);
-			var diagram = new PieChartDiagram(title: "Key elements in Product X", showData: true, config: config);
+            // Arrange
+            var themeVariables = new ThemeVariables
+            {
+                PieTitleTextSize = "18px",
+                PieTitleTextColor = "#333333",
+                PieSectionTextSize = "14px",
+                PieSectionTextColor = "#666666",
+                PieLegendTextSize = "12px",
+                PieLegendTextColor = "#999999",
+                PieStrokeColor = "#000000",
+                PieOuterStrokeWidth = "2px",
+                PieOpacity = 0.8
+            };
+            var config = new PieChartConfig(textPosition: 0.5, themeVariables: themeVariables);
+            var diagram = new PieChartDiagram(title: "Key elements in Product X", showData: true, config: config);
 			diagram.Slices.Add(new PieSlice("Calcium", 42.96));
 			diagram.Slices.Add(new PieSlice("Potassium", 50.05));
 			diagram.Slices.Add(new PieSlice("Magnesium", 10.01));
@@ -299,6 +311,16 @@ pie
 config:
     pie:
         textPosition: 0.5
+    themeVariables:
+        pieTitleTextSize: ""18px""
+        pieTitleTextColor: ""#333333""
+        pieSectionTextSize: ""14px""
+        pieSectionTextColor: ""#666666""
+        pieLegendTextSize: ""12px""
+        pieLegendTextColor: ""#999999""
+        pieStrokeColor: ""#000000""
+        pieOuterStrokeWidth: ""2px""
+        pieOpacity: 0.8
 ---
 pie showData
     title Key elements in Product X
