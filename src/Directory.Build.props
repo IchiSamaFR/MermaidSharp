@@ -1,6 +1,6 @@
 <Project>
 	<PropertyGroup>
-		<Version>1.1.1</Version>
+		<Version>1.2.0</Version>
 		<Authors>IchiSamaFR</Authors>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -12,5 +12,6 @@
 		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageOutputPath>$(SolutionDir)nuget</PackageOutputPath>
 	</PropertyGroup>
 </Project>
