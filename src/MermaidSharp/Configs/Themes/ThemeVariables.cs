@@ -1,9 +1,5 @@
-﻿using MermaidSharp.Extensions;
-using MermaidSharp.Models;
-using System;
+using MermaidSharp.Extensions;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 
 namespace MermaidSharp.Configs.Themes
 {
@@ -15,8 +11,8 @@ namespace MermaidSharp.Configs.Themes
         private readonly string Name = "themeVariables";
 
         /// <summary>
-        /// Returns the theme variable configuration lines for Mermaid output.
-        /// Unlike the base implementation, this override indents the parameter lines and prepends the <c>themeVariables:</c> section only when values are present.
+        /// Returns indented theme variable configuration lines for Mermaid output.
+        /// Prepends the <c>themeVariables:</c> section only when theme variable values are present.
         /// </summary>
         /// <returns>
         /// A list of formatted theme variable configuration lines, or an empty list when no theme variables are set.

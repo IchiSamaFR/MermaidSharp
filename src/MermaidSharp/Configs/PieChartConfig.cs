@@ -33,7 +33,8 @@ namespace MermaidSharp.Configs
         }
 
         /// <summary>
-        /// Gets or sets the theme variables to apply to the diagram. If null, no theme variables are applied.
+        /// Gets or sets the theme variables to apply to the diagram.
+        /// Returns an empty <see cref="PieChartThemeVariables"/> instance when no value has been assigned.
         /// </summary>
         public new PieChartThemeVariables ThemeVariables
         {
@@ -41,7 +42,7 @@ namespace MermaidSharp.Configs
             {
                 if (base.ThemeVariables == null)
                 {
-                    return ThemeVariables = new PieChartThemeVariables();
+                    return (PieChartThemeVariables)(base.ThemeVariables = new PieChartThemeVariables());
                 }
                 if (base.ThemeVariables is PieChartThemeVariables variables)
                 {
@@ -62,12 +63,29 @@ namespace MermaidSharp.Configs
         /// <param name="textPosition">
         /// The axial position of the pie slice labels (0.0 to 1.0 inclusive). If null, Mermaid's default value (0.75) is used.
         /// </param>
-        /// <param name="themeVariables">The theme variables to apply to the diagram. If null, no theme variables are applied.</param>
+        /// <param name="themeVariables">
+        /// The theme variables to apply to the diagram. If null, a new empty <see cref="PieChartThemeVariables"/> instance is used.
+        /// </param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
         public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, PieChartThemeVariables themeVariables = null) : base(theme)
         {
             TextPosition = textPosition;
             ThemeVariables = themeVariables ?? new PieChartThemeVariables();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the PieChartConfig class using legacy theme variables.
+        /// </summary>
+        /// <param name="theme">The visual theme to apply to the diagram.</param>
+        /// <param name="textPosition">
+        /// The axial position of the pie slice labels (0.0 to 1.0 inclusive). If null, Mermaid's default value (0.75) is used.
+        /// </param>
+        /// <param name="themeVariables">The legacy theme variables to apply to the diagram.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
+        [Obsolete("Use PieChartConfig(ConfigTheme, double?, PieChartThemeVariables) instead.")]
+        public PieChartConfig(ConfigTheme theme, double? textPosition, ThemeVariables themeVariables)
+            : this(theme, textPosition, themeVariables as PieChartThemeVariables)
+        {
         }
 
         /// <summary>
