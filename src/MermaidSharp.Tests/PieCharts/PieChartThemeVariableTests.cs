@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MermaidSharp.Configs.Themes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace MermaidSharp.Tests.PieCharts
@@ -10,7 +11,7 @@ namespace MermaidSharp.Tests.PieCharts
         public void PieChartThemeVariableTests_CalculateConfig()
         {
             // Arrange
-            var themeVariables = new Configs.ThemeVariables
+            var themeVariables = new PieChartThemeVariables
             {
                 PieTitleTextSize = "18px",
                 PieTitleTextColor = "#333333",
@@ -47,7 +48,7 @@ themeVariables:
         public void PieChartThemeVariableTests_CalculatePartConfig()
         {
             // Arrange
-            var themeVariables = new Configs.ThemeVariables
+            var themeVariables = new PieChartThemeVariables
             {
                 PieTitleTextSize = "18px",
                 PieTitleTextColor = "#333333",

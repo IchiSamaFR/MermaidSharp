@@ -1,4 +1,5 @@
 using MermaidSharp.Configs;
+using MermaidSharp.Configs.Themes;
 using MermaidSharp.Diagrams;
 using MermaidSharp.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -288,7 +289,7 @@ pie
         public void PieChartDiagram_CalculateDiagram_WithAllOptions_AndConfig()
         {
             // Arrange
-            var themeVariables = new ThemeVariables
+            var themeVariables = new PieChartThemeVariables
             {
                 PieTitleTextSize = "18px",
                 PieTitleTextColor = "#333333",
@@ -341,7 +342,7 @@ pie showData
         public void PieChartDiagram_CalculateDiagram_WithColors()
         {
             // Arrange
-            var themeVariables = new ThemeVariables
+            var themeVariables = new PieChartThemeVariables
             {
                 PieTitleTextSize = "18px",
                 PieTitleTextColor = "#333333",

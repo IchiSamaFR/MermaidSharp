@@ -1,3 +1,4 @@
+using MermaidSharp.Configs.Themes;
 using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using System;
@@ -34,7 +35,25 @@ namespace MermaidSharp.Configs
         /// <summary>
         /// Gets or sets the theme variables to apply to the diagram. If null, no theme variables are applied.
         /// </summary>
-        public ThemeVariables ThemeVariables { get; set; }
+        public new PieChartThemeVariables ThemeVariables
+        {
+            get
+            {
+                if (base.ThemeVariables == null)
+                {
+                    return ThemeVariables = new PieChartThemeVariables();
+                }
+                if (base.ThemeVariables is PieChartThemeVariables variables)
+                {
+                    return variables;
+                }
+                throw new InvalidCastException($"ThemeVariables is not of type {nameof(PieChartThemeVariables)}.");
+            }
+            set
+            {
+                base.ThemeVariables = value;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the PieChartConfig class with the specified theme and text position.
@@ -45,10 +64,10 @@ namespace MermaidSharp.Configs
         /// </param>
         /// <param name="themeVariables">The theme variables to apply to the diagram. If null, no theme variables are applied.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
-        public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, ThemeVariables themeVariables = null) : base(theme)
+        public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, PieChartThemeVariables themeVariables = null) : base(theme)
         {
             TextPosition = textPosition;
-            ThemeVariables = themeVariables ?? new ThemeVariables();
+            ThemeVariables = themeVariables ?? new PieChartThemeVariables();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using MermaidSharp.Enums;
+﻿using MermaidSharp.Configs.Themes;
+using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace MermaidSharp.Configs
     public abstract class AConfig
     {
         private readonly string Name = "config";
+
+        /// <summary>
+        /// Gets or sets the theme variables used to customize the appearance of the component.
+        /// </summary>
+        protected ThemeVariables ThemeVariables { get; set; }
+
         /// <summary>
         /// Gets or sets the theme configuration for the Mermaid diagram rendering.
         /// </summary>

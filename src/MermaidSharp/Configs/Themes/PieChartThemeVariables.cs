@@ -1,19 +1,25 @@
-﻿using MermaidSharp.Extensions;
-using MermaidSharp.Models;
+﻿using MermaidSharp.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MermaidSharp.Configs
+namespace MermaidSharp.Configs.Themes
 {
     /// <summary>
-    /// Represents a collection of Mermaid theme variables used to configure chart styling options.
+    /// Represents a set of theme variables for customizing the appearance of pie charts, including colors, text styles,
+    /// and stroke settings.
     /// </summary>
-    public class ThemeVariables : AConfigurable
+    /// <remarks>Use this class to configure the visual aspects of pie charts, such as section colors, title
+    /// and legend text styles, and opacity. These settings allow for consistent theming and branding of pie chart
+    /// visualizations across an application.</remarks>
+    public class PieChartThemeVariables : ThemeVariables
     {
-        private readonly string Name = "themeVariables";
-
+        /// <summary>
+        /// Gets or sets the collection of pie slices represented in the chart.
+        /// </summary>
         internal IReadOnlyList<PieSlice> PieSlices { get; set; }
 
         /// <summary>
@@ -114,24 +120,6 @@ namespace MermaidSharp.Configs
                 lst.Add($"pieOpacity: {PieOpacity.Value.ToString("G", CultureInfo.InvariantCulture)}");
 
             return lst;
-        }
-
-        /// <summary>
-        /// Returns the theme variable configuration lines for Mermaid output.
-        /// Unlike the base implementation, this override indents the parameter lines and prepends the <c>themeVariables:</c> section only when values are present.
-        /// </summary>
-        /// <returns>
-        /// A list of formatted theme variable configuration lines, or an empty list when no theme variables are set.
-        /// </returns>
-        public override List<string> GetConfigLines()
-        {
-            var paramsList = GetParams().Indent();
-            if (paramsList.Count == 0)
-                return new List<string>();
-
-            paramsList.Insert(0, $"{Name}:");
-
-            return paramsList;
         }
     }
 }
