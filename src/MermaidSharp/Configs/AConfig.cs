@@ -16,6 +16,12 @@ namespace MermaidSharp.Configs
     public abstract class AConfig
     {
         private readonly string Name = "config";
+
+        /// <summary>
+        /// Gets or sets the theme variables used to customize the appearance of the component.
+        /// </summary>
+        protected MermaidSharp.Configs.Themes.ThemeVariables ThemeVariables { get; set; }
+
         /// <summary>
         /// Gets or sets the theme configuration for the Mermaid diagram rendering.
         /// </summary>
