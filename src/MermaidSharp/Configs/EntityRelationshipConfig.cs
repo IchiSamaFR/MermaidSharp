@@ -13,6 +13,10 @@ namespace MermaidSharp.Configs
 	/// </summary>
 	public class EntityRelationshipConfig : AConfig<EntityRelationshipThemeVariables>
 	{
+		public EntityRelationshipConfig() : base()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the EntityRelationshipConfig class with the specified theme.
 		/// </summary>

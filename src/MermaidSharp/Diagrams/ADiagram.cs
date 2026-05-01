@@ -12,7 +12,7 @@ namespace MermaidSharp.Diagrams
 	/// diagram generation.
 	/// </summary>
 	public abstract class ADiagram<TConfig> : AMermaid<TConfig>
-		where TConfig : IConfig
+		where TConfig : IConfig, new()
 	{
         /// <summary>
         /// Gets the collection of nodes contained in the current structure.

@@ -12,7 +12,7 @@ namespace MermaidSharp.Diagrams
 	/// <remarks>Derive from this class to implement specific types of Mermaid diagrams. This class defines
 	/// the contract for generating diagram content and managing diagram titles.</remarks>
 	public abstract class AMermaid<TConfig>
-	    where TConfig : IConfig
+	    where TConfig : IConfig, new()
 	{
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
@@ -37,7 +37,10 @@ namespace MermaidSharp.Diagrams
         protected AMermaid(string title = "", TConfig config = default)
         {
             Title = title;
-            Config = config;
+
+            if (config == null)
+                config = new TConfig();
+			Config = config;
         }
 
         /// <summary>

@@ -5,30 +5,35 @@ using System.Collections.Generic;
 
 namespace MermaidSharp.Configs
 {
-    /// <summary>
-    /// Represents the configuration settings for rendering a git graph diagram, including display options and main
-    /// branch customization.
-    /// </summary>
-    public class GitGraphConfig : AConfig<GitGraphThemeVariables>
+	/// <summary>
+	/// Represents the configuration settings for rendering a git graph diagram, including display options and main
+	/// branch customization.
+	/// </summary>
+	public class GitGraphConfig : AConfig<GitGraphThemeVariables>
 	{
-        private readonly string Name = "gitGraph";
+		private readonly string Name = "gitGraph";
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the commit label is displayed.
-        /// </summary>
-        public bool? ShowCommitLabel { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether branches are displayed in the diagram.
-        /// </summary>
-        public bool? ShowBranches { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether the commit label should be rotated in the diagram.
-        /// </summary>
-        public bool? RotateCommitLabel { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the main branch in the repository.
-        /// </summary>
-        public string MainBranchName { get; set; }
+		/// <summary>
+		/// Gets or sets a value indicating whether the commit label is displayed.
+		/// </summary>
+		public bool? ShowCommitLabel { get; set; }
+		/// <summary>
+		/// Gets or sets a value indicating whether branches are displayed in the diagram.
+		/// </summary>
+		public bool? ShowBranches { get; set; }
+		/// <summary>
+		/// Gets or sets a value indicating whether the commit label should be rotated in the diagram.
+		/// </summary>
+		public bool? RotateCommitLabel { get; set; }
+		/// <summary>
+		/// Gets or sets the name of the main branch in the repository.
+		/// </summary>
+		public string MainBranchName { get; set; }
+
+		public GitGraphConfig() : base()
+		{
+
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the GitGraphConfig class with the specified theme and display options for the
@@ -41,49 +46,49 @@ namespace MermaidSharp.Configs
 		/// <param name="mainBranchName">The name of the main branch to display. If null, the default branch name is used.</param>
 		/// <param name="themeVariables">The theme variables to apply to the git graph. If null, default theme variables are used.</param>
 		public GitGraphConfig(ConfigTheme theme = ConfigTheme.None,
-            bool? showCommitLabel = null,
-            bool? showBranches = null,
-            bool? rotateCommitLabel = null,
-            string mainBranchName = null,
-            GitGraphThemeVariables themeVariables = default) : base(theme, themeVariables)
-        {
-            ShowCommitLabel = showCommitLabel;
-            ShowBranches = showBranches;
-            RotateCommitLabel = rotateCommitLabel;
-            MainBranchName = mainBranchName;
-        }
+			bool? showCommitLabel = null,
+			bool? showBranches = null,
+			bool? rotateCommitLabel = null,
+			string mainBranchName = null,
+			GitGraphThemeVariables themeVariables = default) : base(theme, themeVariables)
+		{
+			ShowCommitLabel = showCommitLabel;
+			ShowBranches = showBranches;
+			RotateCommitLabel = rotateCommitLabel;
+			MainBranchName = mainBranchName;
+		}
 
-        /// <summary>
-        /// Retrieves a list of configuration parameters as formatted strings based on the current theme settings.
-        /// </summary>
-        /// <remarks>Override this method in a derived class to include additional configuration
-        /// parameters as needed.</remarks>
-        /// <returns>A list of strings representing the configuration parameters. The list is empty if no parameters are set.</returns>
-        protected override List<string> GetParams()
-        {
-            var baseLst = base.GetParams();
-            var lst = new List<string>();
+		/// <summary>
+		/// Retrieves a list of configuration parameters as formatted strings based on the current theme settings.
+		/// </summary>
+		/// <remarks>Override this method in a derived class to include additional configuration
+		/// parameters as needed.</remarks>
+		/// <returns>A list of strings representing the configuration parameters. The list is empty if no parameters are set.</returns>
+		protected override List<string> GetParams()
+		{
+			var baseLst = base.GetParams();
+			var lst = new List<string>();
 
-            if (ShowCommitLabel != null)
-                lst.Add($"showCommitLabel: {ShowCommitLabel.ToString().ToLowerInvariant()}");
+			if (ShowCommitLabel != null)
+				lst.Add($"showCommitLabel: {ShowCommitLabel.ToString().ToLowerInvariant()}");
 
-            if (ShowBranches != null)
-                lst.Add($"showBranches: {ShowBranches.ToString().ToLowerInvariant()}");
+			if (ShowBranches != null)
+				lst.Add($"showBranches: {ShowBranches.ToString().ToLowerInvariant()}");
 
-            if (RotateCommitLabel != null)
-                lst.Add($"rotateCommitLabel: {RotateCommitLabel.ToString().ToLowerInvariant()}");
+			if (RotateCommitLabel != null)
+				lst.Add($"rotateCommitLabel: {RotateCommitLabel.ToString().ToLowerInvariant()}");
 
-            if (!string.IsNullOrWhiteSpace(MainBranchName))
-                lst.Add($"mainBranchName: {MainBranchName}");
+			if (!string.IsNullOrWhiteSpace(MainBranchName))
+				lst.Add($"mainBranchName: {MainBranchName}");
 
-            if (lst.Count == 0)
-                return baseLst;
+			if (lst.Count == 0)
+				return baseLst;
 
-            lst = lst.Indent();
-            lst.Insert(0, $"{Name}:");
-            baseLst.AddRange(lst.Indent());
+			lst = lst.Indent();
+			lst.Insert(0, $"{Name}:");
+			baseLst.AddRange(lst.Indent());
 
-            return baseLst;
-        }
-    }
+			return baseLst;
+		}
+	}
 }

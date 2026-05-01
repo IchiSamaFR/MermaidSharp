@@ -10,7 +10,7 @@ namespace MermaidSharp.Diagrams
     /// MermaidSharp library. It encapsulates shared configuration logic and ensures consistent handling of graph titles
     /// and settings across derived types.</remarks>
     public abstract class AGraph<TConfig> : AMermaid<TConfig>
-        where TConfig : IConfig
+        where TConfig : IConfig, new()
     {
         /// <summary>
         /// Initializes a new instance of the AGraph class with the specified title and configuration.

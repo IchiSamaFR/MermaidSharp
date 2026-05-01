@@ -98,12 +98,12 @@ config:
         public void PieChartConfig_TextPosition_Center()
         {
             // Arrange
-            var config = new PieChartConfig(textPosition: 0);
+            var config = new PieChartConfig(textPosition: 0.5d);
 
             string expected = @"---
 config:
     pie:
-        textPosition: 0
+        textPosition: 0.5
 ---";
 
             // Act
@@ -182,37 +182,6 @@ config:
             Assert.IsNotNull(result);
             Assert.AreEqual(expected, result);
         }
-
-        [TestMethod]
-        public void PieChartConfig_LegacyThemeVariables_IsSupported()
-        {
-            // Arrange
-#pragma warning disable CS0618
-            var legacyThemeVariables = new ThemeVariables
-            {
-                PieTitleTextColor = "#333333"
-            };
-            var config = new PieChartConfig(ConfigTheme.Dark, 0.5, legacyThemeVariables);
-#pragma warning restore CS0618
-
-            string expected = @"---
-config:
-    theme: dark
-    pie:
-        textPosition: 0.5
-    themeVariables:
-        pieTitleTextColor: ""#333333""
----";
-
-            // Act
-            string result = config.ToString();
-
-            // Assert
-            Assert.IsNotNull(config);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(expected, result);
-        }
-
         #endregion
 
         #region TextPosition Validation

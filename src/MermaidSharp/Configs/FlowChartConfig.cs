@@ -13,6 +13,10 @@ namespace MermaidSharp.Configs
 	/// </summary>
 	public class FlowChartConfig : AConfig<FlowChartThemeVariables>
 	{
+		public FlowChartConfig() : base()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the PieChartConfig class with the specified theme and text position.
 		/// </summary>

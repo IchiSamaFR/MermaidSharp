@@ -15,14 +15,14 @@ namespace MermaidSharp.Configs
 	/// theming through the Theme property. Derived classes should override the GetParams method to supply additional
 	/// configuration parameters as needed.</remarks>
 	public abstract class AConfig<TThemeVariables> : IConfig
-		where TThemeVariables : IThemeVariables
+		where TThemeVariables : IThemeVariables, new()
 	{
 		private readonly string Name = "config";
 
 		/// <summary>
 		/// Gets or sets the theme variables used to customize the appearance of the component.
 		/// </summary>
-		protected TThemeVariables ThemeVariables { get; set; }
+		public TThemeVariables ThemeVariables { get; set; }
 
 		/// <summary>
 		/// Gets or sets the theme configuration for the Mermaid diagram rendering.
@@ -37,6 +37,9 @@ namespace MermaidSharp.Configs
 		public AConfig(ConfigTheme theme = ConfigTheme.None, TThemeVariables themeVariables = default)
 		{
 			Theme = theme;
+
+			if (themeVariables == null)
+				themeVariables = new TThemeVariables();
 			ThemeVariables = themeVariables;
 		}
 
@@ -82,6 +85,7 @@ namespace MermaidSharp.Configs
 
 			if (Theme != ConfigTheme.None)
 				lst.Add($"theme: {Theme.PrimaryString()}");
+			lst.AddRange(ThemeVariables.GetConfigLines().Indent());
 
 			return lst.Indent();
 		}

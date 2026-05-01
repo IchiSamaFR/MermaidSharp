@@ -33,18 +33,23 @@ namespace MermaidSharp.Diagrams
         /// </summary>
         public List<PieSlice> Slices { get; } = new List<PieSlice>();
 
-        /// <summary>
-        /// Initializes a new instance of the PieChartDiagram class with the specified title, ShowData option, and configuration.
-        /// </summary>
-        /// <param name="title">The title of the pie chart. If not specified, no title is rendered.</param>
-        /// <param name="showData">
-        /// A value indicating whether data values are displayed next to the legend labels. Defaults to <c>false</c>.
-        /// </param>
-        /// <param name="config">The configuration settings to apply to the pie chart. If null, default settings are used.</param>
-        public PieChartDiagram(string title = "", bool showData = false, PieChartConfig config = null) : base(title, config)
+		/// <summary>
+		/// Initializes a new instance of the PieChartDiagram class with the specified title, ShowData option, and configuration.
+		/// </summary>
+		/// <param name="title">The title of the pie chart. If not specified, no title is rendered.</param>
+		/// <param name="showData">
+		/// A value indicating whether data values are displayed next to the legend labels. Defaults to <c>false</c>.
+		/// </param>
+		/// <param name="config">The configuration settings to apply to the pie chart. If null, default settings are used.</param>
+		public PieChartDiagram(string title = "", bool showData = false, PieChartConfig config = null) : base(title, config)
         {
             ShowData = showData;
-        }
+
+			if (Config.ThemeVariables != null)
+			{
+				Config.ThemeVariables.PieSlices = Slices;
+			}
+		}
 
         /// <summary>
         /// Adds a slice to the pie chart with the specified label and value.
