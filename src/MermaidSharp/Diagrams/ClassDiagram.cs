@@ -1,3 +1,5 @@
+using MermaidSharp.Configs;
+using MermaidSharp.Configs.Themes;
 using MermaidSharp.Extensions;
 using MermaidSharp.Models;
 using System;
@@ -12,7 +14,7 @@ namespace MermaidSharp.Diagrams
     /// <remarks>Use this class to construct and generate Mermaid class diagrams programmatically. The diagram
     /// can include multiple namespaces, classes, and links between them. Inherit from this class to extend or customize
     /// class diagram generation.</remarks>
-    public class ClassDiagram : ADiagram
+    public class ClassDiagram : ADiagram<ClassDiagramConfig>
     {
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
@@ -28,8 +30,8 @@ namespace MermaidSharp.Diagrams
         /// Initializes a new instance of the ClassDiagram class with the specified title.
         /// </summary>
         /// <param name="title">The title of the class diagram. If not specified, the title is set to an empty string.</param>
-        public ClassDiagram(string title = "")
-            : base(title)
+        /// <param name="config">The configuration settings to apply to the class diagram. If null, default configuration is used.</param>
+        public ClassDiagram(string title = "", ClassDiagramConfig config = null) : base(title, config)
         {
         }
 

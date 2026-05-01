@@ -10,7 +10,7 @@ namespace MermaidSharp.Configs
     /// <summary>
     /// Represents the configuration settings for rendering a Mermaid pie chart diagram.
     /// </summary>
-    public class PieChartConfig : AConfig
+    public class PieChartConfig : AConfig<PieChartThemeVariables>
     {
         private readonly string Name = "pie";
 
@@ -33,30 +33,6 @@ namespace MermaidSharp.Configs
         }
 
         /// <summary>
-        /// Gets or sets the theme variables to apply to the diagram.
-        /// Returns an empty <see cref="PieChartThemeVariables"/> instance when no value has been assigned.
-        /// </summary>
-        public new PieChartThemeVariables ThemeVariables
-        {
-            get
-            {
-                if (base.ThemeVariables == null)
-                {
-                    return (PieChartThemeVariables)(base.ThemeVariables = new PieChartThemeVariables());
-                }
-                if (base.ThemeVariables is PieChartThemeVariables variables)
-                {
-                    return variables;
-                }
-                throw new InvalidCastException($"ThemeVariables is not of type {nameof(PieChartThemeVariables)}.");
-            }
-            set
-            {
-                base.ThemeVariables = value;
-            }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the PieChartConfig class with the specified theme and text position.
         /// </summary>
         /// <param name="theme">The visual theme to apply to the diagram. Defaults to <see cref="ConfigTheme.None"/>.</param>
@@ -67,10 +43,9 @@ namespace MermaidSharp.Configs
         /// The theme variables to apply to the diagram. If null, a new empty <see cref="PieChartThemeVariables"/> instance is used.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
-        public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, PieChartThemeVariables themeVariables = null) : base(theme)
+        public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, PieChartThemeVariables themeVariables = default) : base(theme, themeVariables)
         {
             TextPosition = textPosition;
-            ThemeVariables = themeVariables ?? new PieChartThemeVariables();
         }
 
         /// <summary>

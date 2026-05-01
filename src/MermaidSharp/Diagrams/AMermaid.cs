@@ -1,36 +1,29 @@
-﻿using MermaidSharp.Constants;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using MermaidSharp.Configs;
+using MermaidSharp.Constants;
 
 namespace MermaidSharp.Diagrams
 {
-    /// <summary>
-    /// Represents the base class for Mermaid diagram generators, providing common properties and methods for creating
-    /// and formatting diagram output.
-    /// </summary>
-    /// <remarks>Derive from this class to implement specific types of Mermaid diagrams. This class defines
-    /// the contract for generating diagram content and managing diagram titles.</remarks>
-    public abstract class AMermaid
-    {
+	/// <summary>
+	/// Represents the base class for Mermaid diagram generators, providing common properties and methods for creating
+	/// and formatting diagram output.
+	/// </summary>
+	/// <remarks>Derive from this class to implement specific types of Mermaid diagrams. This class defines
+	/// the contract for generating diagram content and managing diagram titles.</remarks>
+	public abstract class AMermaid<TConfig>
+	    where TConfig : IConfig
+	{
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
         protected abstract string Name { get; }
 
-        /// <summary>
-        /// Gets the Mermaid diagram type name for the current instance.
-        /// </summary>
-        /// <remarks>
-        /// This property is provided for backward compatibility and may be removed in a future version.
-        /// </remarks>
-        [Obsolete("Access to the diagram type name is deprecated and will be removed in a future version.")]
-        public string DiagramName
-        {
-            get
-            {
-                return Name;
-            }
-        }
+		/// <summary>
+		/// Gets or sets the configuration settings for the current instance.
+		/// </summary>
+		protected TConfig Config { get; set; }
+
         /// <summary>
         /// Gets or sets the title associated with the object.
         /// </summary>
@@ -40,9 +33,11 @@ namespace MermaidSharp.Diagrams
         /// Initializes a new instance of the AMermaid class with the specified title.
         /// </summary>
         /// <param name="title">The title to assign to the diagram. If not specified, the title is set to an empty string.</param>
-        protected AMermaid(string title = "")
+        /// <param name="config">The configuration settings for the diagram. If not specified, default settings will be used.</param>
+        protected AMermaid(string title = "", TConfig config = default)
         {
             Title = title;
+            Config = config;
         }
 
         /// <summary>
@@ -79,13 +74,15 @@ namespace MermaidSharp.Diagrams
             if (!string.IsNullOrWhiteSpace(Title))
                 lines.Add($"title: {Title}");
 
-            return lines;
+			lines.AddRange(Config?.GetConfigLines() ?? new List<string>());
+
+			return lines;
         }
 
-        /// <summary>
-        /// Generates the complete Mermaid diagram as a formatted string.
-        /// </summary>
-        /// <returns>A string containing the full Mermaid diagram.</returns>
-        public abstract string CalculateDiagram();
+		/// <summary>
+		/// Generates the complete Mermaid diagram as a formatted string.
+		/// </summary>
+		/// <returns>A string containing the full Mermaid diagram.</returns>
+		public abstract string CalculateDiagram();
     }
 }

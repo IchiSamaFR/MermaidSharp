@@ -1,4 +1,5 @@
 ﻿using MermaidSharp.Configs;
+using MermaidSharp.Configs.Themes;
 using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using MermaidSharp.Models;
@@ -15,17 +16,12 @@ namespace MermaidSharp.Diagrams
     /// branches, commits, merges, and checkouts. The resulting graph can be used to generate Mermaid diagrams for
     /// documentation or visualization purposes. The class enforces branch existence and naming constraints to ensure
     /// valid Git graph construction.</remarks>
-    public class GitGraph : AGraph
+    public class GitGraph : AGraph<GitGraphConfig>
     {
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
         protected override string Name => "gitGraph";
-
-        /// <summary>
-        /// Gets the configuration settings specific to the Git graph rendering.
-        /// </summary>
-        public new GitGraphConfig Config => base.Config as GitGraphConfig;
 
         private List<AGitAction> _actions = new List<AGitAction>();
         private List<string> _branches = new List<string>();

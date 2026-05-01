@@ -1,17 +1,19 @@
-using MermaidSharp.Extensions;
-using MermaidSharp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MermaidSharp.Configs;
+using MermaidSharp.Extensions;
+using MermaidSharp.Models;
 
 namespace MermaidSharp.Diagrams
 {
-    /// <summary>
-    /// Represents the base class for diagram types that consist of nodes and links, providing common functionality for
-    /// diagram generation.
-    /// </summary>
-    public abstract class ADiagram : AMermaid
-    {
+	/// <summary>
+	/// Represents the base class for diagram types that consist of nodes and links, providing common functionality for
+	/// diagram generation.
+	/// </summary>
+	public abstract class ADiagram<TConfig> : AMermaid<TConfig>
+		where TConfig : IConfig
+	{
         /// <summary>
         /// Gets the collection of nodes contained in the current structure.
         /// </summary>
@@ -21,20 +23,20 @@ namespace MermaidSharp.Diagrams
         /// </summary>
         public List<ALink> Links { get; } = new List<ALink>();
 
-        /// <summary>
-        /// Initializes a new instance of the ADiagram class with the specified title.
-        /// </summary>
-        /// <param name="title">The title to assign to the diagram. If not specified, the title is set to an empty string.</param>
-        protected ADiagram(string title = "")
-        {
-            Title = title;
-        }
+		/// <summary>
+		/// Initializes a new instance of the ADiagram class with the specified title.
+		/// </summary>
+		/// <param name="title">The title to assign to the diagram. If not specified, the title is set to an empty string.</param>
+		/// <param name="config">The configuration settings for the diagram. If not specified, default settings will be used.</param>
+		protected ADiagram(string title = "", TConfig config = default) : base(title, config)
+		{
+		}
 
-        /// <summary>
-        /// Generates the complete Mermaid diagram as a formatted string.
-        /// </summary>
-        /// <returns>A string containing the full Mermaid diagram.</returns>
-        public override string CalculateDiagram()
+		/// <summary>
+		/// Generates the complete Mermaid diagram as a formatted string.
+		/// </summary>
+		/// <returns>A string containing the full Mermaid diagram.</returns>
+		public override string CalculateDiagram()
         {
             var lines = new List<string>();
             lines.Add(GetHeaderString());

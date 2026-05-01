@@ -1,4 +1,5 @@
 using MermaidSharp.Configs;
+using MermaidSharp.Configs.Themes;
 using MermaidSharp.Extensions;
 using MermaidSharp.Models;
 using System;
@@ -15,17 +16,12 @@ namespace MermaidSharp.Diagrams
     /// Supports an optional title and an optional <c>showData</c> flag that renders the actual
     /// data values next to the legend labels.
     /// </remarks>
-    public class PieChartDiagram : AGraph
+    public class PieChartDiagram : AGraph<PieChartConfig>
     {
         /// <summary>
         /// Gets the Mermaid keyword for the pie chart diagram type.
         /// </summary>
         protected override string Name => "pie";
-
-        /// <summary>
-        /// Gets the configuration settings specific to the pie chart rendering.
-        /// </summary>
-        public new PieChartConfig Config => base.Config as PieChartConfig;
 
         /// <summary>
         /// Gets or sets a value indicating whether the actual data values are rendered after each legend label.
@@ -48,11 +44,6 @@ namespace MermaidSharp.Diagrams
         public PieChartDiagram(string title = "", bool showData = false, PieChartConfig config = null) : base(title, config)
         {
             ShowData = showData;
-
-            if (Config?.ThemeVariables != null)
-            {
-                Config.ThemeVariables.PieSlices = Slices;
-            }
         }
 
         /// <summary>

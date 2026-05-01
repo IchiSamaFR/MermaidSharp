@@ -1,9 +1,11 @@
-using MermaidSharp.Enums;
-using MermaidSharp.Extensions;
-using MermaidSharp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MermaidSharp.Configs;
+using MermaidSharp.Configs.Themes;
+using MermaidSharp.Enums;
+using MermaidSharp.Extensions;
+using MermaidSharp.Models;
 
 namespace MermaidSharp.Diagrams
 {
@@ -14,29 +16,30 @@ namespace MermaidSharp.Diagrams
     /// for custom directions and subgraph grouping. The diagram can be rendered as a Mermaid syntax string for
     /// visualization or export. Only the directions "LR", "TD", "BT", "RL", and "TB" are supported. Attempting to use
     /// an unsupported direction will result in a NotSupportedException.</remarks>
-    public class FlowchartDiagram : ADiagram
+    public class FlowchartDiagram : ADiagram<FlowChartConfig>
     {
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
         /// </summary>
         protected override string Name => "flowchart";
 
-        /// <summary>
-        /// Gets or sets the direction of the flowchart.
-        /// </summary>
-        public FlowDirection Direction { get; set; }
+		/// <summary>
+		/// Gets or sets the direction of the flowchart.
+		/// </summary>
+		public FlowDirection Direction { get; set; }
 
         /// <summary>
         /// Gets the collection of subgraphs contained within the flowchart.
         /// </summary>
         public List<FlowSubGraph> SubGraphs { get; } = new List<FlowSubGraph>();
 
-        /// <summary>
-        /// Initializes a new instance of the FlowchartDiagram class with the specified title, direction, nodes, links,
-        /// and subgraphs.
-        /// </summary>
-        /// <param name="direction">The direction of the flowchart.</param>
-        public FlowchartDiagram(FlowDirection direction = FlowDirection.LeftRight) : this(string.Empty, direction)
+		/// <summary>
+		/// Initializes a new instance of the FlowchartDiagram class with the specified title, direction, nodes, links,
+		/// and subgraphs.
+		/// </summary>
+		/// <param name="direction">The direction of the flowchart.</param>
+		/// <param name="config">The configuration settings for the flowchart diagram. If not specified, default settings will be used.</param>
+		public FlowchartDiagram(FlowDirection direction = FlowDirection.LeftRight, FlowChartConfig config = default) : this(string.Empty, direction, config)
         {
 
         }
@@ -47,7 +50,8 @@ namespace MermaidSharp.Diagrams
         /// </summary>
         /// <param name="direction">The direction of the flowchart.</param>
         /// <param name="title">The title of the flowchart diagram</param>
-        public FlowchartDiagram(string title, FlowDirection direction = FlowDirection.LeftRight) : base(title)
+        /// <param name="config">The configuration settings for the flowchart diagram. If not specified, default settings will be used.</param>
+        public FlowchartDiagram(string title, FlowDirection direction = FlowDirection.LeftRight, FlowChartConfig config = default) : base(title, config)
         {
             Direction = direction == FlowDirection.None ? FlowDirection.LeftRight : direction;
         }
