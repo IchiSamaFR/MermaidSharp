@@ -1,7 +1,7 @@
-﻿using MermaidSharp.Configs.Themes;
+﻿using System.Collections.Generic;
+using MermaidSharp.Configs.Themes;
 using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
-using System.Collections.Generic;
 
 namespace MermaidSharp.Configs
 {

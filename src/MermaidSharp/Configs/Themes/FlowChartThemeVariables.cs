@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-
-namespace MermaidSharp.Configs.Themes
+﻿namespace MermaidSharp.Configs.Themes
 {
 	/// <summary>
 	/// Represents a set of theme variables for customizing the appearance of flowcharts, including node, cluster, and link colors.

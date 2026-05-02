@@ -1,40 +1,40 @@
-using MermaidSharp.Configs.Themes;
-using MermaidSharp.Enums;
-using MermaidSharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using MermaidSharp.Configs.Themes;
+using MermaidSharp.Enums;
+using MermaidSharp.Extensions;
 
 namespace MermaidSharp.Configs
 {
-    /// <summary>
-    /// Represents the configuration settings for rendering a Mermaid pie chart diagram.
-    /// </summary>
-    public class PieChartConfig : AConfig<PieChartThemeVariables>
-    {
-        private const string Name = "pie";
+	/// <summary>
+	/// Represents the configuration settings for rendering a Mermaid pie chart diagram.
+	/// </summary>
+	public class PieChartConfig : AConfig<PieChartThemeVariables>
+	{
+		private const string Name = "pie";
 
-        private double? _textPosition;
+		private double? _textPosition;
 
-        /// <summary>
-        /// Gets or sets the axial position of the pie slice labels, from 0.0 at the center to 1.0 at the outside edge
-        /// of the circle. The default value used by Mermaid is 0.75.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when value is not finite or is not between 0.0 and 1.0 inclusive.</exception>
-        public double? TextPosition
-        {
-            get => _textPosition;
-            set
-            {
-                if (value.HasValue && (double.IsNaN(value.Value) || double.IsInfinity(value.Value) || value.Value < 0.0 || value.Value > 1.0))
-                    throw new ArgumentOutOfRangeException(nameof(value), "TextPosition must be a finite number between 0.0 and 1.0 inclusive.");
-                _textPosition = value;
-            }
-        }
+		/// <summary>
+		/// Gets or sets the axial position of the pie slice labels, from 0.0 at the center to 1.0 at the outside edge
+		/// of the circle. The default value used by Mermaid is 0.75.
+		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when value is not finite or is not between 0.0 and 1.0 inclusive.</exception>
+		public double? TextPosition
+		{
+			get => _textPosition;
+			set
+			{
+				if (value.HasValue && (double.IsNaN(value.Value) || double.IsInfinity(value.Value) || value.Value < 0.0 || value.Value > 1.0))
+					throw new ArgumentOutOfRangeException(nameof(value), "TextPosition must be a finite number between 0.0 and 1.0 inclusive.");
+				_textPosition = value;
+			}
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
+		/// <summary>
+		/// 
+		/// </summary>
 		public PieChartConfig() : base()
 		{
 		}
@@ -51,31 +51,31 @@ namespace MermaidSharp.Configs
 		/// </param>
 		/// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
 		public PieChartConfig(ConfigTheme theme = ConfigTheme.None, double? textPosition = null, PieChartThemeVariables themeVariables = default) : base(theme, themeVariables)
-        {
-            TextPosition = textPosition;
-        }
+		{
+			TextPosition = textPosition;
+		}
 
-        /// <summary>
-        /// Retrieves a list of configuration parameters as formatted strings based on the current settings.
-        /// </summary>
-        /// <returns>A list of strings representing the configuration parameters. The list is empty if no parameters are set.</returns>
-        protected override List<string> GetParams()
-        {
-            var baseLst = base.GetParams();
-            var lst = new List<string>();
+		/// <summary>
+		/// Retrieves a list of configuration parameters as formatted strings based on the current settings.
+		/// </summary>
+		/// <returns>A list of strings representing the configuration parameters. The list is empty if no parameters are set.</returns>
+		protected override List<string> GetParams()
+		{
+			var baseLst = base.GetParams();
+			var lst = new List<string>();
 
-            if (TextPosition != null)
-                lst.Add($"textPosition: {TextPosition.Value.ToString("G", CultureInfo.InvariantCulture)}");
+			if (TextPosition != null)
+				lst.Add($"textPosition: {TextPosition.Value.ToString("G", CultureInfo.InvariantCulture)}");
 
-            if (lst.Count == 0)
-                return baseLst;
+			if (lst.Count == 0)
+				return baseLst;
 
-            lst = lst.Indent();
-            lst.Insert(0, $"{Name}:");
-            baseLst.AddRange(lst.Indent());
-            baseLst.AddRange(ThemeVariables.GetConfigLines().Indent());
+			lst = lst.Indent();
+			lst.Insert(0, $"{Name}:");
+			baseLst.AddRange(lst.Indent());
+			baseLst.AddRange(ThemeVariables.GetConfigLines().Indent());
 
-            return baseLst;
-        }
-    }
+			return baseLst;
+		}
+	}
 }

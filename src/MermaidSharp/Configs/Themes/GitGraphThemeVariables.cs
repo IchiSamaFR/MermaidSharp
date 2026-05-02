@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MermaidSharp.Configs.Themes
+﻿namespace MermaidSharp.Configs.Themes
 {
 	/// <summary>
 	/// Represents a set of theme variables for customizing the appearance of Git graph diagrams, including branch, commit, and tag styles.

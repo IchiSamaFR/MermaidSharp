@@ -14,14 +14,14 @@ namespace MermaidSharp.Diagrams
 	public abstract class ADiagram<TConfig> : AMermaid<TConfig>
 		where TConfig : IConfig, new()
 	{
-        /// <summary>
-        /// Gets the collection of nodes contained in the current structure.
-        /// </summary>
-        public List<ANode> Nodes { get; } = new List<ANode>();
-        /// <summary>
-        /// Gets the collection of links associated with the current instance.
-        /// </summary>
-        public List<ALink> Links { get; } = new List<ALink>();
+		/// <summary>
+		/// Gets the collection of nodes contained in the current structure.
+		/// </summary>
+		public List<ANode> Nodes { get; } = new List<ANode>();
+		/// <summary>
+		/// Gets the collection of links associated with the current instance.
+		/// </summary>
+		public List<ALink> Links { get; } = new List<ALink>();
 
 		/// <summary>
 		/// Initializes a new instance of the ADiagram class with the specified title.
@@ -37,16 +37,16 @@ namespace MermaidSharp.Diagrams
 		/// </summary>
 		/// <returns>A string containing the full Mermaid diagram.</returns>
 		public override string CalculateDiagram()
-        {
-            var lines = new List<string>();
-            lines.Add(GetHeaderString());
-            lines.Add(Name);
+		{
+			var lines = new List<string>();
+			lines.Add(GetHeaderString());
+			lines.Add(Name);
 
-            lines.AddRange(Nodes.Select(n => n.ToString()).Indent());
-            lines.AddRange(Links.Select(n => n.ToString()).Indent());
-            lines.AddRange(Nodes.Select(n => n.ToClassString()).Indent());
+			lines.AddRange(Nodes.Select(n => n.ToString()).Indent());
+			lines.AddRange(Links.Select(n => n.ToString()).Indent());
+			lines.AddRange(Nodes.Select(n => n.ToClassString()).Indent());
 
-            return string.Join(Environment.NewLine, lines.ClearNewLines());
-        }
-    }
+			return string.Join(Environment.NewLine, lines.ClearNewLines());
+		}
+	}
 }
