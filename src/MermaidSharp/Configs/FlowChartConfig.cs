@@ -13,6 +13,9 @@ namespace MermaidSharp.Configs
 	/// </summary>
 	public class FlowChartConfig : AConfig<FlowChartThemeVariables>
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FlowChartConfig"/> class with default settings.
+		/// </summary>
 		public FlowChartConfig() : base()
 		{
 		}

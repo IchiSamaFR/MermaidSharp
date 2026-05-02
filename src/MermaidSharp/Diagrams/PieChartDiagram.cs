@@ -44,23 +44,19 @@ namespace MermaidSharp.Diagrams
 		public PieChartDiagram(string title = "", bool showData = false, PieChartConfig config = null) : base(title, config)
         {
             ShowData = showData;
-
-			if (Config.ThemeVariables != null)
-			{
-				Config.ThemeVariables.PieSlices = Slices;
-			}
+			Config.ThemeVariables.PieSlices = Slices;
 		}
 
-        /// <summary>
-        /// Adds a slice to the pie chart with the specified label and value.
-        /// </summary>
-        /// <param name="label">The display label for the slice.</param>
-        /// <param name="value">The positive numeric value for the slice. Supported up to two decimal places.</param>
-        /// <param name="color">The optional color for the slice. If not specified, the default color is used.</param>
-        /// <returns>The current <see cref="PieChartDiagram"/> instance, enabling method chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when label is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when value is not greater than zero.</exception>
-        public PieChartDiagram AddSlice(string label, double value, string color = "")
+		/// <summary>
+		/// Adds a slice to the pie chart with the specified label and value.
+		/// </summary>
+		/// <param name="label">The display label for the slice.</param>
+		/// <param name="value">The positive numeric value for the slice. Supported up to two decimal places.</param>
+		/// <param name="color">The optional color for the slice. If not specified, the default color is used.</param>
+		/// <returns>The current <see cref="PieChartDiagram"/> instance, enabling method chaining.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when label is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when value is not greater than zero.</exception>
+		public PieChartDiagram AddSlice(string label, double value, string color = "")
         {
             Slices.Add(new PieSlice(label, value, color));
             return this;

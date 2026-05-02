@@ -12,7 +12,7 @@ namespace MermaidSharp.Configs
     /// </summary>
     public class PieChartConfig : AConfig<PieChartThemeVariables>
     {
-        private readonly string Name = "pie";
+        private const string Name = "pie";
 
         private double? _textPosition;
 

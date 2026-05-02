@@ -30,6 +30,9 @@ namespace MermaidSharp.Configs
 		/// </summary>
 		public string MainBranchName { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GitGraphConfig"/> class with default settings.
+		/// </summary>
 		public GitGraphConfig() : base()
 		{
 

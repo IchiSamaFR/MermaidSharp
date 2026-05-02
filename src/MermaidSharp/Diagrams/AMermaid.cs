@@ -22,7 +22,7 @@ namespace MermaidSharp.Diagrams
 		/// <summary>
 		/// Gets or sets the configuration settings for the current instance.
 		/// </summary>
-		protected TConfig Config { get; set; }
+		protected TConfig Config { get; }
 
         /// <summary>
         /// Gets or sets the title associated with the object.

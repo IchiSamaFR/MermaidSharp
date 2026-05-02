@@ -13,6 +13,9 @@ namespace MermaidSharp.Configs
 	/// </summary>
 	public class ClassDiagramConfig : AConfig<ClassDiagramThemeVariables>
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ClassDiagramConfig"/> class with default settings.
+		/// </summary>
 		public ClassDiagramConfig() : base()
 		{
 		}
@@ -24,7 +27,6 @@ namespace MermaidSharp.Configs
 		/// <param name="themeVariables">
 		/// The theme variables to apply to the diagram. If null, a new empty <see cref="ClassDiagramThemeVariables"/> instance is used.
 		/// </param>
-		/// <exception cref="ArgumentOutOfRangeException">Thrown when textPosition is not finite or is not between 0.0 and 1.0 inclusive.</exception>
 		public ClassDiagramConfig(ConfigTheme theme = ConfigTheme.None, ClassDiagramThemeVariables themeVariables = default) : base(theme, themeVariables)
 		{
 		}

@@ -1,8 +1,9 @@
-using MermaidSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using MermaidSharp.Extensions;
 
 namespace MermaidSharp.Configs.Themes
 {
@@ -12,6 +13,9 @@ namespace MermaidSharp.Configs.Themes
 	public abstract class ThemeVariables : AConfigurable, IThemeVariables
 	{
 		private readonly string Name = "themeVariables";
+
+		private static readonly System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]> PropertiesCache
+			= new System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]>();
 
 		/// <summary>
 		/// Gets or sets a value indicating whether dark mode is enabled.
@@ -166,14 +170,16 @@ namespace MermaidSharp.Configs.Themes
 		protected sealed override List<string> GetParams()
 		{
 			var lst = new List<string>();
-			var props = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+			var props = PropertiesCache.GetOrAdd(
+				GetType(),
+				t => t.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+					  .Where(p => p.GetCustomAttribute<ThemeVariableAttribute>() != null)
+					  .ToArray()
+			);
 
 			foreach (var prop in props)
 			{
 				var attr = prop.GetCustomAttribute<ThemeVariableAttribute>();
-				if (attr == null)
-					continue;
-
 				var value = prop.GetValue(this);
 				if (value == null)
 					continue;
