@@ -4,19 +4,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MermaidSharp.Tests.QuadrantCharts
 {
     /// <summary>
-    /// Contains unit tests for <see cref="AThemeVariables"/> properties serialization.
+    /// Contains unit tests for <see cref="QuadrantChartThemeVariables"/> properties serialization.
     /// </summary>
     [TestClass]
     public class QuadrantChartThemeVariableTests
     {
         /// <summary>
-        /// Verifies that all AThemeVariables properties are serialized as expected.
+        /// Verifies that all AThemeVariables base properties are serialized as expected via QuadrantChartThemeVariables.
         /// </summary>
         [TestMethod]
-        public void AThemeVariables_AllProperties_ToString_ReturnsExpectedYaml()
+        public void QuadrantChartThemeVariables_AllBaseProperties_ToString_ReturnsExpectedYaml()
         {
             // Arrange
-            var theme = new FlowChartThemeVariables
+            var theme = new QuadrantChartThemeVariables
             {
                 DarkMode = true,
                 Background = "#111111",

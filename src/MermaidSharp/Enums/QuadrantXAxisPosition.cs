@@ -1,18 +1,18 @@
-﻿namespace MermaidSharp.Enums
+﻿using MermaidSharp.Attributes;
+
+namespace MermaidSharp.Enums
 {
     /// <summary>
     /// Specifies the possible positions for the X axis in a Mermaid quadrant chart.
     /// </summary>
     public enum QuadrantXAxisPosition
     {
-        /// <summary>
-        /// The X axis is positioned at the top.
-        /// </summary>
+#pragma warning disable CS1591
+        [MermaidEnum("top")]
         Top,
 
-        /// <summary>
-        /// The X axis is positioned at the bottom.
-        /// </summary>
+        [MermaidEnum("bottom")]
         Bottom
+#pragma warning restore CS1591
     }
 }

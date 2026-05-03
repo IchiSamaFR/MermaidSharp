@@ -1,18 +1,18 @@
-﻿namespace MermaidSharp.Enums
+﻿using MermaidSharp.Attributes;
+
+namespace MermaidSharp.Enums
 {
     /// <summary>
     /// Specifies the possible positions for the Y axis in a Mermaid quadrant chart.
     /// </summary>
     public enum QuadrantYAxisPosition
     {
-        /// <summary>
-        /// The Y axis is positioned on the left.
-        /// </summary>
+#pragma warning disable CS1591
+        [MermaidEnum("left")]
         Left,
 
-        /// <summary>
-        /// The Y axis is positioned on the right.
-        /// </summary>
+        [MermaidEnum("right")]
         Right
+#pragma warning restore CS1591
     }
 }

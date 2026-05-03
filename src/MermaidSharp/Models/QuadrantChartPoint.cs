@@ -46,8 +46,19 @@ namespace MermaidSharp.Models
         /// Returns the Mermaid syntax representation of the point.
         /// </summary>
         /// <returns>A string in Mermaid quadrant chart point syntax.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <see cref="Label"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <see cref="Label"/> is empty or consists only of white-space characters.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <see cref="X"/> or <see cref="Y"/> is not a finite number in the range [0, 1].</exception>
         public override string ToString()
         {
+            if (Label == null)
+                throw new ArgumentNullException(nameof(Label));
+            if (string.IsNullOrWhiteSpace(Label))
+                throw new ArgumentException("Point label cannot be empty or whitespace.", nameof(Label));
+            if (double.IsNaN(X) || double.IsInfinity(X) || X < 0 || X > 1)
+                throw new ArgumentOutOfRangeException(nameof(X), "Point X coordinate must be a finite number between 0 and 1.");
+            if (double.IsNaN(Y) || double.IsInfinity(Y) || Y < 0 || Y > 1)
+                throw new ArgumentOutOfRangeException(nameof(Y), "Point Y coordinate must be a finite number between 0 and 1.");
             var style = BuildStyle();
             string xStr = X.ToString().Replace(',', '.');
             string yStr = Y.ToString().Replace(',', '.');

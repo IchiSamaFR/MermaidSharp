@@ -1,6 +1,7 @@
 ﻿using MermaidSharp.Configs;
 using MermaidSharp.Configs.Themes;
 using MermaidSharp.Diagrams;
+using MermaidSharp.Enums;
 using MermaidSharp.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -38,17 +39,17 @@ namespace MermaidSharp.Tests.QuadrantCharts
             diagram.Points.Add(new QuadrantChartPoint { Label = "E", X = 0.7, Y = 0.3, Color = "#aaaaaa" });
 
             string expected = @"quadrantChart
-	x-axis Low --> High
-	y-axis Bottom --> Top
-	quadrant-1 Q1
-	quadrant-2 Q2
-	quadrant-3 Q3
-	quadrant-4 Q4
-	A: [0.1, 0.9] color: #ff0000, radius: 10
-	B: [0.5, 0.5] color: #00ff00, radius: 8
-	C: [0.9, 0.1] color: #0000ff, radius: 12
-	D: [0.3, 0.7]
-	E: [0.7, 0.3] color: #aaaaaa";
+    x-axis Low --> High
+    y-axis Bottom --> Top
+    quadrant-1 Q1
+    quadrant-2 Q2
+    quadrant-3 Q3
+    quadrant-4 Q4
+    A: [0.1, 0.9] color: #ff0000, radius: 10
+    B: [0.5, 0.5] color: #00ff00, radius: 8
+    C: [0.9, 0.1] color: #0000ff, radius: 12
+    D: [0.3, 0.7]
+    E: [0.7, 0.3] color: #aaaaaa";
 
             // Act
             var result = diagram.CalculateDiagram();
@@ -64,18 +65,18 @@ namespace MermaidSharp.Tests.QuadrantCharts
         public void CalculateDiagram_WithConfigAndThemeVariables_ReturnsExpectedDiagram()
         {
             // Arrange
-            var config = new QuadrantChartConfig
-            {
-                ChartWidth = 900,
-                ChartHeight = 700,
-                TitleFontSize = 20
-            };
-
-            var theme = new FlowChartThemeVariables
+            var themeVariables = new QuadrantChartThemeVariables
             {
                 DarkMode = true,
                 Background = "#222222",
                 FontFamily = "Verdana"
+            };
+
+            var config = new QuadrantChartConfig(ConfigTheme.None, themeVariables)
+            {
+                ChartWidth = 900,
+                ChartHeight = 700,
+                TitleFontSize = 20
             };
 
             var diagram = new QuadrantChartDiagram("Advanced Quadrant", config)
@@ -93,7 +94,6 @@ namespace MermaidSharp.Tests.QuadrantCharts
             diagram.Points.Add(new QuadrantChartPoint { Label = "P1", X = 0.2, Y = 0.8, Color = "#123456", Radius = 14 });
             diagram.Points.Add(new QuadrantChartPoint { Label = "P2", X = 0.8, Y = 0.2, Color = "#654321", Radius = 7 });
 
-            // Simulate config and theme variables output (depends on your implementation)
             string expected = @"---
 title: Advanced Quadrant
 config:
@@ -101,16 +101,56 @@ config:
         chartWidth: 900
         chartHeight: 700
         titleFontSize: 20
+    themeVariables:
+        darkMode: true
+        background: ""#222222""
+        fontFamily: ""Verdana""
 ---
 quadrantChart
-	x-axis Min --> Max
-	y-axis Start --> End
-	quadrant-1 Alpha
-	quadrant-2 Beta
-	quadrant-3 Gamma
-	quadrant-4 Delta
-	P1: [0.2, 0.8] color: #123456, radius: 14
-	P2: [0.8, 0.2] color: #654321, radius: 7";
+    x-axis Min --> Max
+    y-axis Start --> End
+    quadrant-1 Alpha
+    quadrant-2 Beta
+    quadrant-3 Gamma
+    quadrant-4 Delta
+    P1: [0.2, 0.8] color: #123456, radius: 14
+    P2: [0.8, 0.2] color: #654321, radius: 7";
+
+            // Act
+            var result = diagram.CalculateDiagram();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        /// <summary>
+        /// Verifies that CalculateDiagram renders x-axis correctly when only the right label is set.
+        /// </summary>
+        [TestMethod]
+        public void CalculateDiagram_ReturnsXAxisRightOnly_WhenOnlyRightSet()
+        {
+            // Arrange
+            var diagram = new QuadrantChartDiagram { XAxisRight = "High" };
+            string expected = @"quadrantChart
+    x-axis --> High";
+
+            // Act
+            var result = diagram.CalculateDiagram();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        /// <summary>
+        /// Verifies that CalculateDiagram renders y-axis correctly when only the top label is set.
+        /// </summary>
+        [TestMethod]
+        public void CalculateDiagram_ReturnsYAxisTopOnly_WhenOnlyTopSet()
+        {
+            // Arrange
+            var diagram = new QuadrantChartDiagram { YAxisTop = "High" };
+            string expected = @"quadrantChart
+    y-axis --> High";
 
             // Act
             var result = diagram.CalculateDiagram();

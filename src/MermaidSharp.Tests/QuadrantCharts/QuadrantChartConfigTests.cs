@@ -76,10 +76,10 @@ config:
         quadrantExternalBorderStrokeWidth: 3
         xAxisLabelPadding: 8
         xAxisLabelFontSize: 14
-        xAxisPosition: 
+        xAxisPosition: bottom
         yAxisLabelPadding: 9
         yAxisLabelFontSize: 13
-        yAxisPosition: 
+        yAxisPosition: left
         pointTextPadding: 6
         pointLabelFontSize: 11
         pointRadius: 9

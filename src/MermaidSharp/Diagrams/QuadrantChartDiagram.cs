@@ -9,7 +9,7 @@ namespace MermaidSharp.Diagrams
     /// <summary>
     /// Represents a Mermaid quadrant chart diagram, including axes, quadrant labels, and data points.
     /// </summary>
-    public class QuadrantChartDiagram : ADiagram<QuadrantChartConfig>
+    public class QuadrantChartDiagram : AGraph<QuadrantChartConfig>
     {
         /// <summary>
         /// Gets the Mermaid name associated with the current instance.
@@ -83,29 +83,33 @@ namespace MermaidSharp.Diagrams
 
             // x-axis
             if (!string.IsNullOrWhiteSpace(XAxisLeft) && !string.IsNullOrWhiteSpace(XAxisRight))
-                lines.Add($"\tx-axis {XAxisLeft} --> {XAxisRight}");
+                lines.Add($"x-axis {XAxisLeft} --> {XAxisRight}".Indent());
             else if (!string.IsNullOrWhiteSpace(XAxisLeft))
-                lines.Add($"\tx-axis {XAxisLeft}");
+                lines.Add($"x-axis {XAxisLeft}".Indent());
+            else if (!string.IsNullOrWhiteSpace(XAxisRight))
+                lines.Add($"x-axis --> {XAxisRight}".Indent());
 
             // y-axis
             if (!string.IsNullOrWhiteSpace(YAxisBottom) && !string.IsNullOrWhiteSpace(YAxisTop))
-                lines.Add($"\ty-axis {YAxisBottom} --> {YAxisTop}");
+                lines.Add($"y-axis {YAxisBottom} --> {YAxisTop}".Indent());
             else if (!string.IsNullOrWhiteSpace(YAxisBottom))
-                lines.Add($"\ty-axis {YAxisBottom}");
+                lines.Add($"y-axis {YAxisBottom}".Indent());
+            else if (!string.IsNullOrWhiteSpace(YAxisTop))
+                lines.Add($"y-axis --> {YAxisTop}".Indent());
 
             // Quadrant labels
             if (!string.IsNullOrWhiteSpace(Quadrant1))
-                lines.Add($"\tquadrant-1 {Quadrant1}");
+                lines.Add($"quadrant-1 {Quadrant1}".Indent());
             if (!string.IsNullOrWhiteSpace(Quadrant2))
-                lines.Add($"\tquadrant-2 {Quadrant2}");
+                lines.Add($"quadrant-2 {Quadrant2}".Indent());
             if (!string.IsNullOrWhiteSpace(Quadrant3))
-                lines.Add($"\tquadrant-3 {Quadrant3}");
+                lines.Add($"quadrant-3 {Quadrant3}".Indent());
             if (!string.IsNullOrWhiteSpace(Quadrant4))
-                lines.Add($"\tquadrant-4 {Quadrant4}");
+                lines.Add($"quadrant-4 {Quadrant4}".Indent());
 
             // Points
             foreach (var point in Points)
-                lines.Add($"\t{point}");
+                lines.Add(point.ToString().Indent());
 
             return string.Join(Environment.NewLine, lines.ClearNewLines());
         }
