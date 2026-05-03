@@ -85,7 +85,7 @@ namespace MermaidSharp.Configs
 
 			if (Theme != ConfigTheme.None)
 				lst.Add($"theme: {Theme.PrimaryString()}");
-			lst.AddRange(ThemeVariables.GetConfigLines().Indent());
+			lst.AddRange(ThemeVariables.GetConfigLines());
 
 			return lst.Indent();
 		}

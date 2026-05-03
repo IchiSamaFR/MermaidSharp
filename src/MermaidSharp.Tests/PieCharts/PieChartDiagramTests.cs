@@ -310,8 +310,6 @@ pie
 
 			string expected = @"---
 config:
-    pie:
-        textPosition: 0.5
     themeVariables:
         pieTitleTextSize: ""18px""
         pieTitleTextColor: ""#333333""
@@ -322,6 +320,8 @@ config:
         pieStrokeColor: ""#000000""
         pieOuterStrokeWidth: ""2px""
         pieOpacity: 0.8
+    pie:
+        textPosition: 0.5
 ---
 pie showData
     title Key elements in Product X
@@ -363,8 +363,6 @@ pie showData
 
 			string expected = @"---
 config:
-    pie:
-        textPosition: 0.5
     themeVariables:
         pie1: ""red""
         pie3: ""green""
@@ -378,6 +376,8 @@ config:
         pieStrokeColor: ""#000000""
         pieOuterStrokeWidth: ""2px""
         pieOpacity: 0.8
+    pie:
+        textPosition: 0.5
 ---
 pie showData
     title Key elements in Product X

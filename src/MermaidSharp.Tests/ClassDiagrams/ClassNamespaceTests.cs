@@ -3,7 +3,7 @@ using MermaidSharp.Enums;
 using MermaidSharp.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MermaidSharp.Tests.Classes
+namespace MermaidSharp.Tests.ClassDiagrams
 {
 	[TestClass]
 	public class ClassNamespaceTests

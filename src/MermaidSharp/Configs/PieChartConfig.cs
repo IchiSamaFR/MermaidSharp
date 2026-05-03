@@ -73,7 +73,6 @@ namespace MermaidSharp.Configs
 			lst = lst.Indent();
 			lst.Insert(0, $"{Name}:");
 			baseLst.AddRange(lst.Indent());
-			baseLst.AddRange(ThemeVariables.GetConfigLines().Indent());
 
 			return baseLst;
 		}
