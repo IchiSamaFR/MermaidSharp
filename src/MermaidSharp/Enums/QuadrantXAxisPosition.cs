@@ -7,12 +7,16 @@ namespace MermaidSharp.Enums
     /// </summary>
     public enum QuadrantXAxisPosition
     {
-#pragma warning disable CS1591
+        /// <summary>
+        /// The X axis is positioned at the top.
+        /// </summary>
         [MermaidEnum("top")]
         Top,
 
+        /// <summary>
+        /// The X axis is positioned at the bottom.
+        /// </summary>
         [MermaidEnum("bottom")]
         Bottom
-#pragma warning restore CS1591
     }
 }

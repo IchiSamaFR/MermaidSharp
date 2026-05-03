@@ -7,12 +7,16 @@ namespace MermaidSharp.Enums
     /// </summary>
     public enum QuadrantYAxisPosition
     {
-#pragma warning disable CS1591
+        /// <summary>
+        /// The Y axis is positioned on the left.
+        /// </summary>
         [MermaidEnum("left")]
         Left,
 
+        /// <summary>
+        /// The Y axis is positioned on the right.
+        /// </summary>
         [MermaidEnum("right")]
         Right
-#pragma warning restore CS1591
     }
 }
