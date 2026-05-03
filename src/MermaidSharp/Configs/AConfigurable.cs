@@ -36,6 +36,6 @@ namespace MermaidSharp.Configs
 		/// <remarks>Override this method in a derived class to include additional configuration
 		/// parameters as needed.</remarks>
 		/// <returns>A list of strings representing the configuration parameters. The list is empty if no parameters are set.</returns>
-		protected abstract List<string> GetParams();
+		protected abstract List<string> GetThemeVariableParams();
 	}
 }

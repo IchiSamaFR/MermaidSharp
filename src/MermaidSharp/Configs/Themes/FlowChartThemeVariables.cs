@@ -1,4 +1,6 @@
-﻿namespace MermaidSharp.Configs.Themes
+﻿using MermaidSharp.Attributes;
+
+namespace MermaidSharp.Configs.Themes
 {
 	/// <summary>
 	/// Represents a set of theme variables for customizing the appearance of flowcharts, including node, cluster, and link colors.
@@ -6,7 +8,7 @@
 	/// <remarks>
 	/// Use this class to configure the visual aspects of flowcharts, such as node borders, cluster backgrounds, and text colors.
 	/// </remarks>
-	public class FlowChartThemeVariables : ThemeVariables
+	public class FlowChartThemeVariables : AThemeVariables
 	{
 		/// <summary>
 		/// Gets or sets the color of the node border.

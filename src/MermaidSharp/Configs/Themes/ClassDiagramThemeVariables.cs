@@ -6,7 +6,7 @@
 	/// <remarks>
 	/// Reserved for future Git graph-specific theme variables.
 	/// </remarks>
-	public class ClassDiagramThemeVariables : ThemeVariables
+	public class ClassDiagramThemeVariables : AThemeVariables
 	{
 	}
 }

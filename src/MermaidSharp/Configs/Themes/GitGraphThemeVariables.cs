@@ -7,7 +7,7 @@
 	/// Use this class to configure the visual aspects of Git graph diagrams, such as branch colors, commit shapes, and tag styles.
 	/// These settings allow for consistent theming and branding of Git graph visualizations across an application.
 	/// </remarks>
-	public class GitGraphThemeVariables : ThemeVariables
+	public class GitGraphThemeVariables : AThemeVariables
 	{
 	}
 }

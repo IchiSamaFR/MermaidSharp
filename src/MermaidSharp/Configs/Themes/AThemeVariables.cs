@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using MermaidSharp.Attributes;
 using MermaidSharp.Extensions;
 
 namespace MermaidSharp.Configs.Themes
@@ -10,7 +11,7 @@ namespace MermaidSharp.Configs.Themes
 	/// <summary>
 	/// Represents a collection of Mermaid theme variables used to configure chart styling options.
 	/// </summary>
-	public abstract class ThemeVariables : AConfigurable, IThemeVariables
+	public abstract class AThemeVariables : AConfigurable, IThemeVariables
 	{
 		private readonly string Name = "themeVariables";
 
@@ -153,7 +154,7 @@ namespace MermaidSharp.Configs.Themes
 		/// </returns>
 		public override List<string> GetConfigLines()
 		{
-			var paramsList = GetParams().Indent();
+			var paramsList = GetThemeVariableParams().Indent();
 			if (paramsList.Count == 0)
 				return new List<string>();
 
@@ -167,7 +168,7 @@ namespace MermaidSharp.Configs.Themes
 		/// Handles string, double, bool, and List&lt;string&gt; properties decorated with <see cref="ThemeVariableAttribute"/>.
 		/// </summary>
 		/// <returns>A list of strings representing the configuration parameters.</returns>
-		protected sealed override List<string> GetParams()
+		protected override List<string> GetThemeVariableParams()
 		{
 			var lst = new List<string>();
 			var props = PropertiesCache.GetOrAdd(

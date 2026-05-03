@@ -133,11 +133,11 @@ config:
 			string expected = @"---
 config:
     theme: forest
-    themeVariables:
-        primaryColor: ""#aabbcc""
     gitGraph:
         showCommitLabel: true
-        mainBranchName: main
+        mainBranchName: ""main""
+    themeVariables:
+        primaryColor: ""#aabbcc""
 ---";
 
 			// Act

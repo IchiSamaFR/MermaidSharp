@@ -253,7 +253,7 @@ config:
     theme: dark
     gitGraph:
         showCommitLabel: true
-        mainBranchName: master
+        mainBranchName: ""master""
 ---
 gitGraph
     commit id: ""c1""
@@ -295,7 +295,7 @@ gitGraph
 config:
     gitGraph:
         showBranches: false
-        mainBranchName: master
+        mainBranchName: ""master""
 ---
 gitGraph
     commit id: ""c1""
@@ -604,7 +604,7 @@ config:
         showCommitLabel: true
         showBranches: true
         rotateCommitLabel: false
-        mainBranchName: master
+        mainBranchName: ""master""
 ---
 gitGraph LR:
     commit id: ""c1"" tag: ""v1.0"" type: NORMAL
@@ -667,7 +667,7 @@ config:
         showCommitLabel: true
         showBranches: true
         rotateCommitLabel: false
-        mainBranchName: master
+        mainBranchName: ""master""
 ---
 gitGraph LR:
     commit id: ""c1"" tag: ""v1.0"" type: NORMAL

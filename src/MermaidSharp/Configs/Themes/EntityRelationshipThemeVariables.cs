@@ -6,7 +6,7 @@
 	/// <remarks>
 	/// Reserved for future Git graph-specific theme variables.
 	/// </remarks>
-	public class EntityRelationshipThemeVariables : ThemeVariables
+	public class EntityRelationshipThemeVariables : AThemeVariables
 	{
 	}
 }

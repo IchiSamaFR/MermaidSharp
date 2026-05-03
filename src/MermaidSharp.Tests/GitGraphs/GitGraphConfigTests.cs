@@ -125,7 +125,7 @@ config:
 			string expected = @"---
 config:
     gitGraph:
-        mainBranchName: master
+        mainBranchName: ""master""
 ---";
 
 			//Act
@@ -159,7 +159,7 @@ config:
         showCommitLabel: false
         showBranches: true
         rotateCommitLabel: true
-        mainBranchName: master
+        mainBranchName: ""master""
 ---";
 
 			//Act
@@ -186,7 +186,7 @@ config:
     theme: forest
     gitGraph:
         showCommitLabel: true
-        mainBranchName: master
+        mainBranchName: ""master""
 ---";
 
 			//Act

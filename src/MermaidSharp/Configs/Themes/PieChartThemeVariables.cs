@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MermaidSharp.Attributes;
 using MermaidSharp.Models;
 
 namespace MermaidSharp.Configs.Themes
@@ -11,7 +12,7 @@ namespace MermaidSharp.Configs.Themes
 	/// <remarks>Use this class to configure the visual aspects of pie charts, such as section colors, title
 	/// and legend text styles, and opacity. These settings allow for consistent theming and branding of pie chart
 	/// visualizations across an application.</remarks>
-	public class PieChartThemeVariables : ThemeVariables
+	public class PieChartThemeVariables : AThemeVariables
 	{
 		/// <summary>
 		/// Gets or sets the collection of pie slices represented in the chart.

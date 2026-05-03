@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MermaidSharp.Attributes;
 using MermaidSharp.Configs.Themes;
 using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
@@ -10,24 +11,31 @@ namespace MermaidSharp.Configs
 	/// branch customization.
 	/// </summary>
 	public class GitGraphConfig : AConfig<GitGraphThemeVariables>
-	{
-		private readonly string Name = "gitGraph";
+    {
+        /// <summary>
+        /// Gets the name of the configuration section represented by the derived class.
+        /// </summary>
+		protected override string SectionName => "gitGraph";
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the commit label is displayed.
 		/// </summary>
+		[ConfigVariable("showCommitLabel")]
 		public bool? ShowCommitLabel { get; set; }
 		/// <summary>
 		/// Gets or sets a value indicating whether branches are displayed in the diagram.
 		/// </summary>
+		[ConfigVariable("showBranches")]
 		public bool? ShowBranches { get; set; }
 		/// <summary>
 		/// Gets or sets a value indicating whether the commit label should be rotated in the diagram.
 		/// </summary>
+		[ConfigVariable("rotateCommitLabel")]
 		public bool? RotateCommitLabel { get; set; }
 		/// <summary>
 		/// Gets or sets the name of the main branch in the repository.
 		/// </summary>
+		[ConfigVariable("mainBranchName")]
 		public string MainBranchName { get; set; }
 
 		/// <summary>
@@ -59,39 +67,6 @@ namespace MermaidSharp.Configs
 			ShowBranches = showBranches;
 			RotateCommitLabel = rotateCommitLabel;
 			MainBranchName = mainBranchName;
-		}
-
-		/// <summary>
-		/// Retrieves a list of configuration parameters as formatted strings based on the current theme settings.
-		/// </summary>
-		/// <remarks>Override this method in a derived class to include additional configuration
-		/// parameters as needed.</remarks>
-		/// <returns>A list of strings representing the configuration parameters. The list is empty if no parameters are set.</returns>
-		protected override List<string> GetParams()
-		{
-			var baseLst = base.GetParams();
-			var lst = new List<string>();
-
-			if (ShowCommitLabel != null)
-				lst.Add($"showCommitLabel: {ShowCommitLabel.ToString().ToLowerInvariant()}");
-
-			if (ShowBranches != null)
-				lst.Add($"showBranches: {ShowBranches.ToString().ToLowerInvariant()}");
-
-			if (RotateCommitLabel != null)
-				lst.Add($"rotateCommitLabel: {RotateCommitLabel.ToString().ToLowerInvariant()}");
-
-			if (!string.IsNullOrWhiteSpace(MainBranchName))
-				lst.Add($"mainBranchName: {MainBranchName}");
-
-			if (lst.Count == 0)
-				return baseLst;
-
-			lst = lst.Indent();
-			lst.Insert(0, $"{Name}:");
-			baseLst.AddRange(lst.Indent());
-
-			return baseLst;
 		}
 	}
 }

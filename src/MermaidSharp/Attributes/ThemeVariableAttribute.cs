@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MermaidSharp.Configs.Themes
+namespace MermaidSharp.Attributes
 {
 	/// <summary>
 	/// Specifies Mermaid theme variable metadata for a property.

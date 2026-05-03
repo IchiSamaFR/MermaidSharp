@@ -1,93 +1,175 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using MermaidSharp.Attributes;
 using MermaidSharp.Configs.Themes;
 using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 
 namespace MermaidSharp.Configs
 {
-	/// <summary>
-	/// Provides a base class for configuration objects that generate Mermaid configuration blocks with optional theming
-	/// support.
-	/// </summary>
-	/// <remarks>This abstract class is intended to be inherited by specific configuration types that require
-	/// Mermaid-compatible configuration output. It manages the formatting of configuration parameters and supports
-	/// theming through the Theme property. Derived classes should override the GetParams method to supply additional
-	/// configuration parameters as needed.</remarks>
-	public abstract class AConfig<TThemeVariables> : IConfig
-		where TThemeVariables : IThemeVariables, new()
-	{
-		private const string Name = "config";
+    /// <summary>
+    /// Provides a base class for configuration objects that generate Mermaid configuration blocks with optional theming support.
+    /// </summary>
+    /// <remarks>
+    /// This abstract class is intended to be inherited by specific configuration types that require Mermaid-compatible configuration output.
+    /// It manages the formatting of configuration parameters and supports theming through the Theme property.
+    /// Derived classes should override the GetParams method to supply additional configuration parameters as needed.
+    /// </remarks>
+    public abstract class AConfig<TThemeVariables> : IConfig
+        where TThemeVariables : IThemeVariables, new()
+    {
+        private const string Name = "config";
 
-		/// <summary>
-		/// Gets the theme variables used to customize the appearance of the component.
-		/// </summary>
-		public TThemeVariables ThemeVariables { get; }
+        /// <summary>
+        /// Gets the name of the configuration section represented by the derived class.
+        /// </summary>
+        protected virtual string SectionName { get; }
 
-		/// <summary>
-		/// Gets or sets the theme configuration for the Mermaid diagram rendering.
-		/// </summary>
-		public ConfigTheme Theme { get; set; }
+        private static readonly System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]> ConfigPropertiesCache
+            = new System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]>();
 
-		/// <summary>
-		/// Initializes a new instance of the AConfig class with the specified theme.
-		/// </summary>
-		/// <param name="theme">The theme to apply to the configuration.</param>
-		/// <param name="themeVariables">The theme variables to apply to the configuration.</param>
-		public AConfig(ConfigTheme theme = ConfigTheme.None, TThemeVariables themeVariables = default)
-		{
-			Theme = theme;
+        /// <summary>
+        /// Gets the theme variables used to customize the appearance of the component.
+        /// </summary>
+        public TThemeVariables ThemeVariables { get; }
 
-			if (themeVariables == null)
-				themeVariables = new TThemeVariables();
-			ThemeVariables = themeVariables;
-		}
+        /// <summary>
+        /// Gets or sets the theme configuration for the Mermaid diagram rendering.
+        /// </summary>
+        public ConfigTheme Theme { get; set; }
 
-		/// <summary>
-		/// Returns the mermaid representation of the current instance.
-		/// </summary>
-		public override string ToString()
-		{
-			var lines = GetConfigLines();
-			if (lines.Count == 0)
-				return string.Empty;
+        /// <summary>
+        /// Initializes a new instance of the AConfig class with the specified theme.
+        /// </summary>
+        /// <param name="theme">The theme to apply to the configuration.</param>
+        /// <param name="themeVariables">The theme variables to apply to the configuration.</param>
+        public AConfig(ConfigTheme theme = ConfigTheme.None, TThemeVariables themeVariables = default)
+        {
+            Theme = theme;
 
-			lines.Insert(0, $"---");
-			lines.Add("---");
+            if (themeVariables == null)
+                themeVariables = new TThemeVariables();
+            ThemeVariables = themeVariables;
+        }
 
-			return string.Join(Environment.NewLine, lines);
-		}
+        /// <summary>
+        /// Returns the mermaid representation of the current instance.
+        /// </summary>
+        public override string ToString()
+        {
+            var lines = GetConfigLines();
+            if (lines.Count == 0)
+                return string.Empty;
 
-		/// <summary>
-		/// Returns the configuration lines for the current instance as a list of strings.
-		/// </summary>
-		/// <returns>A list of strings representing the configuration lines. The list is empty if there are no parameters.</returns>
-		public List<string> GetConfigLines()
-		{
-			var paramsList = GetParams();
-			if (paramsList.Count == 0)
-				return new List<string>();
+            lines.Insert(0, $"---");
+            lines.Add("---");
 
-			paramsList.Insert(0, $"{Name}:");
+            return string.Join(Environment.NewLine, lines);
+        }
 
-			return paramsList;
-		}
+        /// <summary>
+        /// Returns the configuration lines for the current instance as a list of strings.
+        /// </summary>
+        /// <returns>A list of strings representing the configuration lines. The list is empty if there are no parameters.</returns>
+        public List<string> GetConfigLines()
+        {
+            var paramsList = GetParams();
+            if (paramsList.Count == 0)
+                return new List<string>();
 
-		/// <summary>
-		/// Retrieves a list of configuration parameters as formatted strings based on the current theme settings.
-		/// </summary>
-		/// <remarks>Override this method in a derived class to include additional configuration
-		/// parameters as needed.</remarks>
-		/// <returns>A list of strings representing the configuration parameters. The list is empty if no parameters are set.</returns>
-		protected virtual List<string> GetParams()
-		{
-			var lst = new List<string>();
+            paramsList.Insert(0, $"{Name}:");
 
-			if (Theme != ConfigTheme.None)
-				lst.Add($"theme: {Theme.PrimaryString()}");
-			lst.AddRange(ThemeVariables.GetConfigLines());
+            return paramsList;
+        }
 
-			return lst.Indent();
-		}
-	}
+        /// <summary>
+        /// Retrieves a list of configuration parameters as formatted strings based on the current theme settings and config variables.
+        /// </summary>
+        /// <remarks>
+        /// Override this method in a derived class to include additional configuration parameters as needed.
+        /// </remarks>
+        /// <returns>
+        /// A list of strings representing the configuration parameters. The list is empty if no parameters are set.
+        /// </returns>
+        protected List<string> GetParams()
+        {
+            var lst = new List<string>();
+
+            // Add theme and theme variables
+            if (Theme != ConfigTheme.None)
+                lst.Add($"theme: {Theme.PrimaryString()}");
+
+            // Add config variables decorated with [ConfigVariable]
+            lst.AddRange(GetSectionConfigVariableParams());
+
+            lst.AddRange(ThemeVariables.GetConfigLines());
+
+            return lst.Indent();
+        }
+
+        /// <summary>
+        /// Retrieves a list of configuration parameters as formatted strings based on properties decorated with <see cref="ConfigVariableAttribute"/>.
+        /// </summary>
+        /// <returns>A list of strings representing the configuration parameters.</returns>
+        protected List<string> GetSectionConfigVariableParams()
+        {
+            var lst = new List<string>();
+            var props = ConfigPropertiesCache.GetOrAdd(
+                GetType(),
+                t => t.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                      .Where(p => p.GetCustomAttribute<ConfigVariableAttribute>() != null)
+                      .ToArray()
+            );
+
+            foreach (var prop in props)
+            {
+                var attr = prop.GetCustomAttribute<ConfigVariableAttribute>();
+                var value = prop.GetValue(this);
+                if (value == null)
+                    continue;
+
+                lst.AddRange(GetConfigProperty(attr, value));
+            }
+
+            if (lst.Count == 0)
+                return lst;
+
+            lst = lst.Indent();
+            lst.Insert(0, $"{SectionName}:");
+            return lst;
+        }
+
+        private IEnumerable<string> GetConfigProperty(ConfigVariableAttribute attr, object value)
+        {
+            var lst = new List<string>();
+
+            if (value is IEnumerable<string> strList && !(value is string))
+            {
+                var items = strList.ToList();
+                for (int i = 0; i < items.Count; i++)
+                {
+                    var item = items[i];
+                    if (!string.IsNullOrEmpty(item))
+                        lst.Add($"{attr.Name}: \"{item}\"");
+                }
+            }
+            else if (value is string strVal && !string.IsNullOrEmpty(strVal))
+            {
+                lst.Add($"{attr.Name}: \"{strVal}\"");
+            }
+            else if (value is double dblVal)
+            {
+                lst.Add($"{attr.Name}: {dblVal.ToString("G", CultureInfo.InvariantCulture)}");
+            }
+            else if (value is bool boolVal)
+            {
+                lst.Add($"{attr.Name}: {(boolVal ? "true" : "false")}");
+            }
+
+            return lst;
+        }
+    }
 }
