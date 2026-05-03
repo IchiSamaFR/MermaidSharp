@@ -85,7 +85,7 @@ namespace MermaidSharp.Configs
         /// Gets or sets the position of x-axis (top, bottom).
         /// </summary>
         [ConfigVariable("xAxisPosition")]
-        public QuadrantXAxisPosition? XAxisPosition { get; set; }
+        public XAxisPosition? XAxisPosition { get; set; }
 
         /// <summary>
         /// Gets or sets the left and right padding of y-axis text.
@@ -103,7 +103,7 @@ namespace MermaidSharp.Configs
         /// Gets or sets the position of y-axis (left, right).
         /// </summary>
         [ConfigVariable("yAxisPosition")]
-        public QuadrantYAxisPosition? YAxisPosition { get; set; }
+        public YAxisPosition? YAxisPosition { get; set; }
 
         /// <summary>
         /// Gets or sets the padding between point and the below text.

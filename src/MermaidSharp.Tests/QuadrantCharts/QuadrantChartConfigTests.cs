@@ -53,10 +53,10 @@ config:
                 QuadrantExternalBorderStrokeWidth = 3,
                 XAxisLabelPadding = 8,
                 XAxisLabelFontSize = 14,
-                XAxisPosition = QuadrantXAxisPosition.Bottom,
+                XAxisPosition = XAxisPosition.Bottom,
                 YAxisLabelPadding = 9,
                 YAxisLabelFontSize = 13,
-                YAxisPosition = QuadrantYAxisPosition.Left,
+                YAxisPosition = YAxisPosition.Left,
                 PointTextPadding = 6,
                 PointLabelFontSize = 11,
                 PointRadius = 9
