@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using MermaidSharp.Attributes;
 using MermaidSharp.Configs.Themes;
 using MermaidSharp.Enums;
-using MermaidSharp.Extensions;
 
 namespace MermaidSharp.Configs
 {
@@ -12,11 +9,13 @@ namespace MermaidSharp.Configs
 	/// Represents the configuration settings for rendering a Mermaid pie chart diagram.
 	/// </summary>
 	public class PieChartConfig : AConfig<PieChartThemeVariables>
-    {
-        /// <summary>
-        /// Gets the name of the configuration section represented by the derived class.
-        /// </summary>
+	{
+		/// <summary>
+		/// Gets the name of the configuration section represented by the derived class.
+		/// </summary>
 		protected override string SectionName => "pie";
+
+		private double? _textPosition;
 
 		/// <summary>
 		/// Gets or sets the axial position of the pie slice labels, from 0.0 at the center to 1.0 at the outside edge
@@ -24,10 +23,19 @@ namespace MermaidSharp.Configs
 		/// </summary>
 		/// <exception cref="ArgumentOutOfRangeException">Thrown when value is not finite or is not between 0.0 and 1.0 inclusive.</exception>
 		[ConfigVariable("textPosition")]
-		public double? TextPosition { get; set; }
+		public double? TextPosition
+		{
+			get => _textPosition;
+			set
+			{
+				if (value.HasValue && (double.IsNaN(value.Value) || double.IsInfinity(value.Value) || value.Value < 0.0 || value.Value > 1.0))
+					throw new ArgumentOutOfRangeException(nameof(value), "TextPosition must be a finite number between 0.0 and 1.0 inclusive.");
+				_textPosition = value;
+			}
+		}
 
 		/// <summary>
-		/// 
+		/// Initializes a new instance of the <see cref="PieChartConfig"/> class with default settings.
 		/// </summary>
 		public PieChartConfig() : base()
 		{

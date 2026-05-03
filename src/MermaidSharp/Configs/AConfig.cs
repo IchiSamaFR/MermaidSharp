@@ -16,7 +16,8 @@ namespace MermaidSharp.Configs
     /// <remarks>
     /// This abstract class is intended to be inherited by specific configuration types that require Mermaid-compatible configuration output.
     /// It manages the formatting of configuration parameters and supports theming through the Theme property.
-    /// Derived classes should override the GetParams method to supply additional configuration parameters as needed.
+    /// Derived classes extend configuration output by overriding <see cref="SectionName"/> and decorating properties
+    /// with <see cref="MermaidSharp.Attributes.ConfigVariableAttribute"/> for automatic serialization.
     /// </remarks>
     public abstract class AConfig<TThemeVariables> : IConfig
         where TThemeVariables : IThemeVariables, new()

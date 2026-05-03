@@ -4,7 +4,7 @@
 	/// Represents theme variables for class diagrams.
 	/// </summary>
 	/// <remarks>
-	/// Reserved for future Git graph-specific theme variables.
+	/// Reserved for future class diagram-specific theme variables.
 	/// </remarks>
 	public class ClassDiagramThemeVariables : AThemeVariables
 	{

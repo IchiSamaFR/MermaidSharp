@@ -4,7 +4,7 @@
 	/// Represents theme variables for entity relationship diagrams.
 	/// </summary>
 	/// <remarks>
-	/// Reserved for future Git graph-specific theme variables.
+	/// Reserved for future entity-relationship diagram-specific theme variables.
 	/// </remarks>
 	public class EntityRelationshipThemeVariables : AThemeVariables
 	{
