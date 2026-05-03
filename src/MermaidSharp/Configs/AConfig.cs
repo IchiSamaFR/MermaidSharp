@@ -165,9 +165,21 @@ namespace MermaidSharp.Configs
             {
                 lst.Add($"{attr.Name}: {dblVal.ToString("G", CultureInfo.InvariantCulture)}");
             }
+            else if (value is int intVal)
+            {
+                lst.Add($"{attr.Name}: {intVal}");
+            }
             else if (value is bool boolVal)
             {
                 lst.Add($"{attr.Name}: {(boolVal ? "true" : "false")}");
+            }
+            else if (value is float floatVal)
+            {
+                lst.Add($"{attr.Name}: {floatVal.ToString("G", CultureInfo.InvariantCulture)}");
+            }
+            else if (value is Enum enumVal)
+            {
+                lst.Add($"{attr.Name}: {enumVal.PrimaryString()}");
             }
 
             return lst;
