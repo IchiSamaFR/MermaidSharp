@@ -1,4 +1,4 @@
-# MermaidSharp
+﻿# MermaidSharp
 [![NuGet Version](https://img.shields.io/nuget/v/MermaidSharp)](https://www.nuget.org/packages/MermaidSharp)
 
 > **Info:** This project is a fork of the original [MermaidDotNet](https://github.com/samsmithnz/MermaidDotNet) repository. All enhancements, fixes, and additions are based on the initial project.
@@ -69,14 +69,14 @@ var diagram = typeof(MyClass).ToMermaidClassDiagram();
 Console.WriteLine(diagram.CalculateDiagram());
 ```
 
-See [AutoDiagram](../wiki/AutoDiagram) for more options and flowchart generation.
+See [AutoDiagram](../../wiki/AutoDiagram) for more options and flowchart generation.
 
 ## Wiki & Documentation
 
-- [Getting Started](../wiki/Getting-Started) — Prerequisites, installation, build instructions
-- [Features](../wiki/Features) — Overview of all supported diagram types
-- [Basic Usage](../wiki/Basic-Usage) — Complete examples for each diagram type
-- [AutoDiagram](../wiki/AutoDiagram) — Auto-generate diagrams from .NET types using reflection
-- [EntityFramework Integration](../wiki/EntityFramework-Integration) — Auto-generate ERDs from a `DbContext`
-- [Sample Projects](../wiki/Sample-Projects) — MVC and Blazor WebAssembly sample applications
-- [Contributing](../wiki/Contributing) — Coding standards, testing, and contribution guidelines
+- [Getting Started](../../wiki/Getting-Started) — Prerequisites, installation, build instructions
+- [Features](../../wiki/Features) — Overview of all supported diagram types
+- [Basic Usage](../../wiki/Basic-Usage) — Complete examples for each diagram type
+- [AutoDiagram](../../wiki/AutoDiagram) — Auto-generate diagrams from .NET types using reflection
+- [EntityFramework Integration](../../wiki/EntityFramework-Integration) — Auto-generate ERDs from a `DbContext`
+- [Sample Projects](../../wiki/Sample-Projects) — MVC and Blazor WebAssembly sample applications
+- [Contributing](../../wiki/Contributing) — Coding standards, testing, and contribution guidelines
