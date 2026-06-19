@@ -47,7 +47,9 @@ namespace MermaidSharp.AutoDiagram
             var classNamespaces = assemblies.Select(a => BuildClassAssemblyContext(a, options)).ToList();
             diagram.Namespaces.AddRange(classNamespaces.Select(MapToClassNamespace));
 
-            var dictionary = classNamespaces.SelectMany(cn => cn.ClassDiagrams).ToDictionary(c => c.Type.Name, c => c);
+            var dictionary = classNamespaces.SelectMany(cn => cn.ClassDiagrams)
+                .GroupBy(c => c.Type.Name)
+                .ToDictionary(g => g.Key, g => g.First());
             foreach (var nodeContext in dictionary.Values)
             {
                 diagram.Links.AddRange(BuildLinks(nodeContext, dictionary, options));
@@ -87,7 +89,9 @@ namespace MermaidSharp.AutoDiagram
 
             diagram.Nodes.AddRange(contexts.Select(MapToClassNode));
 
-            var dictionary = contexts.ToDictionary(c => c.Type.Name, c => c);
+            var dictionary = contexts
+                .GroupBy(c => c.Type.Name)
+                .ToDictionary(g => g.Key, g => g.First());
             foreach (var nodeContext in contexts)
             {
                 diagram.Links.AddRange(BuildLinks(nodeContext, dictionary, options));
@@ -101,7 +105,7 @@ namespace MermaidSharp.AutoDiagram
         private static ClassAssemblyContext BuildClassAssemblyContext(Assembly assembly, ClassDiagramOptions options)
         {
             var assemblyContext = new ClassAssemblyContext(assembly);
-            var types = assembly.GetTypes()
+            var types = GetLoadableTypes(assembly)
                 .Where(cd => options.TypeFilter == null || options.TypeFilter(cd.DeclaringType ?? cd))
                 .Where(cd => options.IncludeClassesVisibility.HasFlag(GetClassVisibility(cd.DeclaringType ?? cd)))
                 .Where(cd => cd.DeclaringType == null)
@@ -111,13 +115,34 @@ namespace MermaidSharp.AutoDiagram
             return assemblyContext;
         }
 
+        /// <summary>
+        /// Returns the types defined in the specified assembly, tolerating partial load failures.
+        /// </summary>
+        /// <remarks>If some types in the assembly fail to load (for example due to missing
+        /// dependencies), <see cref="Assembly.GetTypes"/> throws a <see cref="ReflectionTypeLoadException"/>
+        /// for the whole assembly. This falls back to the types that did load successfully instead of
+        /// propagating the exception.</remarks>
+        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                return ex.Types.Where(t => t != null);
+            }
+        }
+
         private static ClassNodeContext BuildClassNodeContext(Type type, ClassDiagramOptions options)
         {
+            const BindingFlags memberFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
             var nodeContext = new ClassNodeContext(type.DeclaringType ?? type);
-            nodeContext.Properties.AddRange(nodeContext.Type.Type.GetProperties()
+            nodeContext.Properties.AddRange(nodeContext.Type.Type.GetProperties(memberFlags)
                 .Where(p => options.IncludePropertiesVisibility.HasFlag(GetPropertyVisibility(p)))
                 .Select(BuildClassPropertyContext));
-            nodeContext.Methods.AddRange(nodeContext.Type.Type.GetMethods()
+            nodeContext.Methods.AddRange(nodeContext.Type.Type.GetMethods(memberFlags)
                 .Where(m => options.IncludeMethodsVisibility.HasFlag(GetMethodVisibility(m)))
                 .Select(BuildClassMethodContext));
             return nodeContext;
@@ -163,9 +188,9 @@ namespace MermaidSharp.AutoDiagram
         {
             var method = methodContext.Method;
             var parameters = method.GetParameters()
-                .Select(p => new ClassMethodParam(string.Empty, p.ParameterType.GetFriendlyType()))
+                .Select(p => new ClassMethodParam(string.Empty, p.ParameterType.GetFriendlyTypeName()))
                 .ToList();
-            var returnType = method.ReturnType == typeof(void) ? string.Empty : method.ReturnType.GetFriendlyType();
+            var returnType = method.ReturnType == typeof(void) ? string.Empty : method.ReturnType.GetFriendlyTypeName();
             return new ClassMethod(method.Name, returnType, GetMethodVisibility(method), parameters);
         }
 
@@ -192,13 +217,11 @@ namespace MermaidSharp.AutoDiagram
 			string linkLabel = options.IncludeLinksLabels ? ClassLinkOption.Association.ToString() : string.Empty;
 			foreach (var property in typeProperties)
 			{
-				foreach (var type in property.Type.Types)
-				{
-					if (!typeNames.ContainsKey(type.Name))
-						continue;
+				var propertyTypeName = property.Type.Type.GetFriendlyName();
+				if (!typeNames.ContainsKey(propertyTypeName))
+					continue;
 
-					links.Add(new ClassLink(property.Name, type.Name, ClassLinkType.Association, linkLabel));
-				}
+				links.Add(new ClassLink(propertyTypeName, nodeContext.Type.Name, ClassLinkType.Association, linkLabel));
 			}
             return links;
 		}

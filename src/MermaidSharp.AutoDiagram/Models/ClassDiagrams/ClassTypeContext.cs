@@ -72,7 +72,7 @@ namespace MermaidSharp.AutoDiagram.Models.ClassDiagrams
         /// </summary>
         /// <param name="property">The property info.</param>
         public ClassTypeContext(PropertyInfo property)
-            : this(property.PropertyType, property.ReflectedType)
+            : this(property.PropertyType)
         {
         }
 

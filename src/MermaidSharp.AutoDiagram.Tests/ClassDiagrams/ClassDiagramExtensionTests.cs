@@ -23,30 +23,58 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
     class Person {
         +String FirstName
         +String LastName
-        +get_FirstName()
-        +set_FirstName()
-        +get_LastName()
-        +set_LastName()
+        ~Int32 InternalId
+        #Int32 Age
+        -String SecretCode
+        +get_FirstName() String
+        +set_FirstName(String)
+        +get_LastName() String
+        +set_LastName(String)
+        ~get_InternalId() Int32
+        ~set_InternalId(Int32)
+        #get_Age() Int32
+        #set_Age(Int32)
+        -get_SecretCode() String
+        -set_SecretCode(String)
         +SayHello()
-        +Equals()
-        +GetHashCode()
-        +GetType()
-        +ToString()
+        #DoWork()
+        -Hide()
+        ~InternalMethod()
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        +GetType() Type
+        +ToString() String
+        #Finalize()
+        #MemberwiseClone() Object
     }";
 #elif NET8_0_OR_GREATER
             var expected = @"classDiagram
     class Person {
         +String FirstName
         +String LastName
-        +get_FirstName()
-        +set_FirstName()
-        +get_LastName()
-        +set_LastName()
+        ~Int32 InternalId
+        #Int32 Age
+        -String SecretCode
+        +get_FirstName() String
+        +set_FirstName(String)
+        +get_LastName() String
+        +set_LastName(String)
+        ~get_InternalId() Int32
+        ~set_InternalId(Int32)
+        #get_Age() Int32
+        #set_Age(Int32)
+        -get_SecretCode() String
+        -set_SecretCode(String)
         +SayHello()
-        +GetType()
-        +ToString()
-        +Equals()
-        +GetHashCode()
+        #DoWork()
+        -Hide()
+        ~InternalMethod()
+        +GetType() Type
+        +ToString() String
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        #Finalize()
+        #MemberwiseClone() Object
     }";
 #endif
 
@@ -73,67 +101,81 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
         +Department~Employee~ Department
         +String FirstName
         +String LastName
-        +get_EmployeeId()
-        +set_EmployeeId()
-        +get_Email()
-        +set_Email()
-        +Contact()
-        +get_Department() Employee
-        +set_Department(Employee)
-        +get_FirstName()
-        +set_FirstName()
-        +get_LastName()
-        +set_LastName()
+        #Int32 Age
+        +get_EmployeeId() String
+        +set_EmployeeId(String)
+        +get_Email() String
+        +set_Email(String)
+        +Contact(String)
+        +get_Department() Department~Employee~
+        +set_Department(Department~Employee~)
+        +get_FirstName() String
+        +set_FirstName(String)
+        +get_LastName() String
+        +set_LastName(String)
+        #get_Age() Int32
+        #set_Age(Int32)
         +SayHello()
-        +Equals()
-        +GetHashCode()
-        +GetType()
-        +ToString()
+        #DoWork()
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        +GetType() Type
+        +ToString() String
+        #Finalize()
+        #MemberwiseClone() Object
     }
     class Manager {
         +Int32 Level
         +String EmployeeId
         +String Email
-        +Department~Manager~ Department
+        +Department~Employee~ Department
         +String FirstName
         +String LastName
-        +get_Level()
-        +set_Level()
+        #Int32 Age
+        +get_Level() Int32
+        +set_Level(Int32)
         +Approve()
-        +get_EmployeeId()
-        +set_EmployeeId()
-        +get_Email()
-        +set_Email()
-        +Contact()
-        +get_Department() Employee
-        +set_Department(Employee)
-        +get_FirstName()
-        +set_FirstName()
-        +get_LastName()
-        +set_LastName()
+        +get_EmployeeId() String
+        +set_EmployeeId(String)
+        +get_Email() String
+        +set_Email(String)
+        +Contact(String)
+        +get_Department() Department~Employee~
+        +set_Department(Department~Employee~)
+        +get_FirstName() String
+        +set_FirstName(String)
+        +get_LastName() String
+        +set_LastName(String)
+        #get_Age() Int32
+        #set_Age(Int32)
         +SayHello()
-        +Equals()
-        +GetHashCode()
-        +GetType()
-        +ToString()
+        #DoWork()
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        +GetType() Type
+        +ToString() String
+        #Finalize()
+        #MemberwiseClone() Object
     }
     class IContactable {
         +String Email
-        +get_Email()
-        +set_Email()
-        +Contact()
+        +get_Email() String
+        +set_Email(String)
+        +Contact(String)
     }
     class Department~Employee~ {
         +String Name
-        +List~Department~T~~ Members
-        +get_Name()
-        +set_Name()
-        +get_Members() T
-        +set_Members(T)
-        +Equals()
-        +GetHashCode()
-        +GetType()
-        +ToString()
+        +List~T~ Members
+        +get_Name() String
+        +set_Name(String)
+        +get_Members() List~T~
+        +set_Members(List~T~)
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        +GetType() Type
+        +ToString() String
+        #Finalize()
+        #MemberwiseClone() Object
     }
     Department-->Employee : Association
     IContactable..|>Employee : Interface
@@ -148,67 +190,81 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
         +Department~Employee~ Department
         +String FirstName
         +String LastName
-        +get_EmployeeId()
-        +set_EmployeeId()
-        +get_Email()
-        +set_Email()
-        +Contact()
-        +get_Department() Employee
-        +set_Department(Employee)
-        +get_FirstName()
-        +set_FirstName()
-        +get_LastName()
-        +set_LastName()
+        #Int32 Age
+        +get_EmployeeId() String
+        +set_EmployeeId(String)
+        +get_Email() String
+        +set_Email(String)
+        +Contact(String)
+        +get_Department() Department~Employee~
+        +set_Department(Department~Employee~)
+        +get_FirstName() String
+        +set_FirstName(String)
+        +get_LastName() String
+        +set_LastName(String)
+        #get_Age() Int32
+        #set_Age(Int32)
         +SayHello()
-        +GetType()
-        +ToString()
-        +Equals()
-        +GetHashCode()
+        #DoWork()
+        +GetType() Type
+        +ToString() String
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        #Finalize()
+        #MemberwiseClone() Object
     }
     class Manager {
         +Int32 Level
         +String EmployeeId
         +String Email
-        +Department~Manager~ Department
+        +Department~Employee~ Department
         +String FirstName
         +String LastName
-        +get_Level()
-        +set_Level()
+        #Int32 Age
+        +get_Level() Int32
+        +set_Level(Int32)
         +Approve()
-        +get_EmployeeId()
-        +set_EmployeeId()
-        +get_Email()
-        +set_Email()
-        +Contact()
-        +get_Department() Employee
-        +set_Department(Employee)
-        +get_FirstName()
-        +set_FirstName()
-        +get_LastName()
-        +set_LastName()
+        +get_EmployeeId() String
+        +set_EmployeeId(String)
+        +get_Email() String
+        +set_Email(String)
+        +Contact(String)
+        +get_Department() Department~Employee~
+        +set_Department(Department~Employee~)
+        +get_FirstName() String
+        +set_FirstName(String)
+        +get_LastName() String
+        +set_LastName(String)
+        #get_Age() Int32
+        #set_Age(Int32)
         +SayHello()
-        +GetType()
-        +ToString()
-        +Equals()
-        +GetHashCode()
+        #DoWork()
+        +GetType() Type
+        +ToString() String
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        #Finalize()
+        #MemberwiseClone() Object
     }
     class IContactable {
         +String Email
-        +get_Email()
-        +set_Email()
-        +Contact()
+        +get_Email() String
+        +set_Email(String)
+        +Contact(String)
     }
     class Department~Employee~ {
         +String Name
-        +List~Department~T~~ Members
-        +get_Name()
-        +set_Name()
-        +get_Members() T
-        +set_Members(T)
-        +GetType()
-        +ToString()
-        +Equals()
-        +GetHashCode()
+        +List~T~ Members
+        +get_Name() String
+        +set_Name(String)
+        +get_Members() List~T~
+        +set_Members(List~T~)
+        +GetType() Type
+        +ToString() String
+        +Equals(Object) Boolean
+        +GetHashCode() Int32
+        #Finalize()
+        #MemberwiseClone() Object
     }
     Department-->Employee : Association
     IContactable..|>Employee : Interface
@@ -243,15 +299,17 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
     namespace MermaidSharp.AutoDiagram.Tests {
         class Department~T~ {
             +String Name
-            +List~Department~T~~ Members
-            +get_Name()
-            +set_Name()
-            +get_Members() T
-            +set_Members(T)
-            +Equals()
-            +GetHashCode()
-            +GetType()
-            +ToString()
+            +List~T~ Members
+            +get_Name() String
+            +set_Name(String)
+            +get_Members() List~T~
+            +set_Members(List~T~)
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            +GetType() Type
+            +ToString() String
+            #Finalize()
+            #MemberwiseClone() Object
         }
         class Employee {
             +String EmployeeId
@@ -259,68 +317,94 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
             +Department~Employee~ Department
             +String FirstName
             +String LastName
-            +get_EmployeeId()
-            +set_EmployeeId()
-            +get_Email()
-            +set_Email()
-            +Contact()
-            +get_Department() Employee
-            +set_Department(Employee)
-            +get_FirstName()
-            +set_FirstName()
-            +get_LastName()
-            +set_LastName()
+            #Int32 Age
+            +get_EmployeeId() String
+            +set_EmployeeId(String)
+            +get_Email() String
+            +set_Email(String)
+            +Contact(String)
+            +get_Department() Department~Employee~
+            +set_Department(Department~Employee~)
+            +get_FirstName() String
+            +set_FirstName(String)
+            +get_LastName() String
+            +set_LastName(String)
+            #get_Age() Int32
+            #set_Age(Int32)
             +SayHello()
-            +Equals()
-            +GetHashCode()
-            +GetType()
-            +ToString()
+            #DoWork()
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            +GetType() Type
+            +ToString() String
+            #Finalize()
+            #MemberwiseClone() Object
         }
         class IContactable {
             +String Email
-            +get_Email()
-            +set_Email()
-            +Contact()
+            +get_Email() String
+            +set_Email(String)
+            +Contact(String)
         }
         class Manager {
             +Int32 Level
             +String EmployeeId
             +String Email
-            +Department~Manager~ Department
+            +Department~Employee~ Department
             +String FirstName
             +String LastName
-            +get_Level()
-            +set_Level()
+            #Int32 Age
+            +get_Level() Int32
+            +set_Level(Int32)
             +Approve()
-            +get_EmployeeId()
-            +set_EmployeeId()
-            +get_Email()
-            +set_Email()
-            +Contact()
-            +get_Department() Employee
-            +set_Department(Employee)
-            +get_FirstName()
-            +set_FirstName()
-            +get_LastName()
-            +set_LastName()
+            +get_EmployeeId() String
+            +set_EmployeeId(String)
+            +get_Email() String
+            +set_Email(String)
+            +Contact(String)
+            +get_Department() Department~Employee~
+            +set_Department(Department~Employee~)
+            +get_FirstName() String
+            +set_FirstName(String)
+            +get_LastName() String
+            +set_LastName(String)
+            #get_Age() Int32
+            #set_Age(Int32)
             +SayHello()
-            +Equals()
-            +GetHashCode()
-            +GetType()
-            +ToString()
+            #DoWork()
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            +GetType() Type
+            +ToString() String
+            #Finalize()
+            #MemberwiseClone() Object
         }
         class Person {
             +String FirstName
             +String LastName
-            +get_FirstName()
-            +set_FirstName()
-            +get_LastName()
-            +set_LastName()
+            ~Int32 InternalId
+            #Int32 Age
+            -String SecretCode
+            +get_FirstName() String
+            +set_FirstName(String)
+            +get_LastName() String
+            +set_LastName(String)
+            ~get_InternalId() Int32
+            ~set_InternalId(Int32)
+            #get_Age() Int32
+            #set_Age(Int32)
+            -get_SecretCode() String
+            -set_SecretCode(String)
             +SayHello()
-            +Equals()
-            +GetHashCode()
-            +GetType()
-            +ToString()
+            #DoWork()
+            -Hide()
+            ~InternalMethod()
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            +GetType() Type
+            +ToString() String
+            #Finalize()
+            #MemberwiseClone() Object
         }
     }
     Department-->Employee
@@ -334,15 +418,17 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
     namespace MermaidSharp.AutoDiagram.Tests {
         class Department~T~ {
             +String Name
-            +List~Department~T~~ Members
-            +get_Name()
-            +set_Name()
-            +get_Members() T
-            +set_Members(T)
-            +GetType()
-            +ToString()
-            +Equals()
-            +GetHashCode()
+            +List~T~ Members
+            +get_Name() String
+            +set_Name(String)
+            +get_Members() List~T~
+            +set_Members(List~T~)
+            +GetType() Type
+            +ToString() String
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            #Finalize()
+            #MemberwiseClone() Object
         }
         class Employee {
             +String EmployeeId
@@ -350,68 +436,94 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
             +Department~Employee~ Department
             +String FirstName
             +String LastName
-            +get_EmployeeId()
-            +set_EmployeeId()
-            +get_Email()
-            +set_Email()
-            +Contact()
-            +get_Department() Employee
-            +set_Department(Employee)
-            +get_FirstName()
-            +set_FirstName()
-            +get_LastName()
-            +set_LastName()
+            #Int32 Age
+            +get_EmployeeId() String
+            +set_EmployeeId(String)
+            +get_Email() String
+            +set_Email(String)
+            +Contact(String)
+            +get_Department() Department~Employee~
+            +set_Department(Department~Employee~)
+            +get_FirstName() String
+            +set_FirstName(String)
+            +get_LastName() String
+            +set_LastName(String)
+            #get_Age() Int32
+            #set_Age(Int32)
             +SayHello()
-            +GetType()
-            +ToString()
-            +Equals()
-            +GetHashCode()
+            #DoWork()
+            +GetType() Type
+            +ToString() String
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            #Finalize()
+            #MemberwiseClone() Object
         }
         class IContactable {
             +String Email
-            +get_Email()
-            +set_Email()
-            +Contact()
+            +get_Email() String
+            +set_Email(String)
+            +Contact(String)
         }
         class Manager {
             +Int32 Level
             +String EmployeeId
             +String Email
-            +Department~Manager~ Department
+            +Department~Employee~ Department
             +String FirstName
             +String LastName
-            +get_Level()
-            +set_Level()
+            #Int32 Age
+            +get_Level() Int32
+            +set_Level(Int32)
             +Approve()
-            +get_EmployeeId()
-            +set_EmployeeId()
-            +get_Email()
-            +set_Email()
-            +Contact()
-            +get_Department() Employee
-            +set_Department(Employee)
-            +get_FirstName()
-            +set_FirstName()
-            +get_LastName()
-            +set_LastName()
+            +get_EmployeeId() String
+            +set_EmployeeId(String)
+            +get_Email() String
+            +set_Email(String)
+            +Contact(String)
+            +get_Department() Department~Employee~
+            +set_Department(Department~Employee~)
+            +get_FirstName() String
+            +set_FirstName(String)
+            +get_LastName() String
+            +set_LastName(String)
+            #get_Age() Int32
+            #set_Age(Int32)
             +SayHello()
-            +GetType()
-            +ToString()
-            +Equals()
-            +GetHashCode()
+            #DoWork()
+            +GetType() Type
+            +ToString() String
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            #Finalize()
+            #MemberwiseClone() Object
         }
         class Person {
             +String FirstName
             +String LastName
-            +get_FirstName()
-            +set_FirstName()
-            +get_LastName()
-            +set_LastName()
+            ~Int32 InternalId
+            #Int32 Age
+            -String SecretCode
+            +get_FirstName() String
+            +set_FirstName(String)
+            +get_LastName() String
+            +set_LastName(String)
+            ~get_InternalId() Int32
+            ~set_InternalId(Int32)
+            #get_Age() Int32
+            #set_Age(Int32)
+            -get_SecretCode() String
+            -set_SecretCode(String)
             +SayHello()
-            +GetType()
-            +ToString()
-            +Equals()
-            +GetHashCode()
+            #DoWork()
+            -Hide()
+            ~InternalMethod()
+            +GetType() Type
+            +ToString() String
+            +Equals(Object) Boolean
+            +GetHashCode() Int32
+            #Finalize()
+            #MemberwiseClone() Object
         }
     }
     Department-->Employee
@@ -446,7 +558,7 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
     namespace MermaidSharp.AutoDiagram.Tests {
         class Department~T~ {
             +String Name
-            +List~Department~T~~ Members
+            +List~T~ Members
         }
         class Employee {
             +String EmployeeId
@@ -454,6 +566,7 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
             +Department~Employee~ Department
             +String FirstName
             +String LastName
+            #Int32 Age
         }
         class IContactable {
             +String Email
@@ -462,13 +575,17 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
             +Int32 Level
             +String EmployeeId
             +String Email
-            +Department~Manager~ Department
+            +Department~Employee~ Department
             +String FirstName
             +String LastName
+            #Int32 Age
         }
         class Person {
             +String FirstName
             +String LastName
+            ~Int32 InternalId
+            #Int32 Age
+            -String SecretCode
         }
         class ClassDiagramExtensionTests
     }
@@ -484,7 +601,7 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
         class AutoGeneratedProgram
         class Department~T~ {
             +String Name
-            +List~Department~T~~ Members
+            +List~T~ Members
         }
         class Employee {
             +String EmployeeId
@@ -492,6 +609,7 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
             +Department~Employee~ Department
             +String FirstName
             +String LastName
+            #Int32 Age
         }
         class IContactable {
             +String Email
@@ -500,13 +618,17 @@ namespace MermaidSharp.AutoDiagram.Tests.ClassDiagrams
             +Int32 Level
             +String EmployeeId
             +String Email
-            +Department~Manager~ Department
+            +Department~Employee~ Department
             +String FirstName
             +String LastName
+            #Int32 Age
         }
         class Person {
             +String FirstName
             +String LastName
+            ~Int32 InternalId
+            #Int32 Age
+            -String SecretCode
         }
         class ClassDiagramExtensionTests
     }
