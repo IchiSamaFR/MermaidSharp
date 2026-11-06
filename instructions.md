@@ -57,7 +57,9 @@ match the info here.
 ### Code Style
 
 -   **Braces:** Use Allman style (braces on new lines).
--   **Indentation:** Use one tabulation per indentation level.
+-   **Indentation:** Use 4 spaces per indentation level (no tabs).
+-   **EditorConfig:** Formatting and naming rules are defined in `.editorconfig`;
+    keep it as the source of truth for the IDE.
 -   **Line Length:** Limit lines to 120 characters.
 -   **Usings:** Place `using` statements outside the namespace and
     remove unused usings.
