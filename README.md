@@ -83,3 +83,7 @@ See [AutoDiagram](../../wiki/AutoDiagram) for more options and flowchart generat
 - [EntityFramework Integration](../../wiki/EntityFramework-Integration) — Auto-generate ERDs from a `DbContext`
 - [Sample Projects](../../wiki/Sample-Projects) — MVC and Blazor WebAssembly sample applications
 - [Contributing](../../wiki/Contributing) — Coding standards, testing, and contribution guidelines
+
+## License
+
+MermaidSharp is released under the [MIT License](LICENSE). It is a fork of [MermaidDotNet](https://github.com/samsmithnz/MermaidDotNet) by Sam Smith, also MIT-licensed.

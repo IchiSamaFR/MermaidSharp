@@ -2,6 +2,7 @@
 	<PropertyGroup>
 		<Version>1.4.0</Version>
 		<Authors>IchiSamaFR</Authors>
+		<Copyright>Copyright (c) 2023 Sam Smith, Copyright (c) 2026 IchiSamaFR</Copyright>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/ichisamafr/MermaidSharp</PackageProjectUrl>
