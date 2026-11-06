@@ -147,6 +147,32 @@ namespace MermaidSharp.Samples.Tests
             Assert.AreEqual(Get(id).Definition, regenerated.Definition);
         }
 
+        [TestMethod]
+        [DynamicData(nameof(ExampleIds))]
+        public void Definition_SubgraphIdsDoNotCollideWithNodeIds(string id)
+        {
+            // Arrange
+            var body = GetBody(Get(id).Definition).ToList();
+            if (!body[0].StartsWith("flowchart", StringComparison.Ordinal))
+                return;
+
+            var subgraphIds = body
+                .Select(l => l.Trim())
+                .Where(l => l.StartsWith("subgraph ", StringComparison.Ordinal))
+                .Select(l => l.Substring("subgraph ".Length).Split('[', ' ')[0])
+                .ToList();
+            var nodeIds = body
+                .Select(l => l.Trim())
+                .Where(l => !l.StartsWith("subgraph ", StringComparison.Ordinal))
+                .Select(l => System.Text.RegularExpressions.Regex.Match(l, @"^[^\s\[\(\{>\-=~.]+(?:\.[^\s\[\(\{>\-=~.]+)*").Value)
+                .Where(v => v.Length > 0)
+                .ToHashSet();
+
+            // Assert: Mermaid fails to render a subgraph that shares its id with a node (cycle).
+            var collisions = subgraphIds.Where(nodeIds.Contains).ToList();
+            Assert.AreEqual(0, collisions.Count, $"Subgraph ids used as node ids: {string.Join(", ", collisions)}");
+        }
+
         private static DiagramExample Get(string id)
         {
             return DiagramCatalog.All.Single(e => e.Id == id);

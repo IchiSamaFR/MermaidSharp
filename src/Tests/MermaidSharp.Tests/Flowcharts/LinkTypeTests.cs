@@ -1,4 +1,4 @@
-using MermaidSharp.Diagrams;
+﻿using MermaidSharp.Diagrams;
 using MermaidSharp.Enums;
 using MermaidSharp.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -94,7 +94,7 @@ namespace MermaidSharp.Tests.Flowcharts
             string expected = @"flowchart LR
     node1[Node 1]
     node2[Node 2]
-    node1~~~>node2";
+    node1~~~node2";
 
             //Act
             string result = flowchart.CalculateDiagram();

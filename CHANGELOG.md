@@ -24,7 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - NuGet package versions are managed centrally in `src/Directory.Packages.props`.
 - Configuration and theme variable serialization share a single implementation.
 
-### Fixed
+### Fixed
+- Flowchart invisible links are written as `~~~` without an arrow head or label (Mermaid rejected `~~~>`).
 - GitGraph: duplicate commit ids and branches are rejected, self-merges and invalid cherry-picks are rejected, merge cherry-pick parent resolution.
 - Flowchart: `linkStyle` index now counts every link in declaration order.
 - Entity Framework 6: entity CLR types are resolved from the object-space mapping.
