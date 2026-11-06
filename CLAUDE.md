@@ -1,3 +1,9 @@
+## Project instructions
+
+The project instructions are shared by Claude and GitHub Copilot (`.github/copilot-instructions.md` points to the same file). Always apply them:
+
+@instructions.md
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
