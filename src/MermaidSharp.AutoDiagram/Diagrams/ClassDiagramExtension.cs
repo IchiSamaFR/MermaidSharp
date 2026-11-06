@@ -25,6 +25,9 @@ namespace MermaidSharp.AutoDiagram.Diagrams
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="assembly"/> is null.</exception>
         public static ClassDiagram ToMermaidClassDiagram(this Assembly assembly, ClassDiagramOptions options = null)
         {
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+
             return new[] { assembly }.ToMermaidClassDiagram(options);
         }
 
@@ -70,6 +73,9 @@ namespace MermaidSharp.AutoDiagram.Diagrams
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="type"/> is null.</exception>
         public static ClassDiagram ToMermaidClassDiagram(this Type type, ClassDiagramOptions options = null)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             return new[] { type }.ToMermaidClassDiagram(options);
         }
 
@@ -143,11 +149,23 @@ namespace MermaidSharp.AutoDiagram.Diagrams
                 .OrderBy(p => Array.IndexOf(ClassDiagramConstants.PropertiesSortOrder, p.Visibility))
                 .ThenBy(p => p.Name));
             nodeContext.Methods.AddRange(nodeContext.Type.Type.GetRuntimeMethods()
+                .Where(IsUserMethod)
                 .Select(BuildClassMethodContext)
                 .Where(m => options.MethodOptions.IncludeVisibility.Contains(m.Visibility))
                 .OrderBy(m => Array.IndexOf(ClassDiagramConstants.PropertiesSortOrder, m.Visibility))
                 .ThenBy(m => m.Name));
             return nodeContext;
+        }
+
+        /// <summary>
+        /// Determines whether a method should appear in the diagram: property/event accessors, operators,
+        /// compiler-generated methods and members inherited from <see cref="object"/> are excluded.
+        /// </summary>
+        private static bool IsUserMethod(MethodInfo method)
+        {
+            return !method.IsSpecialName
+                && method.DeclaringType != typeof(object)
+                && !method.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), false);
         }
 
         private static ClassPropertyContext BuildClassPropertyContext(PropertyInfo property)
