@@ -278,6 +278,7 @@ dotnet test src/MermaidSharp.sln
     │   │   ├── MermaidSharp.EntityFramework.Tests/       # Entity Framework 6 tests (net48)
     │   │   └── MermaidSharp.EntityFrameworkCore.Tests/   # Entity Framework Core tests (net8.0 / net10.0)
     │   ├── Directory.Build.props                         # Shared package metadata and version
+    │   ├── Directory.Packages.props                      # Central NuGet package versions
     │   └── MermaidSharp.sln                              # Solution file
     ├── global.json                                       # .NET SDK version
     ├── instructions.md                                   # Shared AI assistant instructions
