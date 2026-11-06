@@ -87,7 +87,7 @@ namespace MermaidSharp.Models
             sb.Append(Type.PrimaryString());
             if (!string.IsNullOrEmpty(Label))
             {
-                sb.Append(Label);
+                sb.Append(Label.ToMermaidLabel());
                 sb.Append(Type.SecondaryString());
             }
             sb.Append(Arrow.SecondaryString());

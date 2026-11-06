@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
         <NoWarn>$(NoWarn);MSTEST0001;CS1591</NoWarn>
     </PropertyGroup>
 

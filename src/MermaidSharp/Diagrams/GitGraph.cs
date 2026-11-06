@@ -22,10 +22,11 @@ namespace MermaidSharp.Diagrams
         /// </summary>
         protected override string Name => "gitGraph";
 
-        private List<AGitAction> _actions = new List<AGitAction>();
-        private List<string> _branches = new List<string>();
-        private List<string> _tags = new List<string>();
-        private List<string> _commits = new List<string>();
+        private readonly List<AGitAction> _actions = new List<AGitAction>();
+        private readonly List<string> _branches = new List<string>();
+        private readonly List<string> _tags = new List<string>();
+        private readonly Dictionary<string, string> _commitBranches = new Dictionary<string, string>();
+        private string _currentBranch;
 
         /// <summary>
         /// Gets the name of the main branch used by the configuration.
@@ -38,6 +39,11 @@ namespace MermaidSharp.Diagrams
                 return string.IsNullOrWhiteSpace(mainBranchName) ? "main" : mainBranchName;
             }
         }
+
+        /// <summary>
+        /// Gets the name of the branch on which the next commit will be added.
+        /// </summary>
+        public string CurrentBranch => _currentBranch ?? MainBranch;
 
         /// <summary>
         /// Gets or sets the direction of the Git operation.
@@ -90,18 +96,21 @@ namespace MermaidSharp.Diagrams
         }
 
         /// <summary>
-        /// Creates a new branch in the Git graph with the specified name.
+        /// Creates a new branch in the Git graph with the specified name and switches to it, as Mermaid does.
         /// </summary>
-        /// <param name="branch">The name of the branch to create. Cannot be null, empty.</param>
+        /// <param name="branch">The name of the branch to create. Cannot be null, empty or already exist.</param>
         /// <returns>The current GitGraph instance, enabling method chaining.</returns>
         public GitGraph Branch(string branch)
         {
             if (string.IsNullOrWhiteSpace(branch))
                 throw new ArgumentException("Branch name cannot be null or whitespace.", nameof(branch));
 
-            _actions.Add(new GitBranch(branch));
+            if (BranchExists(branch))
+                throw new InvalidOperationException($"Branch '{branch}' already exists.");
 
+            _actions.Add(new GitBranch(branch));
             _branches.Add(branch);
+            _currentBranch = branch;
 
             return this;
         }
@@ -113,13 +122,10 @@ namespace MermaidSharp.Diagrams
         /// <returns>The current GitGraph instance, enabling method chaining.</returns>
         public GitGraph Checkout(string branch)
         {
-            if (string.IsNullOrWhiteSpace(branch))
-                throw new ArgumentException("Branch name cannot be null or whitespace.", nameof(branch));
-
-            if (Branches.All(b => b != branch) && branch != MainBranch)
-                throw new InvalidOperationException($"Branch '{branch}' does not exist. Please create it first using Branch('{branch}').");
+            EnsureBranchExists(branch);
 
             _actions.Add(new GitCheckout(branch));
+            _currentBranch = branch;
             return this;
         }
 
@@ -132,13 +138,11 @@ namespace MermaidSharp.Diagrams
         /// <returns>The current instance of the graph, enabling method chaining.</returns>
         public GitGraph Commit(string id, string tag = "", GitCommitType commitType = GitCommitType.None)
         {
-            if (!string.IsNullOrWhiteSpace(id) && _commits.Contains(id))
-                throw new InvalidOperationException($"Commit '{id}' already exists.");
+            EnsureCommitIdIsUnique(id);
 
             _actions.Add(new GitCommit(id, tag, commitType));
 
-            if (!string.IsNullOrWhiteSpace(tag))
-                _tags.Add(tag);
+            RegisterCommit(id, tag);
             return this;
         }
 
@@ -146,23 +150,23 @@ namespace MermaidSharp.Diagrams
         /// Merges the specified branch into the current branch, optionally applying a tag to the merge operation.
         /// </summary>
         /// <param name="branch">The name of the branch to merge into the current branch. Must refer to an existing branch or the main
-        /// branch.</param>
+        /// branch, and must differ from the current branch.</param>
         /// <param name="id">The unique identifier for the merge commit to add.</param>
         /// <param name="tag">An optional tag to associate with the merge. If specified, the tag is added to the graph.</param>
         /// <param name="commitType">The type of the commit, which may affect its visual representation in the diagram.</param>
         /// <returns>The current GitGraph instance, enabling method chaining.</returns>
         public GitGraph Merge(string branch, string id = "", string tag = "", GitCommitType commitType = GitCommitType.None)
         {
-            if (string.IsNullOrWhiteSpace(branch))
-                throw new ArgumentException("Branch name cannot be null or whitespace.", nameof(branch));
+            EnsureBranchExists(branch);
 
-            if (Branches.All(b => b != branch) && branch != MainBranch)
-                throw new InvalidOperationException($"Branch '{branch}' does not exist. Please create it first using Branch('{branch}').");
+            if (branch == CurrentBranch)
+                throw new InvalidOperationException($"Cannot merge branch '{branch}' into itself.");
+
+            EnsureCommitIdIsUnique(id);
 
             _actions.Add(new GitMerge(branch, id, tag, commitType));
 
-            if (!string.IsNullOrWhiteSpace(tag))
-                _tags.Add(tag);
+            RegisterCommit(id, tag);
             return this;
         }
 
@@ -174,13 +178,19 @@ namespace MermaidSharp.Diagrams
         /// the parent id is resolved automatically by finding the last commit with an id on the merged branch
         /// before the merge occurred.
         /// </remarks>
-        /// <param name="id">The identifier of the commit to cherry-pick. Cannot be null or whitespace.</param>
+        /// <param name="id">The identifier of an existing commit from another branch. Cannot be null or whitespace.</param>
         /// <param name="tag">An optional tag to associate with the cherry-pick operation. If specified, the tag is added to the graph.</param>
         /// <returns>The current GitGraph instance, enabling method chaining.</returns>
         public GitGraph CherryPick(string id, string tag = "")
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Commit ID cannot be null or whitespace.", nameof(id));
+
+            if (!_commitBranches.TryGetValue(id, out var sourceBranch))
+                throw new InvalidOperationException($"Cannot cherry-pick '{id}': commit does not exist.");
+
+            if (sourceBranch == CurrentBranch)
+                throw new InvalidOperationException($"Cannot cherry-pick '{id}': the commit is already on the current branch '{CurrentBranch}'.");
 
             var parentId = string.Empty;
             var mergeReference = Actions.OfType<GitMerge>().FirstOrDefault(m => m.Id == id);
@@ -195,7 +205,39 @@ namespace MermaidSharp.Diagrams
             }
 
             _actions.Add(new GitCherryPick(id, parentId, tag));
+
+            if (!string.IsNullOrWhiteSpace(tag))
+                _tags.Add(tag);
             return this;
+        }
+
+        private bool BranchExists(string branch)
+        {
+            return branch == MainBranch || _branches.Contains(branch);
+        }
+
+        private void EnsureBranchExists(string branch)
+        {
+            if (string.IsNullOrWhiteSpace(branch))
+                throw new ArgumentException("Branch name cannot be null or whitespace.", nameof(branch));
+
+            if (!BranchExists(branch))
+                throw new InvalidOperationException($"Branch '{branch}' does not exist. Please create it first using Branch('{branch}').");
+        }
+
+        private void EnsureCommitIdIsUnique(string id)
+        {
+            if (!string.IsNullOrWhiteSpace(id) && _commitBranches.ContainsKey(id))
+                throw new InvalidOperationException($"Commit '{id}' already exists.");
+        }
+
+        private void RegisterCommit(string id, string tag)
+        {
+            if (!string.IsNullOrWhiteSpace(id))
+                _commitBranches[id] = CurrentBranch;
+
+            if (!string.IsNullOrWhiteSpace(tag))
+                _tags.Add(tag);
         }
 
         /// <summary>
@@ -214,10 +256,18 @@ namespace MermaidSharp.Diagrams
                 if (action == beforeAction)
                     break;
 
-                if (action is GitCheckout checkout)
+                string commitId = null;
+                if (action is GitBranch branch)
+                    currentBranch = branch.Branch;
+                else if (action is GitCheckout checkout)
                     currentBranch = checkout.Branch;
-                else if (action is GitCommit commit && currentBranch == branchName && !string.IsNullOrWhiteSpace(commit.Id))
-                    lastCommitId = commit.Id;
+                else if (action is GitCommit commit)
+                    commitId = commit.Id;
+                else if (action is GitMerge merge)
+                    commitId = merge.Id;
+
+                if (currentBranch == branchName && !string.IsNullOrWhiteSpace(commitId))
+                    lastCommitId = commitId;
             }
 
             return lastCommitId;

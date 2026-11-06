@@ -52,7 +52,7 @@ namespace MermaidSharp.Models
             {
                 return string.Empty;
             }
-            return $"click {Name} \"{ClickAction}\"";
+            return $"click {Name} \"{ClickAction.Replace("\"", "%22")}\"";
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace MermaidSharp.Models
         /// <returns>A string consisting of the primary shape delimiter, the text, and the secondary shape delimiter.</returns>
         protected override string GetSurroundedText()
         {
-            return $"{Shape.PrimaryString()}{Text}{Shape.SecondaryString()}";
+            return $"{Shape.PrimaryString()}{Text.ToMermaidLabel()}{Shape.SecondaryString()}";
         }
     }
 }

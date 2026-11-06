@@ -18,7 +18,13 @@ namespace MermaidSharp.Models
         /// <summary>
         /// Gets or sets the name of the subgraph.
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => _name;
+            set => _name = value.ToMermaidId(nameof(Name));
+        }
+
+        private string _name;
 
         /// <summary>
         /// Gets or sets the flow direction for the diagram layout.
@@ -46,7 +52,7 @@ namespace MermaidSharp.Models
         /// <param name="direction">The layout direction for the subgraph. If null, the default direction is used.</param>
         public FlowSubGraph(string name, List<FlowNode> nodes = null, List<FlowLink> links = null, FlowDirection direction = FlowDirection.None)
         {
-            Name = name.Replace(" ", "");
+            _name = name.ToMermaidId(nameof(name));
             Nodes = nodes ?? new List<FlowNode>();
             Links = links ?? new List<FlowLink>();
             Direction = direction;

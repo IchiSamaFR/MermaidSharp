@@ -12,9 +12,10 @@ MermaidSharp is a comprehensive .NET wrapper to create [Mermaid](https://mermaid
 - Flowcharts, Entity Relationship Diagrams, Class Diagrams
 - Git Graphs, Pie Charts, Quadrant Charts, XY Charts
 - Full Mermaid syntax support
-- .NET 4.8, .NET 8, .NET 9 sample apps (MVC, Blazor, WebAssembly)
+- Targets .NET Framework 4.8 and .NET 8
+- Sample apps (ASP.NET Core MVC, Blazor WebAssembly)
 
-See the [Features](../wiki/Features) page for a complete list.
+See the [Features](../../wiki/Features) page for a complete list.
 
 
 ## Getting Started
@@ -25,14 +26,16 @@ Install the NuGet package:
 dotnet add package MermaidSharp
 ```
 
-For advanced usage, prerequisites, and build instructions, see [Getting-Started](../wiki/Getting-Started).
+For advanced usage, prerequisites, and build instructions, see [Getting-Started](../../wiki/Getting-Started).
 
 ## Quick Example
 
 ```csharp
 using MermaidSharp.Diagrams;
+using MermaidSharp.Enums;
+using MermaidSharp.Models;
 
-var diagram = new FlowchartDiagram("LR");
+var diagram = new FlowchartDiagram(FlowDirection.LeftRight);
 diagram.Nodes.Add(new FlowNode("a", "Start"));
 diagram.Nodes.Add(new FlowNode("b", "End"));
 diagram.Links.Add(new FlowLink("a", "b"));
@@ -45,7 +48,7 @@ Console.WriteLine(diagram.CalculateDiagram());
 //     a-->b
 ```
 
-For complete examples of all diagram types, see [Basic-Usage](../wiki/Basic-Usage).
+For complete examples of all diagram types, see [Basic-Usage](../../wiki/Basic-Usage).
 
 ## EntityFramework Integration
 
@@ -57,7 +60,7 @@ var diagram = myDbContext.ToMermaidEntityDiagram();
 Console.WriteLine(diagram.CalculateDiagram());
 ```
 
-See [EntityFramework-Integration](../wiki/EntityFramework-Integration) for options and details.
+See [EntityFramework-Integration](../../wiki/EntityFramework-Integration) for options and details.
 
 ## AutoDiagram (Reflection)
 

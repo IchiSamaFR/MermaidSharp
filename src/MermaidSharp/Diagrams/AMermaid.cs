@@ -1,5 +1,6 @@
 ﻿using MermaidSharp.Configs;
 using MermaidSharp.Constants;
+using MermaidSharp.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -84,7 +85,7 @@ namespace MermaidSharp.Diagrams
             var lines = new List<string>();
 
             if (!string.IsNullOrWhiteSpace(Title))
-                lines.Add($"title: {Title}");
+                lines.Add($"title: {Title.ToYamlScalar()}");
 
             lines.AddRange(Config?.GetConfigLines() ?? new List<string>());
 

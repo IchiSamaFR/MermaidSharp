@@ -1,5 +1,6 @@
 ﻿using MermaidSharp.Attributes;
 using MermaidSharp.Configs.Themes;
+using MermaidSharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -92,13 +93,13 @@ namespace MermaidSharp.Configs
                     if (string.IsNullOrEmpty(item))
                         continue;
 
-                    lst.Add($"{attr.Name.Replace("{index}", (i + 1).ToString())}: \"{item}\"");
+                    lst.Add($"{attr.Name.Replace("{index}", (i + 1).ToString(CultureInfo.InvariantCulture))}: {item.ToYamlQuoted()}");
                 }
             }
             // Handle string
             else if (value is string strVal && !string.IsNullOrEmpty(strVal))
             {
-                lst.Add($"{attr.Name}: \"{strVal}\"");
+                lst.Add($"{attr.Name}: {strVal.ToYamlQuoted()}");
             }
             // Handle double
             else if (value is double dblVal)

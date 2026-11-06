@@ -114,7 +114,7 @@ namespace MermaidSharp.Tests.Flowcharts
     process-.validate.->decision
     decision==yes==>end
     decision--oprocess
-    linkStyle 0 stroke:green,stroke-width:3px
+    linkStyle 2 stroke:green,stroke-width:3px
     class start startClass
     class decision decisionClass
     click start ""console.log('Start clicked')""";

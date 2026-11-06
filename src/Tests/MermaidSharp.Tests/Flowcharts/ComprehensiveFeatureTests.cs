@@ -56,7 +56,7 @@ namespace MermaidSharp.Tests.Flowcharts
     process--ostore
     store~~~>finish
     validatex--invalid--xinput
-    linkStyle 0 stroke:green,stroke-width:3px
+    linkStyle 2 stroke:green,stroke-width:3px
     class start startNode
     class input inputClass
     click start ""startFlow()""

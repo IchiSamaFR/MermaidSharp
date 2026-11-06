@@ -1,3 +1,4 @@
+using MermaidSharp.Extensions;
 using System.Text;
 
 namespace MermaidSharp.Models
@@ -8,10 +9,17 @@ namespace MermaidSharp.Models
     /// </summary>
     public abstract class ANode
     {
+        private string _name;
+
         /// <summary>
-        /// Gets the Mermaid name associated with the current instance.
+        /// Gets or sets the Mermaid name associated with the current instance. Spaces are removed from the value.
         /// </summary>
-        public string Name { get; set; }
+        /// <exception cref="System.ArgumentNullException">Thrown when the value is null.</exception>
+        public string Name
+        {
+            get => _name;
+            set => _name = value.ToMermaidId(nameof(Name));
+        }
         /// <summary>
         /// Gets or sets the text content associated with this instance.
         /// </summary>
@@ -29,7 +37,7 @@ namespace MermaidSharp.Models
         /// <param name="cssClass">An optional CSS class to apply to the node for custom styling. If not specified, no CSS class is applied.</param>
         protected ANode(string name, string text, string cssClass = "")
         {
-            Name = name.Replace(" ", "");
+            _name = name.ToMermaidId(nameof(name));
             Text = text;
             CssClass = cssClass;
         }
@@ -70,7 +78,7 @@ namespace MermaidSharp.Models
         /// <returns>A string containing the current text value enclosed in square brackets.</returns>
         protected virtual string GetSurroundedText()
         {
-            return $"[{Text}]";
+            return $"[{Text.ToMermaidLabel()}]";
         }
     }
 }

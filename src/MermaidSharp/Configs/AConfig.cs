@@ -151,40 +151,51 @@ namespace MermaidSharp.Configs
         {
             var lst = new List<string>();
 
-            switch (value)
+            if (value is IEnumerable enumerableVal && !(value is string))
             {
-                case IEnumerable enumerableVal when !(value is string):
-                    var enumerableCastedVal = enumerableVal.Cast<object>().Select(o => o?.ToString()).ToList();
-                    foreach (var item in enumerableCastedVal)
-                    {
-                        lst.AddRange(GetConfigProperty(attr, item));
-                    }
+                // Collections are written as a single YAML flow sequence to avoid duplicated keys.
+                var items = enumerableVal.Cast<object>()
+                    .Select(FormatConfigValue)
+                    .Where(v => v != null)
+                    .ToList();
 
-                    break;
-                case double dblVal:
-                    lst.Add($"{attr.Name}: {dblVal.ToString("G", CultureInfo.InvariantCulture)}");
-                    break;
-                case float floatVal:
-                    lst.Add($"{attr.Name}: {floatVal.ToString("G", CultureInfo.InvariantCulture)}");
-                    break;
-                case decimal decVal:
-                    lst.Add($"{attr.Name}: {decVal.ToString("G", CultureInfo.InvariantCulture)}");
-                    break;
-                case bool boolVal:
-                    lst.Add($"{attr.Name}: {boolVal.ToString().ToLowerInvariant()}");
-                    break;
-                case string strVal when !string.IsNullOrEmpty(strVal):
-                    lst.Add($"{attr.Name}: \"{strVal}\"");
-                    break;
-                case Enum enumVal:
-                    lst.Add($"{attr.Name}: {enumVal.PrimaryString()}");
-                    break;
-                default:
-                    lst.Add($"{attr.Name}: {value?.ToString()}");
-                    break;
+                if (items.Count > 0)
+                    lst.Add($"{attr.Name}: [{string.Join(", ", items)}]");
+
+                return lst;
             }
 
+            var formatted = FormatConfigValue(value);
+            if (formatted != null)
+                lst.Add($"{attr.Name}: {formatted}");
+
             return lst;
+        }
+
+        private static string FormatConfigValue(object value)
+        {
+            switch (value)
+            {
+                case null:
+                    return null;
+                case double dblVal:
+                    return dblVal.ToString("G", CultureInfo.InvariantCulture);
+                case float floatVal:
+                    return floatVal.ToString("G", CultureInfo.InvariantCulture);
+                case decimal decVal:
+                    return decVal.ToString("G", CultureInfo.InvariantCulture);
+                case bool boolVal:
+                    return boolVal ? "true" : "false";
+                case string strVal:
+                    return string.IsNullOrEmpty(strVal) ? null : strVal.ToYamlQuoted();
+                case Enum enumVal:
+                    var enumString = enumVal.PrimaryString();
+                    return string.IsNullOrEmpty(enumString) ? null : enumString;
+                case IFormattable formattable:
+                    return formattable.ToString(null, CultureInfo.InvariantCulture);
+                default:
+                    return value.ToString();
+            }
         }
     }
 }
