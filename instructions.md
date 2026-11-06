@@ -206,6 +206,8 @@ public Order CreateOrder(Guid customerId, IEnumerable<Item> items)
     message covering all the changes made during the response.
 -   **Message only:** provide only the commit message text, without any git
     commands (`git add`, `git commit`, etc.).
+-   **No trailers:** do not add `Co-Authored-By`, session links or any other
+    attribution trailer to commit messages.
 
 ---
 
