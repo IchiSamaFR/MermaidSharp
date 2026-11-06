@@ -1,9 +1,10 @@
 # MermaidSharp
 
 MermaidSharp is a comprehensive .NET wrapper library for creating
-Mermaid flowcharts with full syntax support. The solution includes a
-core .NET 8 library, unit tests, and sample applications (MVC Web and
-Blazor) demonstrating usage.
+Mermaid diagrams with full syntax support. The solution includes a
+core library (.NET Framework 4.8, .NET 8 and .NET 10), extension
+libraries (AutoDiagram, Entity Framework), unit tests, and sample
+applications (MVC Web and Blazor) demonstrating usage.
 
 Always reference these instructions first and fallback to search or bash
 commands only when you encounter unexpected information that does not
@@ -15,8 +16,9 @@ match the info here.
 
 ### General Principles
 
--   **Target Framework:** All projects target .NET 8.0. Ensure
-    compatibility with this version.
+-   **Target Frameworks:** Libraries and tests target `net48`, `net8.0`
+    and `net10.0`; samples target `net10.0`. Library code must compile
+    with C# 7.3 (the `net48` default language version).
 -   **Language:** Use C# for all code unless otherwise specified.
 -   **Readability:** Write clear, self-explanatory code. Use meaningful
     variable, method, and class names.
@@ -228,22 +230,16 @@ public Order CreateOrder(Guid customerId, IEnumerable<Item> items)
 
 ### Prerequisites
 
-Install the required .NET SDKs in this exact order:
-- `.NET Framework 4.8 SDK` - Required for core library and tests
-- `.NET 8.0 SDK` - Required for core library and tests
-- `.NET 9.0 SDK` - Required for sample applications
+- `.NET 10 SDK` - Builds every target framework (version pinned by `global.json`)
+- `.NET 8 runtime` - Runs the `net8.0` tests
+- `.NET Framework 4.8 Developer Pack` - Builds and runs the `net48` targets (Windows only)
 
 ``` bash
-# Install .NET Framework 4.8 (required for tests)
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 4.8
+# Install the .NET 10 SDK and the .NET 8 runtime (Linux/macOS)
+curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 10.0
+curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 8.0 --runtime dotnet
 
-# Install .NET 8 (required for tests)
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 8.0
-
-# Install .NET 9 (for sample applications)
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 9.0
-
-export PATH="/home/runner/.dotnet:$PATH"
+export PATH="$HOME/.dotnet:$PATH"
 ```
 
 ---
@@ -256,7 +252,7 @@ export PATH="/home/runner/.dotnet:$PATH"
 -   Use the following command to run tests:
 
 ``` bash
-dotnet test
+dotnet test src/MermaidSharp.sln
 ```
 
 ---
@@ -267,18 +263,27 @@ dotnet test
 
     MermaidSharp/
     ├── src/
-    │   ├── MermaidSharp/                                 # Core library (Framework 4.8 / .NET 8)
-    │   ├── MermaidSharp.Tests/                           # Unit tests (.NET 8)  
-    │   ├── MermaidSharp.MVCWeb/                          # Sample MVC app (.NET 9)
-    │   ├── MermaidSharp.BlazorApp/                       # Sample Blazor app (.NET 9)
-    │   ├── MermaidSharp.EntityFrameworkCore/             # Entity Framework Core (Framework 4.8 / .NET 8)
-    │   ├── MermaidSharp.EntityFramework.Tests/           # Entity Framework tests (Framework 4.8)
-    │   ├── MermaidSharp.EntityFrameworkCore.Tests/       # Entity Framework Core tests (.NET 8)
+    │   ├── MermaidSharp/                                 # Core library (net48 / net8.0 / net10.0)
+    │   ├── MermaidSharp.AutoDiagram/                     # Reflection-based diagrams (net48 / net8.0 / net10.0)
+    │   ├── MermaidSharp.EntityFrameworkCore/             # EF6 (net48) and EF Core (net8.0 / net10.0) diagrams
+    │   ├── Samples/
+    │   │   ├── MermaidSharp.MVCWeb/                      # Sample MVC app (net10.0)
+    │   │   └── MermaidSharp.BlazorApp/                   # Sample Blazor app (net10.0)
+    │   ├── Tests/
+    │   │   ├── MermaidSharp.Tests/                       # Core library tests
+    │   │   ├── MermaidSharp.AutoDiagram.Tests/           # AutoDiagram tests
+    │   │   ├── MermaidSharp.AutoDiagram.Tests.Models/    # Models used by AutoDiagram tests
+    │   │   ├── MermaidSharp.EntityFramework.Tests/       # Entity Framework 6 tests (net48)
+    │   │   └── MermaidSharp.EntityFrameworkCore.Tests/   # Entity Framework Core tests (net8.0 / net10.0)
+    │   ├── Directory.Build.props                         # Shared package metadata and version
     │   └── MermaidSharp.sln                              # Solution file
+    ├── global.json                                       # .NET SDK version
+    ├── instructions.md                                   # Shared AI assistant instructions
     └── README.md                                         # Documentation
 
 ### Key Project Files
 
 -   **Core Library**: `src/MermaidSharp/MermaidSharp.csproj`
--   **Tests**: `src/MermaidSharp.Tests/MermaidSharp.Tests.csproj`\
+-   **Tests**: `src/Tests/MermaidSharp.Tests/MermaidSharp.Tests.csproj`
 -   **Solution**: `src/MermaidSharp.sln`
+-   **CI**: `.github/workflows/`
