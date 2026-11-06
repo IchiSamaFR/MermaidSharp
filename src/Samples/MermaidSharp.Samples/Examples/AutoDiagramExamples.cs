@@ -59,7 +59,7 @@ namespace MermaidSharp.Samples.Examples
                 typeof(FlowchartDiagram).Assembly,
                 typeof(ClassDiagramExtension).Assembly
             };
-            var diagram = assemblies.ToMermaidFlowchartDiagram(new FlowchartDiagramOptions { SubgraphGroupLabel = "MermaidSharp" });
+            var diagram = assemblies.ToMermaidFlowchartDiagram(new FlowchartDiagramOptions { SubgraphGroupLabel = "Solution" });
 
             return new DiagramExample(DiagramKind.AutoDiagram, "auto-flowchart-assemblies", "Assembly dependencies",
                 "Flowchart of the MermaidSharp assemblies and their references.", diagram.CalculateDiagram());

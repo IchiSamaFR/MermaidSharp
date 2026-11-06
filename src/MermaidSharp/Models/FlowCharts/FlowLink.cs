@@ -1,4 +1,4 @@
-using MermaidSharp.Enums;
+﻿using MermaidSharp.Enums;
 using MermaidSharp.Extensions;
 using System.Text;
 
@@ -79,6 +79,12 @@ namespace MermaidSharp.Models
         /// <returns>A string containing the Mermaid link syntax representing the configured relationship.</returns>
         protected override string GetLink()
         {
+            if (Type == FlowLinkType.Invisible)
+            {
+                // Mermaid invisible links accept neither arrow heads nor labels.
+                return Type.PrimaryString();
+            }
+
             StringBuilder sb = new StringBuilder();
             if (IsBidirectional)
             {

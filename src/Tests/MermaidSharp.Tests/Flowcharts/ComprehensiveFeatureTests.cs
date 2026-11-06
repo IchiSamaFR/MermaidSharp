@@ -1,4 +1,4 @@
-using MermaidSharp.Diagrams;
+﻿using MermaidSharp.Diagrams;
 using MermaidSharp.Enums;
 using MermaidSharp.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -54,7 +54,7 @@ namespace MermaidSharp.Tests.Flowcharts
     input-.check.->validate
     validate==valid==>process
     process--ostore
-    store~~~>finish
+    store~~~finish
     validatex--invalid--xinput
     linkStyle 2 stroke:green,stroke-width:3px
     class start startNode
