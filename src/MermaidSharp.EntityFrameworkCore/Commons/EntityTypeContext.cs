@@ -19,20 +19,13 @@ namespace MermaidSharp.EntityFrameworkCore.Contexts
 
 #if NET48
         private readonly EntityType _entityType;
+        private readonly MetadataWorkspace _workspace;
 
-        public EntityTypeContext(EntityType entityType, Type clrType)
+        public EntityTypeContext(EntityType entityType, MetadataWorkspace workspace)
         {
             _entityType = entityType;
-            ClrType = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .FirstOrDefault(t => t.FullName == entityType.FullName);
-
-            if (ClrType == null)
-            {
-                ClrType = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(a => a.GetTypes())
-                    .FirstOrDefault(t => t.Name == entityType.Name);
-            }
+            _workspace = workspace;
+            ClrType = Ef6ClrTypeResolver.Resolve(entityType, workspace);
             Name = entityType.Name;
             IsOwned = false;
             Properties = _entityType.Properties
@@ -61,7 +54,7 @@ namespace MermaidSharp.EntityFrameworkCore.Contexts
         {
 #if NET48
             return _entityType.NavigationProperties
-                .Select(n => new NavigationContext(n));
+                .Select(n => new NavigationContext(n, _workspace));
 #else
             return _entityType.GetNavigations()
                 .Select(n => new NavigationContext(n));
@@ -79,10 +72,12 @@ namespace MermaidSharp.EntityFrameworkCore.Contexts
     {
 #if NET48
         private readonly NavigationProperty _navigation;
+        private readonly MetadataWorkspace _workspace;
 
-        public NavigationContext(NavigationProperty navigation)
+        public NavigationContext(NavigationProperty navigation, MetadataWorkspace workspace)
         {
             _navigation = navigation;
+            _workspace = workspace;
         }
 
         public string Name => _navigation.Name;
@@ -92,14 +87,7 @@ namespace MermaidSharp.EntityFrameworkCore.Contexts
             get
             {
                 var targetType = _navigation.ToEndMember.GetEntityType();
-                var entitesNamespace = $"{targetType.NamespaceName}.Entities";
-                var clrType = AppDomain.CurrentDomain
-                    .GetAssemblies()
-                    .SelectMany(a => a.GetTypes())
-                    .FirstOrDefault(t =>
-                        t.Name == targetType.Name &&
-                        t.Namespace == entitesNamespace);
-                return new EntityTypeContext(targetType, clrType);
+                return new EntityTypeContext(targetType, _workspace);
             }
         }
 #else

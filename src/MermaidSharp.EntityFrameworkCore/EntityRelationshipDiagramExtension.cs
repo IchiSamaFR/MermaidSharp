@@ -63,17 +63,12 @@ namespace MermaidSharp.EntityFrameworkCore
         private static List<EntityTypeContext> GetEntityTypes(DbContext dbContext)
         {
             var objectContext = ((IObjectContextAdapter)dbContext).ObjectContext;
-            var container = objectContext.MetadataWorkspace.GetEntityContainer(objectContext.DefaultContainerName, DataSpace.CSpace);
+            var workspace = objectContext.MetadataWorkspace;
+            var container = workspace.GetEntityContainer(objectContext.DefaultContainerName, DataSpace.CSpace);
 
             return container.BaseEntitySets
                 .OfType<EntitySet>()
-                .Select(set =>
-                {
-                    var entityType = set.ElementType;
-                    var clrType = objectContext.GetType().Assembly.GetTypes()
-                        .FirstOrDefault(t => t.Name == entityType.Name) ?? typeof(object);
-                    return new EntityTypeContext(entityType, clrType);
-                })
+                .Select(set => new EntityTypeContext(set.ElementType, workspace))
                 .OrderBy(e => e.Name)
                 .ToList();
         }

@@ -106,7 +106,7 @@ namespace MermaidSharp.AutoDiagram.Diagrams
         private static ClassAssemblyContext BuildClassAssemblyContext(Assembly assembly, ClassDiagramOptions options)
         {
             var assemblyContext = new ClassAssemblyContext(assembly);
-            var types = assembly.GetTypes()
+            var types = GetLoadableTypes(assembly)
                 .Where(cd => options.AssemblyClassFilter == null || options.AssemblyClassFilter(cd.DeclaringType ?? cd))
                 .Where(cd => options.IncludeClassesVisibility.Contains(GetClassVisibility(cd.DeclaringType ?? cd)))
                 .Where(cd => cd.DeclaringType == null)
@@ -118,6 +118,19 @@ namespace MermaidSharp.AutoDiagram.Diagrams
                     .OrderBy(t => t.Properties.Count + t.Methods.Count == 0)
                     .ThenBy(t => t.Type.Name));
             return assemblyContext;
+        }
+
+        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                // Keep the types that could be loaded when some dependencies are missing.
+                return ex.Types.Where(t => t != null);
+            }
         }
 
         private static ClassNodeContext BuildClassNodeContext(Type type, ClassDiagramOptions options)

@@ -1,3 +1,4 @@
+using MermaidSharp.Extensions;
 using System;
 using System.Globalization;
 
@@ -53,7 +54,7 @@ namespace MermaidSharp.Models
         /// <returns>A string in the format <c>"Label" : Value</c>.</returns>
         public override string ToString()
         {
-            return $"\"{Label}\" : {Value.ToString("0.##", CultureInfo.InvariantCulture)}";
+            return $"\"{Label.EscapeMermaidQuotes()}\" : {Value.ToString("0.##", CultureInfo.InvariantCulture)}";
         }
     }
 }

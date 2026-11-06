@@ -1,3 +1,5 @@
+using MermaidSharp.Extensions;
+
 namespace MermaidSharp.Models
 {
     /// <summary>
@@ -5,15 +7,26 @@ namespace MermaidSharp.Models
     /// </summary>
     public abstract class ALink
     {
+        private string _sourceNode;
+        private string _destinationNode;
+
         /// <summary>
         /// Gets or sets the identifier of the source node in the diagram.
         /// </summary>
-        public string SourceNode { get; set; }
+        public string SourceNode
+        {
+            get => _sourceNode;
+            set => _sourceNode = value.ToMermaidId(nameof(SourceNode));
+        }
 
         /// <summary>
         /// Gets or sets the identifier of the destination node.
         /// </summary>
-        public string DestinationNode { get; set; }
+        public string DestinationNode
+        {
+            get => _destinationNode;
+            set => _destinationNode = value.ToMermaidId(nameof(DestinationNode));
+        }
 
         /// <summary>
         /// Initializes a new instance of the Link class that represents a connection between two nodes in a flowchart.
@@ -22,8 +35,8 @@ namespace MermaidSharp.Models
         /// <param name="destinationNode">The identifier of the destination node for the link. Spaces will be removed from the value.</param>
         protected ALink(string sourceNode, string destinationNode)
         {
-            SourceNode = sourceNode.Replace(" ", "");
-            DestinationNode = destinationNode.Replace(" ", "");
+            _sourceNode = sourceNode.ToMermaidId(nameof(sourceNode));
+            _destinationNode = destinationNode.ToMermaidId(nameof(destinationNode));
         }
 
         /// <summary>

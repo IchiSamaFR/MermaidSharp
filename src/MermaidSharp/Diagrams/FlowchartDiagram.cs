@@ -69,14 +69,15 @@ namespace MermaidSharp.Diagrams
             lines.AddRange(Nodes.Select(n => n.ToString()).Indent());
             lines.AddRange(Links.Select(n => n.ToString()).Indent());
 
-            var allNodes = Nodes.OfType<FlowNode>()
+            var allNodes = Nodes
                 .Concat(SubGraphs.SelectMany(sg => sg.Nodes))
                 .ToList();
-            var allLinks = Links.OfType<FlowLink>()
-                .Concat(SubGraphs.SelectMany(sg => sg.Links))
+
+            // Mermaid indexes links in declaration order: subgraph links are written first, then top-level links.
+            var allLinks = SubGraphs.SelectMany(sg => sg.Links)
+                .Concat(Links)
                 .ToList();
-            var linkStyles = allLinks.Where(l => !string.IsNullOrEmpty(l.LinkStyle)).ToList();
-            lines.AddRange(linkStyles.Select((n, i) => n.ToStyleString(i)).Indent());
+            lines.AddRange(allLinks.Select((l, i) => l.ToStyleString(i)).Indent());
             lines.AddRange(allNodes.Select(n => n.ToClassString()).Indent());
             lines.AddRange(allNodes.Select(n => n.ToClickString()).Indent());
 

@@ -49,7 +49,7 @@ namespace MermaidSharp.Models
         /// </summary>
         public override string ToString()
         {
-            var comment = !string.IsNullOrEmpty(Comment) ? $"\"{Comment}\"" : string.Empty;
+            var comment = !string.IsNullOrEmpty(Comment) ? $"\"{Comment.EscapeMermaidQuotes()}\"" : string.Empty;
 
             var returnedParts = new string[]
             {
