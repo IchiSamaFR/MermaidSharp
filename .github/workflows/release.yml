@@ -1,0 +1,59 @@
+# Publishing a version: push a vX.Y.Z tag (e.g. git tag v1.5.0 && git push origin v1.5.0).
+# Packages are published to nuget.org; a GitHub release keeps the notes. A vX.Y.Z-beta.N tag is a pre-release.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+  # nuget.org trusted publishing: the OIDC token is exchanged for a temporary API key (1 h, single use).
+  id-token: write
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  publish:
+    # Windows is required for the net48 targets and the Entity Framework 6 tests.
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Version
+        id: version
+        run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Tests
+        run: dotnet test src/MermaidSharp.sln -c Release
+
+      - name: Pack
+        run: dotnet pack src/MermaidSharp.sln -c Release -p:Version=${{ steps.version.outputs.value }} -o artifacts
+
+      # Right before the push: the temporary key expires after one hour. user = nuget.org profile name (not the e-mail).
+      - name: Login to nuget.org (trusted publishing)
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: IchiSamaFR
+
+      # No --skip-duplicate: nuget.org also answers 409 for a reserved prefix, so the error must fail the job.
+      - name: Publish to nuget.org
+        run: dotnet nuget push "artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}"
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes $([[ "$GITHUB_REF_NAME" == *-* ]] && echo --prerelease)
