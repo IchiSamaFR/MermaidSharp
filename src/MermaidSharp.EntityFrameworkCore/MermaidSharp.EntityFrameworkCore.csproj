@@ -12,17 +12,14 @@
     <ItemGroup>
         <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
-    
-    <ItemGroup Condition="'$(TargetFramework)' == 'net48' ">
-        <PackageReference Include="EntityFramework" Version="[6.5.1,)" />
+
+    <!-- Versions are minimums for consumers (see Directory.Packages.props). -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+        <PackageReference Include="EntityFramework" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' ">
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="[8.0.25,)" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net10.0' ">
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="[10.0.14,)" />
+    <ItemGroup Condition="'$(TargetFramework)' != 'net48'">
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
     </ItemGroup>
 
     <ItemGroup>

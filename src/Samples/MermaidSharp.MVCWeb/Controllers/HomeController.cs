@@ -37,11 +37,6 @@ namespace MermaidSharp.MVCWeb.Controllers
             return View(model: graph);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
-
 
 namespace MermaidSharp.Configs
 {
@@ -15,22 +13,12 @@ namespace MermaidSharp.Configs
     /// </summary>
     public abstract class AConfigurable
     {
-        private static readonly System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]> PropertiesCache
-            = new System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]>();
-
         /// <summary>
         /// Returns the mermaid representation of the current instance.
         /// </summary>
         public override string ToString()
         {
-            var lines = GetConfigLines();
-            if (lines.Count == 0)
-                return string.Empty;
-
-            lines.Insert(0, $"---");
-            lines.Add("---");
-
-            return string.Join(Environment.NewLine, lines);
+            return ConfigSerializer.ToFrontMatter(GetConfigLines());
         }
 
         /// <summary>
@@ -47,27 +35,15 @@ namespace MermaidSharp.Configs
         protected List<string> GetThemeVariableParams()
         {
             var lst = new List<string>();
-            var props = PropertiesCache.GetOrAdd(
-                GetType(),
-                t => t.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                      .Where(p => p.GetCustomAttribute<ThemeVariableAttribute>() != null)
-                      .ToArray()
-            );
-
-            foreach (var prop in props)
+            foreach (var entry in ConfigSerializer.GetDecoratedValues<ThemeVariableAttribute>(this))
             {
-                var attr = prop.GetCustomAttribute<ThemeVariableAttribute>();
-                var value = prop.GetValue(this);
-                if (value == null)
-                    continue;
-
-                lst.AddRange(GetProperty(attr, value));
+                lst.AddRange(GetProperty(entry.Key, entry.Value));
             }
 
             return lst;
         }
 
-        private IEnumerable<string> GetProperty(ThemeVariableAttribute attr, object value)
+        private static IEnumerable<string> GetProperty(ThemeVariableAttribute attr, object value)
         {
             var lst = new List<string>();
 
@@ -83,7 +59,7 @@ namespace MermaidSharp.Configs
             if (string.IsNullOrWhiteSpace(attr.Name))
                 throw new InvalidOperationException("Theme variable name is required for scalar theme variable properties.");
 
-            // Handle IEnumerable<string>
+            // Lists are written as numbered variables, e.g. pie1, pie2, ...
             if (value is IEnumerable<string> strList)
             {
                 var items = strList.ToList();
@@ -95,22 +71,13 @@ namespace MermaidSharp.Configs
 
                     lst.Add($"{attr.Name.Replace("{index}", (i + 1).ToString(CultureInfo.InvariantCulture))}: {item.ToYamlQuoted()}");
                 }
+
+                return lst;
             }
-            // Handle string
-            else if (value is string strVal && !string.IsNullOrEmpty(strVal))
-            {
-                lst.Add($"{attr.Name}: {strVal.ToYamlQuoted()}");
-            }
-            // Handle double
-            else if (value is double dblVal)
-            {
-                lst.Add($"{attr.Name}: {dblVal.ToString("G", CultureInfo.InvariantCulture)}");
-            }
-            // Handle bool
-            else if (value is bool boolVal)
-            {
-                lst.Add($"{attr.Name}: {(boolVal ? "true" : "false")}");
-            }
+
+            var formatted = ConfigSerializer.FormatValue(value);
+            if (formatted != null)
+                lst.Add($"{attr.Name}: {formatted}");
 
             return lst;
         }

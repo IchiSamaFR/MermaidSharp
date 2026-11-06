@@ -19,7 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Node, link and subgraph ids throw `ArgumentNullException` when null; setters strip spaces like constructors.
 - Labels with special characters are quoted and escaped; YAML values and titles are escaped.
 - Configuration collections are written as a single YAML sequence; empty strings are skipped.
-- Samples target .NET 10.
+- Samples target .NET 10; template pages (Counter, Weather, Privacy) removed.
+- NuGet package versions are managed centrally in `src/Directory.Packages.props`.
+- Configuration and theme variable serialization share a single implementation.
 
 ### Fixed
 - GitGraph: duplicate commit ids and branches are rejected, self-merges and invalid cherry-picks are rejected, merge cherry-pick parent resolution.

@@ -5,9 +5,7 @@ using MermaidSharp.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
 
 namespace MermaidSharp.Configs
 {
@@ -30,9 +28,6 @@ namespace MermaidSharp.Configs
         /// </summary>
         protected virtual string SectionName { get; }
 
-        private static readonly System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]> _configPropertiesCache
-            = new System.Collections.Concurrent.ConcurrentDictionary<Type, PropertyInfo[]>();
-
         /// <summary>
         /// Gets the theme variables used to customize the appearance of the component.
         /// </summary>
@@ -48,7 +43,7 @@ namespace MermaidSharp.Configs
         /// </summary>
         /// <param name="theme">The theme to apply to the configuration.</param>
         /// <param name="themeVariables">The theme variables to apply to the configuration.</param>
-        public AConfig(ConfigTheme theme = ConfigTheme.None, TThemeVariables themeVariables = default)
+        protected AConfig(ConfigTheme theme = ConfigTheme.None, TThemeVariables themeVariables = default)
         {
             Theme = theme;
 
@@ -62,14 +57,7 @@ namespace MermaidSharp.Configs
         /// </summary>
         public override string ToString()
         {
-            var lines = GetConfigLines();
-            if (lines.Count == 0)
-                return string.Empty;
-
-            lines.Insert(0, $"---");
-            lines.Add("---");
-
-            return string.Join(Environment.NewLine, lines);
+            return ConfigSerializer.ToFrontMatter(GetConfigLines());
         }
 
         /// <summary>
@@ -119,21 +107,9 @@ namespace MermaidSharp.Configs
         protected List<string> GetSectionConfigVariableParams()
         {
             var lst = new List<string>();
-            var props = _configPropertiesCache.GetOrAdd(
-                GetType(),
-                t => t.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                      .Where(p => p.GetCustomAttribute<ConfigVariableAttribute>() != null)
-                      .ToArray()
-            );
-
-            foreach (var prop in props)
+            foreach (var entry in ConfigSerializer.GetDecoratedValues<ConfigVariableAttribute>(this))
             {
-                var attr = prop.GetCustomAttribute<ConfigVariableAttribute>();
-                var value = prop.GetValue(this);
-                if (value == null)
-                    continue;
-
-                lst.AddRange(GetConfigProperty(attr, value));
+                lst.AddRange(GetConfigProperty(entry.Key, entry.Value));
             }
 
             if (lst.Count == 0)
@@ -155,7 +131,7 @@ namespace MermaidSharp.Configs
             {
                 // Collections are written as a single YAML flow sequence to avoid duplicated keys.
                 var items = enumerableVal.Cast<object>()
-                    .Select(FormatConfigValue)
+                    .Select(ConfigSerializer.FormatValue)
                     .Where(v => v != null)
                     .ToList();
 
@@ -165,37 +141,11 @@ namespace MermaidSharp.Configs
                 return lst;
             }
 
-            var formatted = FormatConfigValue(value);
+            var formatted = ConfigSerializer.FormatValue(value);
             if (formatted != null)
                 lst.Add($"{attr.Name}: {formatted}");
 
             return lst;
-        }
-
-        private static string FormatConfigValue(object value)
-        {
-            switch (value)
-            {
-                case null:
-                    return null;
-                case double dblVal:
-                    return dblVal.ToString("G", CultureInfo.InvariantCulture);
-                case float floatVal:
-                    return floatVal.ToString("G", CultureInfo.InvariantCulture);
-                case decimal decVal:
-                    return decVal.ToString("G", CultureInfo.InvariantCulture);
-                case bool boolVal:
-                    return boolVal ? "true" : "false";
-                case string strVal:
-                    return string.IsNullOrEmpty(strVal) ? null : strVal.ToYamlQuoted();
-                case Enum enumVal:
-                    var enumString = enumVal.PrimaryString();
-                    return string.IsNullOrEmpty(enumString) ? null : enumString;
-                case IFormattable formattable:
-                    return formattable.ToString(null, CultureInfo.InvariantCulture);
-                default:
-                    return value.ToString();
-            }
         }
     }
 }

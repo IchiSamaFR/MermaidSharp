@@ -6,21 +6,16 @@
         <NoWarn>$(NoWarn);MSTEST0001;CS1591</NoWarn>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' != 'net48'">
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-        <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
-        <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
-        <PackageReference Include="coverlet.collector" Version="6.0.4" />
-        <PackageReference Include="coverlet.msbuild" Version="6.0.4" />
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="MSTest.TestAdapter" />
+        <PackageReference Include="MSTest.TestFramework" />
+        <PackageReference Include="coverlet.collector" />
+        <PackageReference Include="coverlet.msbuild" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net48' ">
+    <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
         <Reference Include="System.Runtime" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-        <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
-        <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
-        <PackageReference Include="coverlet.collector" Version="6.0.2" />
-        <PackageReference Include="coverlet.msbuild" Version="6.0.2" />
     </ItemGroup>
 
     <ItemGroup>
