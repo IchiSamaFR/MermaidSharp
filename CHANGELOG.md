@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Labels with special characters are quoted and escaped; YAML values and titles are escaped.
 - Configuration collections are written as a single YAML sequence; empty strings are skipped.
 - Samples target .NET 10; template pages (Counter, Weather, Privacy) removed.
+- Samples show a shared catalog (`MermaidSharp.Samples`) covering every diagram type and AutoDiagram, checked by `MermaidSharp.Samples.Tests`.
 - NuGet package versions are managed centrally in `src/Directory.Packages.props`.
 - Configuration and theme variable serialization share a single implementation.
 

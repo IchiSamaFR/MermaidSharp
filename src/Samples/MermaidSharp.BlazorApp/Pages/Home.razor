@@ -1,48 +1,35 @@
 @page "/"
-@using MermaidSharp.Enums
-@using MermaidSharp.Diagrams
-@using MermaidSharp.Models
-@inject IJSRuntime JSRuntime
+@using MermaidSharp.Samples
 
+<PageTitle>MermaidSharp samples</PageTitle>
 
-<PageTitle>Home</PageTitle>
+<h1>MermaidSharp samples</h1>
+<p class="lead">Every diagram below is generated in C# with MermaidSharp and rendered with Blazorade.Mermaid.</p>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<body>
-    Here is a mermaid diagram:
-    <MermaidDiagram Definition="@graph" />
-</body>
-
-@code {
-    string graph = string.Empty;
-
-    protected override async Task OnInitializedAsync()
+<nav class="mb-4">
+    @foreach (var group in DiagramCatalog.ByKind)
     {
-        List<FlowNode> nodes = new()
-        {
-            new("node1", "This is node 1"),
-            new("node2", "This is node 2", FlowNodeShapeType.Hexagon),
-            new("node3", "This is node 3", FlowNodeShapeType.Rounded)
-        };
-        List<FlowLink> links = new()
-        {
-            new FlowLink("node1", "node2", "12s"),
-            new FlowLink("node1", "node3", "3mins")
-        };
-        FlowchartDiagram flowchart = new();
-        flowchart.Nodes.AddRange(nodes);
-        flowchart.Links.AddRange(links);
-        graph = flowchart.CalculateDiagram();
+        <a class="btn btn-outline-secondary btn-sm me-1 mb-1" href="#@group.Key">@group.First().Category</a>
     }
+</nav>
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        // if (firstRender)
-        // {
-        //     await JSRuntime.InvokeVoidAsync("initializeMermaid");
-        // }
-    }
+@foreach (var group in DiagramCatalog.ByKind)
+{
+    <section id="@group.Key" class="mb-5">
+        <h2 class="border-bottom pb-2">@group.First().Category</h2>
+        @foreach (var example in group)
+        {
+            <article id="@example.Id" class="card mb-4">
+                <div class="card-body">
+                    <h3 class="h5 card-title">@example.Title</h3>
+                    <p class="card-text text-muted">@example.Description</p>
+                    <MermaidDiagram Definition="@example.Definition" />
+                    <details>
+                        <summary>Mermaid definition</summary>
+                        <pre class="bg-light p-2 border rounded"><code>@example.Definition</code></pre>
+                    </details>
+                </div>
+            </article>
+        }
+    </section>
 }

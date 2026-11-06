@@ -1,19 +1,44 @@
-@model string;
+@using MermaidSharp.Samples
+@model List<IGrouping<DiagramKind, DiagramExample>>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Samples";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<body>
-    Here is a mermaid diagram:
-    <pre class="mermaid">
-@Html.Raw(Model)
-    </pre>
+<h1 class="display-5">MermaidSharp samples</h1>
+<p class="lead">Every diagram below is generated in C# with MermaidSharp and rendered by mermaid.js.</p>
+
+<nav class="mb-4">
+    @foreach (var group in Model)
+    {
+        <a class="btn btn-outline-secondary btn-sm me-1 mb-1" href="#@group.Key">@group.First().Category</a>
+    }
+</nav>
+
+@foreach (var group in Model)
+{
+    <section id="@group.Key" class="mb-5">
+        <h2 class="border-bottom pb-2">@group.First().Category</h2>
+        @foreach (var example in group)
+        {
+            <article id="@example.Id" class="card mb-4">
+                <div class="card-body">
+                    <h3 class="h5 card-title">@example.Title</h3>
+                    <p class="card-text text-muted">@example.Description</p>
+                    @* The definition is HTML-encoded: mermaid reads the decoded text content. *@
+                    <pre class="mermaid">@example.Definition</pre>
+                    <details>
+                        <summary>Mermaid definition</summary>
+                        <pre class="bg-light p-2 border rounded"><code>@example.Definition</code></pre>
+                    </details>
+                </div>
+            </article>
+        }
+    </section>
+}
+
+@section Scripts {
     <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
         mermaid.initialize({ startOnLoad: true });
     </script>
-</body>
+}
