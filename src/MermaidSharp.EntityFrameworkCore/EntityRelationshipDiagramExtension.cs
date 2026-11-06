@@ -49,11 +49,18 @@ namespace MermaidSharp.EntityFrameworkCore
         /// relationships defined in a DbContext using Mermaid syntax. The diagram reflects the current model
         /// configuration of the context.</remarks>
         /// <param name="dbContext">The Entity Framework database context to analyze. Cannot be null.</param>
-        /// <param name="options">Options to customize the generation of the entity-relationship diagram, such as whether to include column details, relationships, and other metadata.</param>
+        /// <param name="options">Options to customize the generation of the entity-relationship diagram, such as whether to include column details, relationships, and other metadata. If null, default options are used.</param>
         /// <returns>An EntityRelationshipDiagram object containing the Mermaid syntax for the entity-relationship diagram of the
         /// database context.</returns>
+        /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="dbContext"/> is null.</exception>
         public static EntityRelationshipDiagram ToMermaidEntityDiagram(this DbContext dbContext, EntityRelationshipDiagramOptions options)
         {
+            if (dbContext == null)
+                throw new System.ArgumentNullException(nameof(dbContext));
+
+            if (options == null)
+                options = new EntityRelationshipDiagramOptions();
+
             var entityTypes = GetEntityTypes(dbContext);
             var schema = BuildSchema(entityTypes);
             return BuildEntityRelationshipDiagram(schema, options);

@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `GitGraph.CurrentBranch` property.
 - MIT `LICENSE` file, `CHANGELOG.md`, `.editorconfig` and `.gitattributes`.
 - `build` and `Release` GitHub Actions workflows (NuGet trusted publishing on `v*` tags).
-- Regression tests for the fixes below.
+- Regression tests for the fixes below, and option tests for AutoDiagram and the Entity Framework extensions.
 
 ### Changed
 - `GitGraph.Branch()` now switches to the created branch, as Mermaid does.
@@ -28,7 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Flowchart: `linkStyle` index now counts every link in declaration order.
 - Entity Framework 6: entity CLR types are resolved from the object-space mapping.
 - AutoDiagram: assemblies with unloadable types no longer throw.
+- AutoDiagram: class diagrams no longer list property accessors (`get_`/`set_`), operators, compiler-generated methods or methods inherited from `object` as methods.
 - AutoDiagram package now includes its README; EF6 tests are discovered by `dotnet test`.
+- AutoDiagram and Entity Framework extensions throw `ArgumentNullException` for a null source instead of `NullReferenceException`; a null `EntityRelationshipDiagramOptions` falls back to the defaults.
 
 ## [1.4.0] - 2026-05-08
 

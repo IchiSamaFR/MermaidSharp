@@ -17,9 +17,13 @@ namespace MermaidSharp.AutoDiagram.Diagrams
         /// </summary>
         /// <param name="assemblies">Collection of assemblies to convert into flowchart nodes.</param>
         /// <param name="options">Optional configuration settings for the diagram generation.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="assemblies"/> is null.</exception>
         /// <returns>Flowchart diagram representing the assemblies as nodes with links showing their references.</returns>
         public static FlowchartDiagram ToMermaidFlowchartDiagram(this IEnumerable<Assembly> assemblies, FlowchartDiagramOptions options = null)
         {
+            if (assemblies == null)
+                throw new System.ArgumentNullException(nameof(assemblies));
+
             if (options == null)
                 options = new FlowchartDiagramOptions();
 
