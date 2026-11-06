@@ -362,5 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# graphify (graphe de connaissances genere)
+# graphify knowledge graph (generated locally, rebuilt with `graphify update .`)
 graphify-out/
+
+# Claude Code local settings (personal, not shared)
+.claude/settings.local.json

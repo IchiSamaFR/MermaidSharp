@@ -1,0 +1,80 @@
+# Coding style shared by Visual Studio, Rider and VS Code. See instructions.md for the full conventions.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{json,yml,yaml}]
+indent_size = 2
+end_of_line = lf
+
+[*.{sh,bash}]
+end_of_line = lf
+
+[*.{csproj,props,targets,slnx,config,xml,razor,cshtml}]
+indent_size = 4
+
+[*.cs]
+max_line_length = 120
+
+# Usings
+dotnet_sort_system_directives_first = true
+csharp_using_directive_placement = outside_namespace:suggestion
+dotnet_diagnostic.IDE0005.severity = suggestion
+
+# Braces (Allman)
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+
+# Namespaces: block-scoped (file-scoped namespaces require C# 10, net48 uses C# 7.3)
+csharp_style_namespace_declarations = block_scoped:suggestion
+
+# Language features available in C# 7.3 only
+csharp_style_prefer_switch_expression = false:none
+csharp_style_prefer_pattern_matching = false:none
+csharp_style_prefer_not_pattern = false:none
+csharp_style_prefer_null_check_over_type_check = false:none
+csharp_prefer_simple_using_statement = false:none
+csharp_style_implicit_object_creation_when_type_is_apparent = false:none
+dotnet_style_prefer_collection_expression = never:none
+csharp_style_prefer_primary_constructors = false:none
+
+# var
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_for_built_in_types = true:silent
+csharp_style_var_elsewhere = true:silent
+
+# Naming: constants in PascalCase
+dotnet_naming_rule.constants_pascal_case.symbols = constant_symbols
+dotnet_naming_rule.constants_pascal_case.style = pascal_case_style
+dotnet_naming_rule.constants_pascal_case.severity = suggestion
+dotnet_naming_symbols.constant_symbols.applicable_kinds = field
+dotnet_naming_symbols.constant_symbols.required_modifiers = const
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+# Naming: private instance fields in _camelCase
+dotnet_naming_rule.private_fields_underscore.symbols = private_field_symbols
+dotnet_naming_rule.private_fields_underscore.style = underscore_camel_case_style
+dotnet_naming_rule.private_fields_underscore.severity = suggestion
+dotnet_naming_symbols.private_field_symbols.applicable_kinds = field
+dotnet_naming_symbols.private_field_symbols.applicable_accessibilities = private
+dotnet_naming_style.underscore_camel_case_style.required_prefix = _
+dotnet_naming_style.underscore_camel_case_style.capitalization = camel_case
+
+# Naming: interfaces start with I
+dotnet_naming_rule.interfaces_prefix_i.symbols = interface_symbols
+dotnet_naming_rule.interfaces_prefix_i.style = prefix_i_style
+dotnet_naming_rule.interfaces_prefix_i.severity = suggestion
+dotnet_naming_symbols.interface_symbols.applicable_kinds = interface
+dotnet_naming_style.prefix_i_style.required_prefix = I
+dotnet_naming_style.prefix_i_style.capitalization = pascal_case
