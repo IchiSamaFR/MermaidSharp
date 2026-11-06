@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\MermaidSharp\MermaidSharp.csproj" />
+        <ProjectReference Include="..\MermaidSharp.Samples\MermaidSharp.Samples.csproj" />
     </ItemGroup>
 
 </Project>

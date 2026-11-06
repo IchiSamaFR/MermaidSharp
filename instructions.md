@@ -269,6 +269,7 @@ dotnet test src/MermaidSharp.sln
     │   ├── MermaidSharp.AutoDiagram/                     # Reflection-based diagrams (net48 / net8.0 / net10.0)
     │   ├── MermaidSharp.EntityFrameworkCore/             # EF6 (net48) and EF Core (net8.0 / net10.0) diagrams
     │   ├── Samples/
+    │   │   ├── MermaidSharp.Samples/                     # Shared catalog of sample diagrams (net10.0)
     │   │   ├── MermaidSharp.MVCWeb/                      # Sample MVC app (net10.0)
     │   │   └── MermaidSharp.BlazorApp/                   # Sample Blazor app (net10.0)
     │   ├── Tests/
@@ -276,7 +277,8 @@ dotnet test src/MermaidSharp.sln
     │   │   ├── MermaidSharp.AutoDiagram.Tests/           # AutoDiagram tests
     │   │   ├── MermaidSharp.AutoDiagram.Tests.Models/    # Models used by AutoDiagram tests
     │   │   ├── MermaidSharp.EntityFramework.Tests/       # Entity Framework 6 tests (net48)
-    │   │   └── MermaidSharp.EntityFrameworkCore.Tests/   # Entity Framework Core tests (net8.0 / net10.0)
+    │   │   ├── MermaidSharp.EntityFrameworkCore.Tests/   # Entity Framework Core tests (net8.0 / net10.0)
+    │   │   └── MermaidSharp.Samples.Tests/               # Generic checks run on every sample diagram (net10.0)
     │   ├── Directory.Build.props                         # Shared package metadata and version
     │   ├── Directory.Packages.props                      # Central NuGet package versions
     │   └── MermaidSharp.sln                              # Solution file
