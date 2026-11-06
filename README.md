@@ -12,7 +12,7 @@ MermaidSharp is a comprehensive .NET wrapper to create [Mermaid](https://mermaid
 - Flowcharts, Entity Relationship Diagrams, Class Diagrams
 - Git Graphs, Pie Charts, Quadrant Charts, XY Charts
 - Full Mermaid syntax support
-- Targets .NET Framework 4.8 and .NET 8
+- Targets .NET Framework 4.8, .NET 8 and .NET 10
 - Sample apps (ASP.NET Core MVC, Blazor WebAssembly)
 
 See the [Features](../../wiki/Features) page for a complete list.
