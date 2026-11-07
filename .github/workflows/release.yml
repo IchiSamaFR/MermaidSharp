@@ -40,7 +40,10 @@ jobs:
         run: dotnet test src/MermaidSharp.sln -c Release
 
       - name: Pack
-        run: dotnet pack src/MermaidSharp.sln -c Release -p:Version=${{ steps.version.outputs.value }} -o artifacts
+        # Absolute PackageOutputPath: a relative --output is not reliable when packing a solution.
+        run: |
+          dotnet pack src/MermaidSharp.sln -c Release -p:Version=${{ steps.version.outputs.value }} -p:PackageOutputPath="${{ github.workspace }}/artifacts"
+          ls -l artifacts
 
       # Right before the push: the temporary key expires after one hour. user = nuget.org profile name (not the e-mail).
       - name: Login to nuget.org (trusted publishing)
@@ -51,7 +54,12 @@ jobs:
 
       # No --skip-duplicate: nuget.org also answers 409 for a reserved prefix, so the error must fail the job.
       - name: Publish to nuget.org
-        run: dotnet nuget push "artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}"
+        # The glob is expanded by bash (failglob: no package fails the step) and each package is pushed explicitly.
+        run: |
+          shopt -s failglob
+          for package in artifacts/*.nupkg; do
+            dotnet nuget push "$package" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.nuget-login.outputs.NUGET_API_KEY }}"
+          done
 
       - name: GitHub release
         env:

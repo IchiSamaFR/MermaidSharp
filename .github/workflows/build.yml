@@ -54,7 +54,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Pack (validation)
-        run: dotnet pack src/MermaidSharp.sln --configuration Release --no-build --output artifacts
+        run: dotnet pack src/MermaidSharp.sln --configuration Release --no-build -p:PackageOutputPath="${{ github.workspace }}/artifacts"
 
       - name: Upload packages
         uses: actions/upload-artifact@v7
